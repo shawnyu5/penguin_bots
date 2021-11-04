@@ -9,14 +9,14 @@ from dotenv import load_dotenv
 import sys
 import time
 
-sys.path.insert(1, '/home/shawn/python/web_scraping/penguin')   # add directory to system path in this program
+sys.path.insert(1, '/home/shawn/python/web_scraping/penguin_bots/')   # add directory to system path in this program
 import utils as penguin # type: ignore
 
 # makes sure the current product is different from the product stored in file
 def validate_product(product_title):
     # store product title to file
     try:
-        with open("/home/shawn/python/web_scraping/penguin/rating/product_info.txt", "r+") as file:
+        with open("/home/shawn/python/web_scraping/penguin_bots/rating/product_info.txt", "r+") as file:
             # read title from file
             file_title = file.read()
     except:
@@ -28,7 +28,7 @@ def validate_product(product_title):
         exit(1)
 
     # if current title is different from previous, write to file
-    with open("/home/shawn/python/web_scraping/penguin/rating/product_info.txt", "w+") as file:
+    with open("/home/shawn/python/web_scraping/penguin_bots/rating/product_info.txt", "w+") as file:
         # print(f"new product title {product_title} written")
         file.write(product_title)
 

@@ -8,7 +8,7 @@ import requests
 
 # check if current product is interesting, returns true or false
 def if_interested(title) -> bool:
-    with open("/home/shawn/python/web_scraping/penguin/not_interested_products.csv", newline = "") as file:
+    with open("/home/shawn/python/web_scraping/penguin_bots/not_interested_products.csv", newline = "") as file:
         # read products from cvs
         product = csv.reader(file, quotechar='|')
         product_titles = []
@@ -93,7 +93,7 @@ def get_description(soup) -> str:
 
 def add_not_interested(product_title) -> None:
     # Parse file to make sure current product is not on not interested list
-    with open("/home/shawn/python/web_scraping/penguin/not_interested_products.csv", "r") as file:
+    with open("/home/shawn/python/web_scraping/penguin_bots/not_interested_products.csv", "r") as file:
         contents = file.read()
         if product_title in contents:
             print(f"{product_title} is already on not interested list. Aborting")
@@ -101,7 +101,7 @@ def add_not_interested(product_title) -> None:
 
     choice = input(f"Would you like to add {product_title} to the not interested list?(y/n) ")
     if choice == ('y' or 'Y'):
-        with open("/home/shawn/python/web_scraping/penguin/not_interested_products.csv", "a") as file:
+        with open("/home/shawn/python/web_scraping/penguin_bots/not_interested_products.csv", "a") as file:
             file.write(product_title + "\n")
             print(f"{product_title} addded to not interested list")
     else:

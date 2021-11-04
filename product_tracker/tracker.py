@@ -6,7 +6,7 @@ import sys
 from bs4 import BeautifulSoup
 import requests
 import json
-sys.path.insert(1, '/home/shawn/python/web_scraping/penguin') # utils
+sys.path.insert(1, '/home/shawn/python/web_scraping/penguin_bots/') # utils
 import utils  # type: ignore
 
 def to_object(title:str, discount:str, price:str):
@@ -19,10 +19,10 @@ def to_object(title:str, discount:str, price:str):
 
 def validate(product) -> bool:
 
-    with open("/home/shawn/python/web_scraping/penguin/product_tracker/current_product.json", "r") as file:
+    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "r") as file:
         file_product = json.load(file)
 
-    with open("/home/shawn/python/web_scraping/penguin/product_tracker/current_product.json", "w") as file:
+    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "w") as file:
         json.dump(product, file, indent=4)
 
     if file_product["title"] == product["title"]:
@@ -41,7 +41,7 @@ def index(array, search_term) -> int:
 
 # add the current product to
 def to_file(current_product):
-    with open("/home/shawn/python/web_scraping/penguin/product_tracker/products.json", "r+") as file:
+    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/products.json", "r+") as file:
         product_arr = json.load(file)
 
         # checks if current product is logged and return the index.
@@ -61,7 +61,7 @@ def to_file(current_product):
         product_arr.append(current_product)
         # print(current_product)
 
-    with open("/home/shawn/python/web_scraping/penguin/product_tracker/products.json", "w+") as file:
+    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/products.json", "w+") as file:
         json.dump(product_arr, file, indent=4)
 
 
