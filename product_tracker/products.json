@@ -580,11 +580,6 @@
         "price": 13.45
     },
     {
-        "title": "Royalistic by Juan Tamariz (Download + Cards)",
-        "discount_percent": 6,
-        "price": 23.32
-    },
-    {
         "title": "Salt & Silver by Giovanni Livera",
         "discount_percent": 8,
         "price": 45.85
@@ -880,11 +875,6 @@
         "price": 4.11
     },
     {
-        "title": "Phoenix by Peter Samelson",
-        "discount_percent": 6,
-        "price": 55.95
-    },
-    {
         "title": "Power Word: Fall by Matt Sconce (DVD + Gimmicks)",
         "discount_percent": 41,
         "price": 3.4899999999999998,
@@ -918,6 +908,18 @@
         "title": "Solitary by Cameron Francis",
         "discount_percent": 3,
         "price": 19.29,
+        "appearances": 1
+    },
+    {
+        "title": "Phoenix by Peter Samelson",
+        "discount_percent": 5,
+        "price": 56.95,
+        "appearances": 1
+    },
+    {
+        "title": "Royalistic by Juan Tamariz (Download + Cards)",
+        "discount_percent": 30,
+        "price": 17.44,
         "appearances": 1
     }
 ]

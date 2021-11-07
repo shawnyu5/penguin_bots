@@ -59,7 +59,8 @@ def to_file(current_product):
                 current_product["price"] =  current_product["price"] / current_product["appearances"]
 
         product_arr.append(current_product)
-        # print(current_product)
+
+        print("product saved:", current_product)
 
     with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/products.json", "w+") as file:
         json.dump(product_arr, file, indent=4)
@@ -80,7 +81,8 @@ def main():
     # if product has not changed, save product to file and don't parse json
     # file
     if not validate(product):
-        print("Product updated")
+        print("Product has not changed")
+        print(product)
         exit(0)
 
     to_file(product)
