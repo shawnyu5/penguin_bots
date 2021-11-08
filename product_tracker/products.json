@@ -610,16 +610,6 @@
         "price": 28.95
     },
     {
-        "title": "X Finger by Geoff Weber (DVD)",
-        "discount_percent": 88,
-        "price": 2.31
-    },
-    {
-        "title": "Clear By Brian Kennedy",
-        "discount_percent": 6,
-        "price": 28.0
-    },
-    {
         "title": "Cinch by Shaun Robison (DVD + Gimmick)",
         "discount_percent": 21,
         "price": 19.49
@@ -943,5 +933,17 @@
         "discount_percent": 6,
         "price": 27.95,
         "appearances": 1
+    },
+    {
+        "title": "X Finger by Geoff Weber (DVD)",
+        "discount_percent": 80,
+        "price": 3.96,
+        "appearances": 2
+    },
+    {
+        "title": "Clear By Brian Kennedy",
+        "discount_percent": 8,
+        "price": 27.5,
+        "appearances": 2
     }
 ]
