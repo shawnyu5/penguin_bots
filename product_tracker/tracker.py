@@ -40,9 +40,12 @@ def index(array, search_term) -> int:
     return -1
 
 # add the current product to
-def to_file(current_product):
+def to_file():
     with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/products.json", "r+") as file:
         product_arr = json.load(file)
+
+    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "r+") as file:
+        current_product = json.load(file)
 
         # checks if current product is logged and return the index.
         found_index = index(product_arr, current_product)
@@ -85,7 +88,7 @@ def main():
         print(product)
         exit(0)
 
-    to_file(product)
+    to_file()
 
 
 if __name__ == "__main__":
