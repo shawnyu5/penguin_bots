@@ -53,7 +53,7 @@ def to_file(current_product):
 
             # not all products saved has a appearance attribute
             if "appearances" not in removed_product:
-                current_product["appearances"] = 1
+                current_product["appearances"] = 2
             else:
                 current_product["appearances"] = removed_product["appearances"] + 1
                 current_product["price"] =  current_product["price"] / current_product["appearances"]
