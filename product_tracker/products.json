@@ -550,11 +550,6 @@
         "price": 17.97
     },
     {
-        "title": "Card Stunts with Gregory Wilson (DVD)",
-        "discount_percent": 3,
-        "price": 28.95
-    },
-    {
         "title": "Hello My Name Is by Cameron Francis (DVD + Gimmicks)",
         "discount_percent": 9,
         "price": 17.97
@@ -698,11 +693,6 @@
         "title": "Angle of Attack by Jeff Sheridan (DVD)",
         "discount_percent": 40,
         "price": 17.95
-    },
-    {
-        "title": "Balloon School with Joe Montella (DVD)",
-        "discount_percent": 3,
-        "price": 48.29
     },
     {
         "title": "Dragon Thread by Mike Wong (DVD)",
@@ -944,6 +934,90 @@
         "title": "Clear By Brian Kennedy",
         "discount_percent": 71,
         "price": 4.25,
+        "appearances": 2
+    },
+    {
+        "title": "Al Schneider Cups & Balls by L&L Publishing",
+        "discount_percent": 45,
+        "price": 16.45,
+        "appearances": 1
+    },
+    {
+        "title": "Contact Juggling Ball (Acrylic, CLEAR, 76mm)",
+        "discount_percent": 30,
+        "price": 15.39,
+        "appearances": 1
+    },
+    {
+        "title": "Coincidencia by Jim Krenz",
+        "discount_percent": 5,
+        "price": 28.5,
+        "appearances": 1
+    },
+    {
+        "title": "A Taste of Chaos by Loki Kross",
+        "discount_percent": 3,
+        "price": 33.84,
+        "appearances": 1
+    },
+    {
+        "title": "Spell-O-Matic Blue (Gimmicks and Online Instructions) by Big Blind Media",
+        "discount_percent": 3,
+        "price": 24.16,
+        "appearances": 1
+    },
+    {
+        "title": "Haunted Key Deluxe (Gimmicks and Online Instruction) by Murphy's Magic",
+        "discount_percent": 3,
+        "price": 14.45,
+        "appearances": 1
+    },
+    {
+        "title": "PSI POWER (Gimmicks and Online Instructions) by Secret Factory",
+        "discount_percent": 5,
+        "price": 94.94,
+        "appearances": 1
+    },
+    {
+        "title": "Split Focus by Greg Wilson (Eisenhower)",
+        "discount_percent": 4,
+        "price": 190.01,
+        "appearances": 1
+    },
+    {
+        "title": "The Double Lift Project by Big Blind Media - DVD",
+        "discount_percent": 8,
+        "price": 32.1,
+        "appearances": 1
+    },
+    {
+        "title": "Cortana by Felix Bodden - DVD",
+        "discount_percent": 6,
+        "price": 23.27,
+        "appearances": 1
+    },
+    {
+        "title": "An Extension of Me (DVD Set with Gimmick Coin Bonus) by Eric Jones - DVD",
+        "discount_percent": 8,
+        "price": 82.45,
+        "appearances": 1
+    },
+    {
+        "title": "Green Lite by Lennart Green (DVD)",
+        "discount_percent": 11,
+        "price": 30.89,
+        "appearances": 1
+    },
+    {
+        "title": "Balloon School with Joe Montella (DVD)",
+        "discount_percent": 93,
+        "price": 3.33,
+        "appearances": 2
+    },
+    {
+        "title": "Card Stunts with Gregory Wilson (DVD)",
+        "discount_percent": 4,
+        "price": 28.7,
         "appearances": 2
     }
 ]
