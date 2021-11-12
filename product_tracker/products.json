@@ -640,11 +640,6 @@
         "price": 22.48
     },
     {
-        "title": "Angle of Attack by Jeff Sheridan (DVD)",
-        "discount_percent": 40,
-        "price": 17.95
-    },
-    {
         "title": "Generation Extreme with Brian Tudor (DVD)",
         "discount_percent": 8,
         "price": 45.8
@@ -898,12 +893,6 @@
         "appearances": 1
     },
     {
-        "title": "Balloon School with Joe Montella (DVD)",
-        "discount_percent": 93,
-        "price": 3.33,
-        "appearances": 2
-    },
-    {
         "title": "Card Stunts with Gregory Wilson (DVD)",
         "discount_percent": 4,
         "price": 28.7,
@@ -1112,5 +1101,23 @@
         "discount_percent": 23,
         "price": 29.7,
         "appearances": 1
+    },
+    {
+        "title": "Angle of Attack by Jeff Sheridan (DVD)",
+        "discount_percent": 64.0,
+        "price": 3.45,
+        "appearances": 2
+    },
+    {
+        "title": "Any Card At Any Birthday by Boris Wild (DVD)",
+        "discount_percent": 5,
+        "price": 28.45,
+        "appearances": 1
+    },
+    {
+        "title": "Balloon School with Joe Montella (DVD)",
+        "discount_percent": 34.666666666666664,
+        "price": 14.713333333333333,
+        "appearances": 3
     }
 ]

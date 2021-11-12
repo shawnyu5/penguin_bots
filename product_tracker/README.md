@@ -15,3 +15,14 @@ was last ran.
 
 `def to_file()` - loads all products from file, and parse the array to see if
 current product exists
+
+# Testing
+
+We should run the script once on a known product.
+
+Check if `current_product.json` contains the correct product
+
+Then run the script on a different product
+
+The previous product should be saved to `products.json`. `current_product.json`
+should also change to reflect current product.
