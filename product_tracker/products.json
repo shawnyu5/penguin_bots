@@ -685,31 +685,6 @@
         "price": 57.0
     },
     {
-        "title": "Mint Box by Daniel Garcia",
-        "discount_percent": 6,
-        "price": 56.0
-    },
-    {
-        "title": "Money Morph by Kevin King (DVD)",
-        "discount_percent": 10,
-        "price": 26.95
-    },
-    {
-        "title": "Money Shot by Mickael Chatelain (Download + Gimmick)",
-        "discount_percent": 10,
-        "price": 22.43
-    },
-    {
-        "title": "Name and Place by Bob Cassidy (DVD)",
-        "discount_percent": 6,
-        "price": 18.63
-    },
-    {
-        "title": "No Choice Wallet by Tony Miller and Mark Mason",
-        "discount_percent": 10,
-        "price": 53.95
-    },
-    {
         "title": "Note by Matt Sconce (DVD + Gimmick)",
         "discount_percent": 5,
         "price": 28.45
@@ -1055,9 +1030,87 @@
         "appearances": 2
     },
     {
-        "title": "Meridian Technique (2 DVD Set) by Mark Elsdon",
-        "discount_percent": 4,
-        "price": 43.12,
+        "title": "Mint Box by Daniel Garcia",
+        "discount_percent": 3,
+        "price": 58.0,
         "appearances": 2
+    },
+    {
+        "title": "Money Morph by Kevin King (DVD)",
+        "discount_percent": 5,
+        "price": 28.45,
+        "appearances": 2
+    },
+    {
+        "title": "Money Shot by Mickael Chatelain (Download + Gimmick)",
+        "discount_percent": 10,
+        "price": 22.43,
+        "appearances": 2
+    },
+    {
+        "title": "Name and Place by Bob Cassidy (DVD)",
+        "discount_percent": 4,
+        "price": 18.96,
+        "appearances": 2
+    },
+    {
+        "title": "No Choice Wallet by Tony Miller and Mark Mason",
+        "discount_percent": 6,
+        "price": 55.95,
+        "appearances": 2
+    },
+    {
+        "title": "Confetti Shooter by Vernet Magic",
+        "discount_percent": 28,
+        "price": 17.91,
+        "appearances": 1
+    },
+    {
+        "title": "Just Imagine (With DVD) by Jay Sankey",
+        "discount_percent": 8,
+        "price": 18.35,
+        "appearances": 1
+    },
+    {
+        "title": "Ghost Flight (Gimmicks and Online Instructions) by Peter Duffie and Kaymar Magic",
+        "discount_percent": 8,
+        "price": 18.35,
+        "appearances": 1
+    },
+    {
+        "title": "Card Production Gimmick Blue by Sorcier Magic",
+        "discount_percent": 10,
+        "price": 13.5,
+        "appearances": 1
+    },
+    {
+        "title": "Incredible Self-Working Card Tricks Volume 5 by Michael Maxwell",
+        "discount_percent": 26,
+        "price": 25.79,
+        "appearances": 1
+    },
+    {
+        "title": "Mirage Billiard Balls by JL (RED, single ball only)",
+        "discount_percent": 3,
+        "price": 24.16,
+        "appearances": 1
+    },
+    {
+        "title": "Meridian Technique (2 DVD Set) by Mark Elsdon",
+        "discount_percent": 6,
+        "price": 14.0,
+        "appearances": 3
+    },
+    {
+        "title": "Mirage (Gimmicks and Online Instructions) by JB Dumas and David Stone",
+        "discount_percent": 8,
+        "price": 32.05,
+        "appearances": 1
+    },
+    {
+        "title": "Monkey Fist Balls (4 pack)",
+        "discount_percent": 23,
+        "price": 29.7,
+        "appearances": 1
     }
 ]

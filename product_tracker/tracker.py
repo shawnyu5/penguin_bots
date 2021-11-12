@@ -61,6 +61,9 @@ def to_file():
                 current_product["appearances"] = removed_product["appearances"] + 1
                 current_product["price"] =  current_product["price"] / current_product["appearances"]
 
+            # calculate average percentage
+            current_product["discount_percent"] = (current_product["discount_percent"] + removed_product["discount_percent"]) / 2
+
         product_arr.append(current_product)
 
         print("product saved:", current_product)
