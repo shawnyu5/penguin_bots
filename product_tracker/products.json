@@ -550,16 +550,6 @@
         "price": 17.97
     },
     {
-        "title": "In the Beginning There Were Coins Starring Jay Noblezada (DVD)",
-        "discount_percent": 10,
-        "price": 26.95
-    },
-    {
-        "title": "In The Trenches with Paul Green (DVD)",
-        "discount_percent": 5,
-        "price": 28.5
-    },
-    {
         "title": "Level One by Christian Grace (Download + Gimmicks)",
         "discount_percent": 55,
         "price": 13.5
@@ -1119,5 +1109,23 @@
         "discount_percent": 34.666666666666664,
         "price": 14.713333333333333,
         "appearances": 3
+    },
+    {
+        "title": "CIA (Gimmicks and DVD) by Magick Balay & The Blue Crown",
+        "discount_percent": 5,
+        "price": 23.69,
+        "appearances": 1
+    },
+    {
+        "title": "In the Beginning There Were Coins Starring Jay Noblezada (DVD)",
+        "discount_percent": 21.5,
+        "price": 19.95,
+        "appearances": 2
+    },
+    {
+        "title": "In The Trenches with Paul Green (DVD)",
+        "discount_percent": 36.0,
+        "price": 20.5,
+        "appearances": 1
     }
 ]

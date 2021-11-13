@@ -1,10 +1,15 @@
+from bs4 import BeautifulSoup
+import requests
 from dotenv import load_dotenv
-import os
+import json
 
-load_dotenv();
+url = "https://www.penguinmagic.com/p/266"
+print(url)
+#  return
 
-name = os.getenv("name")
-name = "adam"
+html_page = requests.get(url).text
+soup = BeautifulSoup(html_page, "html.parser")
 
-print(name)
+title = soup.find("div", { "id": "product_main_details" }).text
+print(title)
 

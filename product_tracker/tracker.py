@@ -64,7 +64,7 @@ def to_file(current_product):
 
             # not all products saved has a appearance attribute
             if "appearances" not in removed_product:
-                current_product["appearances"] = 2
+                current_product["appearances"] = 1
             else:
                 current_product["appearances"] = removed_product["appearances"] + 1
                 current_product["price"] =  current_product["price"] / current_product["appearances"]
@@ -84,6 +84,8 @@ def to_file(current_product):
 def main():
     load_dotenv()
     url = str(os.getenv("url"))
+    print(url)
+    #  return
 
     html_page = requests.get(url).text
     soup = BeautifulSoup(html_page, "html.parser")
