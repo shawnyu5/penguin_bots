@@ -550,11 +550,6 @@
         "price": 17.97
     },
     {
-        "title": "Level One by Christian Grace (Download + Gimmicks)",
-        "discount_percent": 55,
-        "price": 13.5
-    },
-    {
         "title": "Retina by Looch (DVD)",
         "discount_percent": 55,
         "price": 13.45
@@ -653,21 +648,6 @@
         "title": "Hands Off (Any card at any number) by Patrick Redford (DVD)",
         "discount_percent": 5,
         "price": 28.45
-    },
-    {
-        "title": "Liquid Metal Starring Morgan Strebler (DVD)",
-        "discount_percent": 86,
-        "price": 3.95
-    },
-    {
-        "title": "Mind Stunts 1&2 by Patrik Kuffs (2 DVD Set)",
-        "discount_percent": 13,
-        "price": 51.25
-    },
-    {
-        "title": "Minotaur The Final Issue by Dan Harlan (2 DVD Set)",
-        "discount_percent": 5,
-        "price": 57.0
     },
     {
         "title": "Note by Matt Sconce (DVD + Gimmick)",
@@ -1003,42 +983,6 @@
         "appearances": 2
     },
     {
-        "title": "Making Mind Reading Look Real by Luke Jermay (DVD)",
-        "discount_percent": 57,
-        "price": 8.39,
-        "appearances": 2
-    },
-    {
-        "title": "Mint Box by Daniel Garcia",
-        "discount_percent": 3,
-        "price": 58.0,
-        "appearances": 2
-    },
-    {
-        "title": "Money Morph by Kevin King (DVD)",
-        "discount_percent": 5,
-        "price": 28.45,
-        "appearances": 2
-    },
-    {
-        "title": "Money Shot by Mickael Chatelain (Download + Gimmick)",
-        "discount_percent": 10,
-        "price": 22.43,
-        "appearances": 2
-    },
-    {
-        "title": "Name and Place by Bob Cassidy (DVD)",
-        "discount_percent": 4,
-        "price": 18.96,
-        "appearances": 2
-    },
-    {
-        "title": "No Choice Wallet by Tony Miller and Mark Mason",
-        "discount_percent": 6,
-        "price": 55.95,
-        "appearances": 2
-    },
-    {
         "title": "Confetti Shooter by Vernet Magic",
         "discount_percent": 28,
         "price": 17.91,
@@ -1073,12 +1017,6 @@
         "discount_percent": 3,
         "price": 24.16,
         "appearances": 1
-    },
-    {
-        "title": "Meridian Technique (2 DVD Set) by Mark Elsdon",
-        "discount_percent": 6,
-        "price": 14.0,
-        "appearances": 3
     },
     {
         "title": "Mirage (Gimmicks and Online Instructions) by JB Dumas and David Stone",
@@ -1127,5 +1065,71 @@
         "discount_percent": 36.0,
         "price": 20.5,
         "appearances": 1
+    },
+    {
+        "title": "Level One by Christian Grace (Download + Gimmicks)",
+        "discount_percent": 73.0,
+        "price": 24.5,
+        "appearances": 1
+    },
+    {
+        "title": "Liquid Metal Starring Morgan Strebler (DVD)",
+        "discount_percent": 96.0,
+        "price": 26.95,
+        "appearances": 1
+    },
+    {
+        "title": "Making Mind Reading Look Real by Luke Jermay (DVD)",
+        "discount_percent": 21.666666666666668,
+        "price": 6.1000000000000005,
+        "appearances": 3
+    },
+    {
+        "title": "Meridian Technique (2 DVD Set) by Mark Elsdon",
+        "discount_percent": 4.0,
+        "price": 10.125,
+        "appearances": 4
+    },
+    {
+        "title": "Mind Stunts 1&2 by Patrik Kuffs (2 DVD Set)",
+        "discount_percent": 22.0,
+        "price": 53.21,
+        "appearances": 1
+    },
+    {
+        "title": "Minotaur The Final Issue by Dan Harlan (2 DVD Set)",
+        "discount_percent": 10.0,
+        "price": 57.0,
+        "appearances": 1
+    },
+    {
+        "title": "Mint Box by Daniel Garcia",
+        "discount_percent": 2.6666666666666665,
+        "price": 19.0,
+        "appearances": 3
+    },
+    {
+        "title": "Money Morph by Kevin King (DVD)",
+        "discount_percent": 3.3333333333333335,
+        "price": 9.483333333333333,
+        "appearances": 3
+    },
+    {
+        "title": "Money Shot by Mickael Chatelain (Download + Gimmick)",
+        "discount_percent": 7.0,
+        "price": 7.336666666666667,
+        "appearances": 3
+    },
+    {
+        "title": "Name and Place by Bob Cassidy (DVD)",
+        "discount_percent": 2.3333333333333335,
+        "price": 6.43,
+        "appearances": 3
+    },
+    {
+        "title": "No Choice Wallet by Tony Miller and Mark Mason",
+        "discount_percent": 3.0,
+        "price": 19.316666666666666,
+        "appearances": 3
     }
 ]
