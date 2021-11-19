@@ -425,21 +425,6 @@
         "price": 15.23
     },
     {
-        "title": "Into the Abyss by Oz Pearlman (DVD)",
-        "discount_percent": 13,
-        "price": 30.31
-    },
-    {
-        "title": "SANKEY MAGIC CLASSICS SERIES: Jay Sankey Live (DVD)",
-        "discount_percent": 63,
-        "price": 11.0
-    },
-    {
-        "title": "Sankey Very Much by Jay Sankey (DVD)",
-        "discount_percent": 76,
-        "price": 6.95
-    },
-    {
         "title": "SKY FALL RED by Sebastien Calbry",
         "discount_percent": 10,
         "price": 22.48
@@ -485,11 +470,6 @@
         "price": 19.29
     },
     {
-        "title": "Outside the Box Starring Nate Kranzo (DVD)",
-        "discount_percent": 3,
-        "price": 28.95
-    },
-    {
         "title": "Pen Pal by Alexis de la Fuente & Mark Mason (DVD + Gimmick)",
         "discount_percent": 3,
         "price": 19.29
@@ -530,59 +510,9 @@
         "price": 229.15
     },
     {
-        "title": "STRIPPER Starring Oz Pearlman (DVD + Deck)",
-        "discount_percent": 4,
-        "price": 18.96
-    },
-    {
-        "title": "TECHNIQUE by Matthew Mello (DVD)",
-        "discount_percent": 23,
-        "price": 19.11
-    },
-    {
         "title": "Airtight by Jay Sankey presented by Matt Johnson (BALLOONS INCLUDED)",
         "discount_percent": 10,
         "price": 17.97
-    },
-    {
-        "title": "Hello My Name Is by Cameron Francis (DVD + Gimmicks)",
-        "discount_percent": 9,
-        "price": 17.97
-    },
-    {
-        "title": "Retina by Looch (DVD)",
-        "discount_percent": 55,
-        "price": 13.45
-    },
-    {
-        "title": "Salt & Silver by Giovanni Livera",
-        "discount_percent": 8,
-        "price": 45.85
-    },
-    {
-        "title": "Seance with Dixie Dooley (DVD)",
-        "discount_percent": 6,
-        "price": 27.95
-    },
-    {
-        "title": "Sorted Affair 2016 by Sean Bogunia presented by Matt Johnson (CARDS INCLUDED)",
-        "discount_percent": 3,
-        "price": 24.11
-    },
-    {
-        "title": "The Aretalogy of Vanni Bossi by Stephen Minch (FIRST EDITION)",
-        "discount_percent": 8,
-        "price": 59.6
-    },
-    {
-        "title": "The Bill Test by Erik Casey (DVD + Gimmicks)",
-        "discount_percent": 23,
-        "price": 19.11
-    },
-    {
-        "title": "THE CLASSIC FORCE with Paul Green (DVD)",
-        "discount_percent": 3,
-        "price": 28.95
     },
     {
         "title": "Mental Dice by Tony Anverdi",
@@ -625,19 +555,9 @@
         "price": 22.48
     },
     {
-        "title": "Generation Extreme with Brian Tudor (DVD)",
-        "discount_percent": 8,
-        "price": 45.8
-    },
-    {
         "title": "Gidrah by Dan Huffman presented by Patrick Redford (DVD)",
         "discount_percent": 52,
         "price": 9.39
-    },
-    {
-        "title": "Gregory Wilson's Ring Leader (DVD)",
-        "discount_percent": 6,
-        "price": 46.63
     },
     {
         "title": "Growing Ring by Dan Hauss (DVD + Gimmicks)",
@@ -653,11 +573,6 @@
         "title": "Note by Matt Sconce (DVD + Gimmick)",
         "discount_percent": 5,
         "price": 28.45
-    },
-    {
-        "title": "On the Spot with Gregory Wilson (2 Volumes on 1 DVD!)",
-        "discount_percent": 6,
-        "price": 46.63
     },
     {
         "title": "Penguin LIVE: SUPER SAMPLER (DVD)",
@@ -689,57 +604,9 @@
         "appearances": 1
     },
     {
-        "title": "Sleeping Queen by Dan Hauss (DVD)",
-        "discount_percent": 9,
-        "price": 22.53,
-        "appearances": 1
-    },
-    {
-        "title": "Solitary by Cameron Francis",
-        "discount_percent": 3,
-        "price": 19.29,
-        "appearances": 1
-    },
-    {
         "title": "Phoenix by Peter Samelson",
         "discount_percent": 5,
         "price": 56.95,
-        "appearances": 1
-    },
-    {
-        "title": "Royalistic by Juan Tamariz (Download + Cards)",
-        "discount_percent": 30,
-        "price": 17.44,
-        "appearances": 1
-    },
-    {
-        "title": "Speakeasy by Dan Harlan (DVD)",
-        "discount_percent": 77,
-        "price": 22.76,
-        "appearances": 1
-    },
-    {
-        "title": "The Greatest Beginner Magic DVD Ever featuring Oz Pearlman and Jessie Geneva (DVD)",
-        "discount_percent": 35,
-        "price": 19.45,
-        "appearances": 1
-    },
-    {
-        "title": "The Hunter Shuffle (DVD)",
-        "discount_percent": 33,
-        "price": 19.95,
-        "appearances": 1
-    },
-    {
-        "title": "The Mind Reading Coloring Book",
-        "discount_percent": 19,
-        "price": 20.15,
-        "appearances": 1
-    },
-    {
-        "title": "The Monte by Alan Rorrison (CARDS INCLUDED)",
-        "discount_percent": 6,
-        "price": 18.63,
         "appearances": 1
     },
     {
@@ -863,39 +730,15 @@
         "appearances": 1
     },
     {
-        "title": "Card Stunts with Gregory Wilson (DVD)",
-        "discount_percent": 4,
-        "price": 28.7,
-        "appearances": 2
-    },
-    {
         "title": "MIND NET BAG (Gimmicks and Online Instructions/Routines) by Max Vellucci and Alan Wong",
         "discount_percent": 5,
         "price": 57.0,
         "appearances": 1
     },
     {
-        "title": "Cinch by Shaun Robison (DVD + Gimmick)",
-        "discount_percent": 5,
-        "price": 23.69,
-        "appearances": 2
-    },
-    {
         "title": "Club Sandwich by Andrew Normansell and JB Magic",
         "discount_percent": 8,
         "price": 18.35,
-        "appearances": 2
-    },
-    {
-        "title": "Code Red by Cody Nottingham (DVD & Download)",
-        "discount_percent": 10,
-        "price": 22.43,
-        "appearances": 2
-    },
-    {
-        "title": "Compress by SansMinds Creative Lab",
-        "discount_percent": 11,
-        "price": 17.64,
         "appearances": 2
     },
     {
@@ -909,60 +752,6 @@
         "discount_percent": 8,
         "price": 27.45,
         "appearances": 1
-    },
-    {
-        "title": "Compressed Deck by Luke Dancy",
-        "discount_percent": 26,
-        "price": 14.61,
-        "appearances": 1
-    },
-    {
-        "title": "Cookie Bite by Eric Ross presented by Rick Lax",
-        "discount_percent": 21,
-        "price": 23.45,
-        "appearances": 2
-    },
-    {
-        "title": "Cutting Edge Cards and Coins with Jason Dean and John Born (3 DVDs)",
-        "discount_percent": 3,
-        "price": 57.95,
-        "appearances": 2
-    },
-    {
-        "title": "Darwin's Encyclopedia of Thumb Tip Magic (3 DVDs)",
-        "discount_percent": 3,
-        "price": 57.95,
-        "appearances": 2
-    },
-    {
-        "title": "Dragon Thread by Mike Wong (DVD)",
-        "discount_percent": 5,
-        "price": 28.45,
-        "appearances": 2
-    },
-    {
-        "title": "Extra Credit (Props and DVD) by Joshua Jay",
-        "discount_percent": 30,
-        "price": 17.4,
-        "appearances": 2
-    },
-    {
-        "title": "Fists of Fury Starring Curtis Kam (DVD)",
-        "discount_percent": 3,
-        "price": 28.95,
-        "appearances": 2
-    },
-    {
-        "title": "Flashback by Dani DaOrtiz (DVD and Gimmick)",
-        "discount_percent": 6,
-        "price": 23.27,
-        "appearances": 1
-    },
-    {
-        "title": "Flip Cup by Kyle Marlett (DVD + Gimmick)",
-        "discount_percent": 3,
-        "price": 19.29,
-        "appearances": 2
     },
     {
         "title": "Freeform Mentalism by Peter Turner (2 DVD Set)",
@@ -1031,72 +820,6 @@
         "appearances": 1
     },
     {
-        "title": "Angle of Attack by Jeff Sheridan (DVD)",
-        "discount_percent": 64.0,
-        "price": 3.45,
-        "appearances": 2
-    },
-    {
-        "title": "Any Card At Any Birthday by Boris Wild (DVD)",
-        "discount_percent": 5,
-        "price": 28.45,
-        "appearances": 1
-    },
-    {
-        "title": "Balloon School with Joe Montella (DVD)",
-        "discount_percent": 34.666666666666664,
-        "price": 14.713333333333333,
-        "appearances": 3
-    },
-    {
-        "title": "CIA (Gimmicks and DVD) by Magick Balay & The Blue Crown",
-        "discount_percent": 5,
-        "price": 23.69,
-        "appearances": 1
-    },
-    {
-        "title": "In the Beginning There Were Coins Starring Jay Noblezada (DVD)",
-        "discount_percent": 21.5,
-        "price": 19.95,
-        "appearances": 2
-    },
-    {
-        "title": "In The Trenches with Paul Green (DVD)",
-        "discount_percent": 36.0,
-        "price": 20.5,
-        "appearances": 1
-    },
-    {
-        "title": "Level One by Christian Grace (Download + Gimmicks)",
-        "discount_percent": 73.0,
-        "price": 24.5,
-        "appearances": 1
-    },
-    {
-        "title": "Liquid Metal Starring Morgan Strebler (DVD)",
-        "discount_percent": 96.0,
-        "price": 26.95,
-        "appearances": 1
-    },
-    {
-        "title": "Making Mind Reading Look Real by Luke Jermay (DVD)",
-        "discount_percent": 21.666666666666668,
-        "price": 6.1000000000000005,
-        "appearances": 3
-    },
-    {
-        "title": "Meridian Technique (2 DVD Set) by Mark Elsdon",
-        "discount_percent": 4.0,
-        "price": 10.125,
-        "appearances": 4
-    },
-    {
-        "title": "Mind Stunts 1&2 by Patrik Kuffs (2 DVD Set)",
-        "discount_percent": 22.0,
-        "price": 53.21,
-        "appearances": 1
-    },
-    {
         "title": "Minotaur The Final Issue by Dan Harlan (2 DVD Set)",
         "discount_percent": 10.0,
         "price": 57.0,
@@ -1115,21 +838,333 @@
         "appearances": 3
     },
     {
-        "title": "Money Shot by Mickael Chatelain (Download + Gimmick)",
-        "discount_percent": 7.0,
-        "price": 7.336666666666667,
+        "title": "Angle of Attack by Jeff Sheridan (DVD)",
+        "discount_percent": 49.666666666666664,
+        "price": 1.4833333333333334,
         "appearances": 3
     },
     {
-        "title": "Name and Place by Bob Cassidy (DVD)",
-        "discount_percent": 2.3333333333333335,
+        "title": "Any Card At Any Birthday by Boris Wild (DVD)",
+        "discount_percent": 5.0,
+        "price": 14.225,
+        "appearances": 2
+    },
+    {
+        "title": "Balloon School with Joe Montella (DVD)",
+        "discount_percent": 9.916666666666666,
+        "price": 11.865,
+        "appearances": 4
+    },
+    {
+        "title": "Code Red by Cody Nottingham (DVD & Download)",
+        "discount_percent": 6.666666666666667,
+        "price": 7.476666666666667,
+        "appearances": 3
+    },
+    {
+        "title": "Compress by SansMinds Creative Lab",
+        "discount_percent": 5.666666666666667,
+        "price": 6.21,
+        "appearances": 3
+    },
+    {
+        "title": "Compressed Deck by Luke Dancy",
+        "discount_percent": 24.5,
+        "price": 7.635,
+        "appearances": 2
+    },
+    {
+        "title": "Cutting Edge Cards and Coins with Jason Dean and John Born (3 DVDs)",
+        "discount_percent": 3.6666666666666665,
+        "price": 18.316666666666666,
+        "appearances": 3
+    },
+    {
+        "title": "Darwin's Encyclopedia of Thumb Tip Magic (3 DVDs)",
+        "discount_percent": 2.6666666666666665,
+        "price": 18.983333333333334,
+        "appearances": 3
+    },
+    {
+        "title": "Dragon Thread by Mike Wong (DVD)",
+        "discount_percent": 3.3333333333333335,
+        "price": 9.483333333333333,
+        "appearances": 3
+    },
+    {
+        "title": "Extra Credit (Props and DVD) by Joshua Jay",
+        "discount_percent": 20.0,
+        "price": 5.8,
+        "appearances": 3
+    },
+    {
+        "title": "Fists of Fury Starring Curtis Kam (DVD)",
+        "discount_percent": 2.6666666666666665,
+        "price": 9.483333333333333,
+        "appearances": 3
+    },
+    {
+        "title": "Flashback by Dani DaOrtiz (DVD and Gimmick)",
+        "discount_percent": 29.0,
+        "price": 5.965,
+        "appearances": 2
+    },
+    {
+        "title": "Flip Cup by Kyle Marlett (DVD + Gimmick)",
+        "discount_percent": 2.0,
         "price": 6.43,
         "appearances": 3
     },
     {
-        "title": "No Choice Wallet by Tony Miller and Mark Mason",
-        "discount_percent": 3.0,
-        "price": 19.316666666666666,
+        "title": "Hello My Name Is by Cameron Francis (DVD + Gimmicks)",
+        "discount_percent": 17.0,
+        "price": 18.3,
+        "appearances": 1
+    },
+    {
+        "title": "In the Beginning There Were Coins Starring Jay Noblezada (DVD)",
+        "discount_percent": 14.166666666666666,
+        "price": 7.816666666666666,
         "appearances": 3
+    },
+    {
+        "title": "Into the Abyss by Oz Pearlman (DVD)",
+        "discount_percent": 87.0,
+        "price": 8.85,
+        "appearances": 1
+    },
+    {
+        "title": "Liquid Metal Starring Morgan Strebler (DVD)",
+        "discount_percent": 52.0,
+        "price": 13.725,
+        "appearances": 2
+    },
+    {
+        "title": "Making Mind Reading Look Real by Luke Jermay (DVD)",
+        "discount_percent": 6.416666666666667,
+        "price": 4.74,
+        "appearances": 4
+    },
+    {
+        "title": "Meridian Technique (2 DVD Set) by Mark Elsdon",
+        "discount_percent": 2.8,
+        "price": 8.1,
+        "appearances": 5
+    },
+    {
+        "title": "Money Shot by Mickael Chatelain (Download + Gimmick)",
+        "discount_percent": 21.0,
+        "price": 1.4075,
+        "appearances": 4
+    },
+    {
+        "title": "Name and Place by Bob Cassidy (DVD)",
+        "discount_percent": 5.833333333333333,
+        "price": 3.915,
+        "appearances": 4
+    },
+    {
+        "title": "No Choice Wallet by Tony Miller and Mark Mason",
+        "discount_percent": 1.5,
+        "price": 14.4875,
+        "appearances": 4
+    },
+    {
+        "title": "On the Spot with Gregory Wilson (2 Volumes on 1 DVD!)",
+        "discount_percent": 12.0,
+        "price": 46.63,
+        "appearances": 1
+    },
+    {
+        "title": "Open by Marcus Eddie (DVD + Supplies)",
+        "discount_percent": 3,
+        "price": 19.29,
+        "appearances": 1
+    },
+    {
+        "title": "Outside the Box Starring Nate Kranzo (DVD)",
+        "discount_percent": 13.0,
+        "price": 26.95,
+        "appearances": 1
+    },
+    {
+        "title": "Retina by Looch (DVD)",
+        "discount_percent": 126.0,
+        "price": 8.7,
+        "appearances": 1
+    },
+    {
+        "title": "Royalistic by Juan Tamariz (Download + Cards)",
+        "discount_percent": 20.0,
+        "price": 11.24,
+        "appearances": 2
+    },
+    {
+        "title": "Salt & Silver by Giovanni Livera",
+        "discount_percent": 14.0,
+        "price": 46.68,
+        "appearances": 1
+    },
+    {
+        "title": "SANKEY MAGIC CLASSICS SERIES: Jay Sankey Live (DVD)",
+        "discount_percent": 89.0,
+        "price": 22.0,
+        "appearances": 1
+    },
+    {
+        "title": "Sankey Very Much by Jay Sankey (DVD)",
+        "discount_percent": 82.0,
+        "price": 27.95,
+        "appearances": 1
+    },
+    {
+        "title": "Seance with Dixie Dooley (DVD)",
+        "discount_percent": 9.0,
+        "price": 28.95,
+        "appearances": 1
+    },
+    {
+        "title": "Sleeping Queen by Dan Hauss (DVD)",
+        "discount_percent": 9.0,
+        "price": 11.265,
+        "appearances": 2
+    },
+    {
+        "title": "Solitary by Cameron Francis",
+        "discount_percent": 5.5,
+        "price": 9.15,
+        "appearances": 2
+    },
+    {
+        "title": "Sorted Affair 2016 by Sean Bogunia presented by Matt Johnson (CARDS INCLUDED)",
+        "discount_percent": 8.0,
+        "price": 23.69,
+        "appearances": 1
+    },
+    {
+        "title": "Speakeasy by Dan Harlan (DVD)",
+        "discount_percent": 41.0,
+        "price": 47.47,
+        "appearances": 2
+    },
+    {
+        "title": "STRIPPER Starring Oz Pearlman (DVD + Deck)",
+        "discount_percent": 12.0,
+        "price": 18.3,
+        "appearances": 1
+    },
+    {
+        "title": "TECHNIQUE by Matthew Mello (DVD)",
+        "discount_percent": 44.0,
+        "price": 19.53,
+        "appearances": 1
+    },
+    {
+        "title": "The Aretalogy of Vanni Bossi by Stephen Minch (FIRST EDITION)",
+        "discount_percent": 11.0,
+        "price": 62.84,
+        "appearances": 1
+    },
+    {
+        "title": "The Bill Test by Erik Casey (DVD + Gimmicks)",
+        "discount_percent": 53.0,
+        "price": 17.43,
+        "appearances": 1
+    },
+    {
+        "title": "THE CLASSIC FORCE with Paul Green (DVD)",
+        "discount_percent": 11.0,
+        "price": 27.45,
+        "appearances": 1
+    },
+    {
+        "title": "The Drop'N Project by Michael Eaton (DVD)",
+        "discount_percent": 10,
+        "price": 27.0,
+        "appearances": 1
+    },
+    {
+        "title": "The Greatest Beginner Magic DVD Ever featuring Oz Pearlman and Jessie Geneva (DVD)",
+        "discount_percent": 20.5,
+        "price": 13.975,
+        "appearances": 2
+    },
+    {
+        "title": "The Hunter Shuffle (DVD)",
+        "discount_percent": 36.5,
+        "price": 8.975,
+        "appearances": 2
+    },
+    {
+        "title": "The Mind Reading Coloring Book",
+        "discount_percent": 19.5,
+        "price": 9.865,
+        "appearances": 2
+    },
+    {
+        "title": "The Monte by Alan Rorrison (CARDS INCLUDED)",
+        "discount_percent": 5.5,
+        "price": 9.48,
+        "appearances": 2
+    },
+    {
+        "title": "Card Stunts with Gregory Wilson (DVD)",
+        "discount_percent": 2.5,
+        "price": 7.05,
+        "appearances": 4
+    },
+    {
+        "title": "CIA (Gimmicks and DVD) by Magick Balay & The Blue Crown",
+        "discount_percent": 4.166666666666667,
+        "price": 7.896666666666667,
+        "appearances": 3
+    },
+    {
+        "title": "Cinch by Shaun Robison (DVD + Gimmick)",
+        "discount_percent": 4.0,
+        "price": 5.8175,
+        "appearances": 4
+    },
+    {
+        "title": "Cookie Bite by Eric Ross presented by Rick Lax",
+        "discount_percent": 17.75,
+        "price": 3.1125,
+        "appearances": 4
+    },
+    {
+        "title": "Generation Extreme with Brian Tudor (DVD)",
+        "discount_percent": 36.0,
+        "price": 35.84,
+        "appearances": 1
+    },
+    {
+        "title": "Gregory Wilson's Ring Leader (DVD)",
+        "discount_percent": 12.0,
+        "price": 46.63,
+        "appearances": 1
+    },
+    {
+        "title": "In The Trenches with Paul Green (DVD)",
+        "discount_percent": 40.5,
+        "price": 8.25,
+        "appearances": 2
+    },
+    {
+        "title": "Level One by Christian Grace (Download + Gimmicks)",
+        "discount_percent": 14.833333333333334,
+        "price": 9.5,
+        "appearances": 3
+    },
+    {
+        "title": "Mind Stunts 1&2 by Patrik Kuffs (2 DVD Set)",
+        "discount_percent": 14.333333333333334,
+        "price": 14.143333333333333,
+        "appearances": 3
+    },
+    {
+        "title": "ROLLING STONES by John Kennedy Magic",
+        "discount_percent": 8,
+        "price": 54.95,
+        "appearances": 1
     }
 ]
