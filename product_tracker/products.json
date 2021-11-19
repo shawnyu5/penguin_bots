@@ -559,16 +559,9 @@
         "discount_percent": 52,
         "price": 9.39
     },
-    {
-<<<<<<< HEAD
-        "title": "Gregory Wilson's Ring Leader (DVD)",
-        "discount_percent": 6,
-        "price": 46.63
-=======
         "title": "Growing Ring by Dan Hauss (DVD + Gimmicks)",
         "discount_percent": 8,
         "price": 32.05
->>>>>>> update
     },
     {
         "title": "Hands Off (Any card at any number) by Patrick Redford (DVD)",
@@ -1168,21 +1161,14 @@
         "appearances": 3
     },
     {
-<<<<<<< HEAD
         "title": "No Choice Wallet by Tony Miller and Mark Mason",
         "discount_percent": 3.0,
         "price": 19.316666666666666,
         "appearances": 3
     },
-    {
-        "title": "Growing Ring by Dan Hauss (DVD + Gimmicks)",
-        "discount_percent": 21.0,
-        "price": 30.31,
-=======
         "title": "ROLLING STONES by John Kennedy Magic",
         "discount_percent": 8,
         "price": 54.95,
->>>>>>> update
         "appearances": 1
     }
 ]

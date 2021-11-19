@@ -15,8 +15,7 @@ def to_object(title:str, discount:str, price:str):
     return {
             "title": title,
             "discount_percent": discount,
-            "price": price,
-            "appearances": 1 # going to assume first appearance until other wise
+            "price": price
             }
 
 # check if current product is different from the product in current_product.json
