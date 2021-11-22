@@ -13,5 +13,310 @@
         "title": "Vanishing Ring Black (Gimmick and Online Instructions) by SansMinds",
         "discount_percent": 44,
         "price": 77.04
+    },
+    {
+        "title": "No Choice Wallet by Tony Miller and Mark Mason",
+        "discount_percent": 15,
+        "price": 50.95
+    },
+    {
+        "title": "CHANGLING CARD RED by Marco Markiewicz",
+        "discount_percent": 6,
+        "price": 32.68
+    },
+    {
+        "title": "Influencer (English) by Astor",
+        "discount_percent": 5,
+        "price": 142.5
+    },
+    {
+        "title": "The Neural Miracle (Gimmicks and Online Instructions) by Phill Smith",
+        "discount_percent": 8,
+        "price": 37.8
+    },
+    {
+        "title": "Card Into Frame by 7 MAGIC",
+        "discount_percent": 8,
+        "price": 36.6
+    },
+    {
+        "title": "A BAR KADABRA by Quique Marduk",
+        "discount_percent": 23,
+        "price": 26.84
+    },
+    {
+        "title": "The Oracle System (Gimmicks and Online Instructions) by Ben Seidman",
+        "discount_percent": 3,
+        "price": 38.66
+    },
+    {
+        "title": "Deja Vu Deck - David Regal",
+        "discount_percent": 31,
+        "price": 13.71
+    },
+    {
+        "title": "Genesis System Project (Gimmick and Online Instructions) by Adam Wilber and Vulpine Creations",
+        "discount_percent": 5,
+        "price": 71.25
+    },
+    {
+        "title": "The Ultimate Vanishing Bandana",
+        "discount_percent": 31,
+        "price": 23.93
+    },
+    {
+        "title": "Quantum Angel by Paul Harris",
+        "discount_percent": 30,
+        "price": 24.36
+    },
+    {
+        "title": "Catch (Gimmicks and Online Instructions) by Vanishing Inc",
+        "discount_percent": 6,
+        "price": 23.31
+    },
+    {
+        "title": "Tango Silver Line Copper and Silver Walking Liberty/English Penny (w/DVD) (D0120) by Tango",
+        "discount_percent": 3,
+        "price": 77.34
+    },
+    {
+        "title": "Psypher PRO by Robert Smith (Download+ Gimmicks)",
+        "discount_percent": 10,
+        "price": 44.97
+    },
+    {
+        "title": "Pyrotechnic Pasteboards with Gregory Wilson (DVD)",
+        "discount_percent": 6,
+        "price": 27.95
+    },
+    {
+        "title": "Retina by Looch (DVD)",
+        "discount_percent": 3,
+        "price": 28.95
+    },
+    {
+        "title": "Royalistic by Juan Tamariz (Download + Cards)",
+        "discount_percent": 5,
+        "price": 23.74
+    },
+    {
+        "title": "Salt & Silver by Giovanni Livera",
+        "discount_percent": 9,
+        "price": 45.02
+    },
+    {
+        "title": "THE CLASSIC FORCE with Paul Green (DVD)",
+        "discount_percent": 35,
+        "price": 19.45
+    },
+    {
+        "title": "The Hunter Shuffle (DVD)",
+        "discount_percent": 46,
+        "price": 15.95
+    },
+    {
+        "title": "The Mind Reading Coloring Book",
+        "discount_percent": 19,
+        "price": 20.15
+    },
+    {
+        "title": "The Monte by Alan Rorrison (CARDS INCLUDED)",
+        "discount_percent": 6,
+        "price": 18.63
+    },
+    {
+        "title": "The Sheridan Course in Card Manipulation by Jeff Sheridan (3 DVD Set)",
+        "discount_percent": 6,
+        "price": 65.27
+    },
+    {
+        "title": "Transporter by Joshua Jay (DVD + BLUE GIMMICKS)",
+        "discount_percent": 28,
+        "price": 21.36
+    },
+    {
+        "title": "Unbroken by Cody Nottingham",
+        "discount_percent": 8,
+        "price": 36.6
+    },
+    {
+        "title": "What am I thinking? by Marc Spelmann (DVD)",
+        "discount_percent": 8,
+        "price": 27.45
+    },
+    {
+        "title": "APOLLO RED by Nicholas Lawrence & Worm",
+        "discount_percent": 8.0,
+        "price": 28.95,
+        "appearances": 1
+    },
+    {
+        "title": "Queen Bee Playing Cards",
+        "discount_percent": 9,
+        "price": 10.8
+    },
+    {
+        "title": "X Finger by Geoff Weber (DVD)",
+        "discount_percent": 31,
+        "price": 13.62
+    },
+    {
+        "title": "A Little R&B (Red & Blue) by Dan Harlan (DVD + 5 Gimmicks)",
+        "discount_percent": 5,
+        "price": 23.74
+    },
+    {
+        "title": "Nexus Wallet (Gimmick & Online Instructions) by Javier Fuenmayor",
+        "discount_percent": 4,
+        "price": 104.51
+    },
+    {
+        "title": "RIPPED TRAVEL (Red Gimmicks and Online Instruction) by Craziest",
+        "discount_percent": 3,
+        "price": 24.16
+    },
+    {
+        "title": "Carat X1 Version 2 (One Deck)",
+        "discount_percent": 6,
+        "price": 9.32
+    },
+    {
+        "title": "1 TO 6 SPOT CARD by Martin Lewis",
+        "discount_percent": 8,
+        "price": 87.1
+    },
+    {
+        "title": "Winner's Dice (Gimmicks and Online Instructions) by Secret Factory",
+        "discount_percent": 8,
+        "price": 36.6
+    },
+    {
+        "title": "Single Forcing Die (6) by Diamond Jim Tyler",
+        "discount_percent": 8,
+        "price": 9.1
+    },
+    {
+        "title": "Little Door by Roddy  McGhie (Download + Gimmicks)",
+        "discount_percent": 13,
+        "price": 34.59
+    },
+    {
+        "title": "Gregory Wilson's Ring Leader (DVD)",
+        "discount_percent": 29,
+        "price": 35.01
+    },
+    {
+        "title": "Hello My Name Is by Cameron Francis (DVD + Gimmicks)",
+        "discount_percent": 3,
+        "price": 19.29
+    },
+    {
+        "title": "In The Trenches with Paul Green (DVD)",
+        "discount_percent": 3,
+        "price": 29.0
+    },
+    {
+        "title": "Into the Abyss by Oz Pearlman (DVD)",
+        "discount_percent": 10,
+        "price": 31.47
+    },
+    {
+        "title": "Level One by Christian Grace (Download + Gimmicks)",
+        "discount_percent": 6,
+        "price": 28.0
+    },
+    {
+        "title": "Making Mind Reading Look Real by Luke Jermay (DVD)",
+        "discount_percent": 8,
+        "price": 18.3
+    },
+    {
+        "title": "Meridian Technique (2 DVD Set) by Mark Elsdon",
+        "discount_percent": 3,
+        "price": 43.5
+    },
+    {
+        "title": "Mind Stunts 1&2 by Patrik Kuffs (2 DVD Set)",
+        "discount_percent": 8,
+        "price": 54.19
+    },
+    {
+        "title": "Minotaur The Final Issue by Dan Harlan (2 DVD Set)",
+        "discount_percent": 13.0,
+        "price": 58.0,
+        "appearances": 1
+    },
+    {
+        "title": "Money Morph by Kevin King (DVD)",
+        "discount_percent": 14.0,
+        "price": 27.45,
+        "appearances": 1
+    },
+    {
+        "title": "Money Shot by Mickael Chatelain (Download + Gimmick)",
+        "discount_percent": 13.0,
+        "price": 22.85,
+        "appearances": 1
+    },
+    {
+        "title": "Name and Place by Bob Cassidy (DVD)",
+        "discount_percent": 8,
+        "price": 18.3
+    },
+    {
+        "title": "Cutting Edge Cards and Coins with Jason Dean and John Born (3 DVDs)",
+        "discount_percent": 13,
+        "price": 51.95
+    },
+    {
+        "title": "Darwin's Encyclopedia of Thumb Tip Magic (3 DVDs)",
+        "discount_percent": 3,
+        "price": 57.95
+    },
+    {
+        "title": "Dragon Thread by Mike Wong (DVD)",
+        "discount_percent": 71,
+        "price": 8.45
+    },
+    {
+        "title": "Extra Credit (Props and DVD) by Joshua Jay",
+        "discount_percent": 27,
+        "price": 18.24
+    },
+    {
+        "title": "Fists of Fury Starring Curtis Kam (DVD)",
+        "discount_percent": 3,
+        "price": 28.95
+    },
+    {
+        "title": "Flashback by Dani DaOrtiz (DVD and Gimmick)",
+        "discount_percent": 63,
+        "price": 8.99
+    },
+    {
+        "title": "Flip Cup by Kyle Marlett (DVD + Gimmick)",
+        "discount_percent": 9,
+        "price": 17.97
+    },
+    {
+        "title": "Freeform Mentalism by Peter Turner (2 DVD Set)",
+        "discount_percent": 3,
+        "price": 48.29
+    },
+    {
+        "title": "Function(9) by Calen Morelli (2 DVD Set)",
+        "discount_percent": 8,
+        "price": 36.6
+    },
+    {
+        "title": "Gazzo's Tossed Out Deck (DVD + Deck)",
+        "discount_percent": 9,
+        "price": 31.47
+    },
+    {
+        "title": "Growing Ring by Dan Hauss (DVD + Gimmicks)",
+        "discount_percent": 10.0,
+        "price": 33.21,
+        "appearances": 1
     }
 ]
