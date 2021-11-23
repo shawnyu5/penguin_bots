@@ -640,11 +640,6 @@
         "price": 46.63
     },
     {
-        "title": "Growing Ring by Dan Hauss (DVD + Gimmicks)",
-        "discount_percent": 8,
-        "price": 32.05
-    },
-    {
         "title": "Hands Off (Any card at any number) by Patrick Redford (DVD)",
         "discount_percent": 5,
         "price": 28.45
@@ -1131,5 +1126,11 @@
         "discount_percent": 3.0,
         "price": 19.316666666666666,
         "appearances": 3
+    },
+    {
+        "title": "Growing Ring by Dan Hauss (DVD + Gimmicks)",
+        "discount_percent": 21.0,
+        "price": 30.31,
+        "appearances": 1
     }
 ]
