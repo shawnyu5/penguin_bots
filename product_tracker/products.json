@@ -708,21 +708,9 @@
         "appearances": 1
     },
     {
-        "title": "Money Morph by Kevin King (DVD)",
-        "discount_percent": 14.0,
-        "price": 27.45,
-        "appearances": 1
-    },
-    {
         "title": "Freeform Mentalism by Peter Turner (2 DVD Set)",
         "discount_percent": 3,
         "price": 48.29
-    },
-    {
-        "title": "Function(9) by Calen Morelli (2 DVD Set)",
-        "discount_percent": 8,
-        "price": 32.05,
-        "appearances": 1
     },
     {
         "title": "Monkey Fist Balls (4 pack)",
@@ -1365,5 +1353,17 @@
         "discount_percent": 10.0,
         "price": 33.21,
         "appearances": 1
+    },
+    {
+        "title": "Function(9) by Calen Morelli (2 DVD Set)",
+        "discount_percent": 7.0,
+        "price": 18.635,
+        "appearances": 2
+    },
+    {
+        "title": "Money Morph by Kevin King (DVD)",
+        "discount_percent": 42.0,
+        "price": 4.475,
+        "appearances": 2
     }
 ]
