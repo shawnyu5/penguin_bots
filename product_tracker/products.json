@@ -1372,14 +1372,14 @@
     },
     {
         "title": "What am I thinking? by Marc Spelmann (DVD)",
-        "discount_percent": 13.0,
-        "price": 28.45,
+        "discount_percent": 29.0,
+        "price": 23.45,
         "appearances": 1
     },
     {
         "title": "What am I thinking? by Marc Spelmann (DVD)",
-        "discount_percent": 29.0,
-        "price": 23.45,
-        "appearances": 1
+        "discount_percent": 38.0,
+        "price": 5.475,
+        "appearances": 2
     }
 ]
