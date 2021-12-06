@@ -80,11 +80,6 @@
         "price": 25.31
     },
     {
-        "title": "FADECK BLUE by Juan Pablo",
-        "discount_percent": 31,
-        "price": 20.5
-    },
-    {
         "title": "Miser's Dream by Chris Capehart - DVD",
         "discount_percent": 45,
         "price": 13.66
@@ -604,26 +599,6 @@
         "appearances": 1
     },
     {
-        "title": "The Sheridan Course in Card Manipulation by Jeff Sheridan (3 DVD Set)",
-        "discount_percent": 6,
-        "price": 65.27
-    },
-    {
-        "title": "Transporter by Joshua Jay (DVD + BLUE GIMMICKS)",
-        "discount_percent": 28,
-        "price": 21.36
-    },
-    {
-        "title": "Unbroken by Cody Nottingham",
-        "discount_percent": 8,
-        "price": 36.6
-    },
-    {
-        "title": "What am I thinking? by Marc Spelmann (DVD)",
-        "discount_percent": 8,
-        "price": 27.45
-    },
-    {
         "title": "APOLLO RED by Nicholas Lawrence & Worm",
         "discount_percent": 8.0,
         "price": 28.95,
@@ -887,12 +862,6 @@
         "appearances": 1
     },
     {
-        "title": "Retina by Looch (DVD)",
-        "discount_percent": 126.0,
-        "price": 8.7,
-        "appearances": 1
-    },
-    {
         "title": "Royalistic by Juan Tamariz (Download + Cards)",
         "discount_percent": 20.0,
         "price": 11.24,
@@ -951,28 +920,6 @@
         "discount_percent": 12.0,
         "price": 18.3,
         "appearances": 1
-    },
-    {
-        "title": "TECHNIQUE by Matthew Mello (DVD)",
-        "discount_percent": 44.0,
-        "price": 19.53,
-        "appearances": 1
-    },
-    {
-        "title": "The Aretalogy of Vanni Bossi by Stephen Minch (FIRST EDITION)",
-        "discount_percent": 11.0,
-        "price": 62.84,
-        "appearances": 1
-    },
-    {
-        "title": "The Bill Test by Erik Casey (DVD + Gimmicks)",
-        "discount_percent": 53.0,
-        "price": 17.43,
-        "appearances": 1
-    },
-    {
-        "title": "THE CLASSIC FORCE with Paul Green (DVD)",
-        "discount_percent": 11.0
     },
     {
         "title": "No Choice Wallet by Tony Miller and Mark Mason",
@@ -1070,21 +1017,6 @@
         "price": 19.45
     },
     {
-        "title": "The Hunter Shuffle (DVD)",
-        "discount_percent": 46,
-        "price": 15.95
-    },
-    {
-        "title": "The Mind Reading Coloring Book",
-        "discount_percent": 19,
-        "price": 20.15
-    },
-    {
-        "title": "The Monte by Alan Rorrison (CARDS INCLUDED)",
-        "discount_percent": 6,
-        "price": 18.63
-    },
-    {
         "title": "The Sheridan Course in Card Manipulation by Jeff Sheridan (3 DVD Set)",
         "discount_percent": 6,
         "price": 65.27
@@ -1098,11 +1030,6 @@
         "title": "Unbroken by Cody Nottingham",
         "discount_percent": 8,
         "price": 36.6
-    },
-    {
-        "title": "What am I thinking? by Marc Spelmann (DVD)",
-        "discount_percent": 8,
-        "price": 27.45
     },
     {
         "title": "APOLLO RED by Nicholas Lawrence & Worm",
@@ -1201,18 +1128,6 @@
         "discount_percent": 14.0,
         "price": 27.45,
         "appearances": 1
-    },
-    {
-        "title": "The Drop'N Project by Michael Eaton (DVD)",
-        "discount_percent": 10,
-        "price": 27.0,
-        "appearances": 1
-    },
-    {
-        "title": "The Greatest Beginner Magic DVD Ever featuring Oz Pearlman and Jessie Geneva (DVD)",
-        "discount_percent": 20.5,
-        "price": 13.975,
-        "appearances": 2
     },
     {
         "title": "The Hunter Shuffle (DVD)",
@@ -1365,5 +1280,106 @@
         "discount_percent": 42.0,
         "price": 4.475,
         "appearances": 2
+    },
+    {
+        "title": "FADECK BLUE by Juan Pablo",
+        "discount_percent": 47.0,
+        "price": 25.0,
+        "appearances": 1
+    },
+    {
+        "title": "Retina by Looch (DVD)",
+        "discount_percent": 64.5,
+        "price": 14.475,
+        "appearances": 2
+    },
+    {
+        "title": "TECHNIQUE by Matthew Mello (DVD)",
+        "discount_percent": 50.5,
+        "price": 5.25,
+        "appearances": 2
+    },
+    {
+        "title": "The Aretalogy of Vanni Bossi by Stephen Minch (FIRST EDITION)",
+        "discount_percent": 7.0,
+        "price": 31.42,
+        "appearances": 2
+    },
+    {
+        "title": "The Bill Test by Erik Casey (DVD + Gimmicks)",
+        "discount_percent": 39.5,
+        "price": 9.135,
+        "appearances": 2
+    },
+    {
+        "title": "THE CLASSIC FORCE with Paul Green (DVD)",
+        "discount_percent": 19.0,
+        "price": 27.45,
+        "appearances": 1
+    },
+    {
+        "title": "The Drop'N Project by Michael Eaton (DVD)",
+        "discount_percent": 8.0,
+        "price": 14.0,
+        "appearances": 2
+    },
+    {
+        "title": "The Greatest Beginner Magic DVD Ever featuring Oz Pearlman and Jessie Geneva (DVD)",
+        "discount_percent": 32.166666666666664,
+        "price": 2.316666666666667,
+        "appearances": 3
+    },
+    {
+        "title": "The Hunter Shuffle (DVD)",
+        "discount_percent": 87.0,
+        "price": 17.45,
+        "appearances": 1
+    },
+    {
+        "title": "The Mind Reading Coloring Book",
+        "discount_percent": 36.0,
+        "price": 20.57,
+        "appearances": 1
+    },
+    {
+        "title": "The Monte by Alan Rorrison (CARDS INCLUDED)",
+        "discount_percent": 60.0,
+        "price": 9.06,
+        "appearances": 1
+    },
+    {
+        "title": "The Sheridan Course in Card Manipulation by Jeff Sheridan (3 DVD Set)",
+        "discount_percent": 9.0,
+        "price": 67.61,
+        "appearances": 1
+    },
+    {
+        "title": "Token by Paul Richards (DVD + Gimmicks)",
+        "discount_percent": 3,
+        "price": 38.61
+    },
+    {
+        "title": "Transporter by Joshua Jay (DVD + BLUE GIMMICKS)",
+        "discount_percent": 53.0,
+        "price": 22.36,
+        "appearances": 1
+    },
+    {
+        "title": "Unbroken by Cody Nottingham",
+        "discount_percent": 13.0,
+        "price": 37.94,
+        "appearances": 1
+    },
+    {
+        "title": "What am I thinking? by Marc Spelmann (DVD)",
+        "discount_percent": 13.0,
+        "price": 28.45,
+        "appearances": 1
+    },
+    {
+        "title": "What am I thinking? by Marc Spelmann (DVD)",
+        "discount_percent": 29.0,
+        "price": 23.45,
+        "appearances": 1
     }
 ]
