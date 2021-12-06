@@ -610,11 +610,6 @@
         "price": 10.8
     },
     {
-        "title": "X Finger by Geoff Weber (DVD)",
-        "discount_percent": 31,
-        "price": 13.62
-    },
-    {
         "title": "A Little R&B (Red & Blue) by Dan Harlan (DVD + 5 Gimmicks)",
         "discount_percent": 5,
         "price": 23.74
@@ -1381,5 +1376,11 @@
         "discount_percent": 38.0,
         "price": 5.475,
         "appearances": 2
+    },
+    {
+        "title": "X Finger by Geoff Weber (DVD)",
+        "discount_percent": 56.0,
+        "price": 14.94,
+        "appearances": 1
     }
 ]

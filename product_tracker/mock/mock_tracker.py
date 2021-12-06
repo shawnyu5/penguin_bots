@@ -1,3 +1,4 @@
+import os
 import sys
 from bs4 import BeautifulSoup
 import requests
@@ -5,6 +6,8 @@ import json
 sys.path.insert(1, '/home/shawn/python/web_scraping/penguin_bots/') # utils
 import utils  # type: ignore
 from pprint import pprint
+from dotenv import load_dotenv
+from pymongo import MongoClient
 
 # return in the index which the search term appears in the array. -1 if nothing is found
 def index(array, search_term) -> int:
@@ -68,15 +71,19 @@ def to_file():
         json.dump(product_arr, file, indent=4)
 
 
+load_dotenv()
+client = MongoClient(os.getenv("key"))
+db = client.penguin_magic.open_box
+
 current_product = {
-    "title": "new",
+    "title": "Jar of Pickles",
     "discount_percent": 76,
     "price": 11.77,
     "appearances": 1
 }
 
 if not validate(current_product):
-    print("Product has not changed")
+    print("Product has not changed:")
     pprint(current_product)
     exit(0)
 

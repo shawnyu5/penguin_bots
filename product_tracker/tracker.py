@@ -2,6 +2,7 @@
 # purpose of this file:
 # Date: 2021-10-13
 # ---------------------------------
+from pymongo import MongoClient
 import sys
 from bs4 import BeautifulSoup
 import requests
@@ -10,6 +11,7 @@ import os
 from dotenv import load_dotenv
 sys.path.insert(1, '/home/shawn/python/web_scraping/penguin_bots/') # utils
 import utils  # type: ignore
+from pprint import pprint
 
 def to_object(title:str, discount:str, price:str):
     return {
@@ -51,8 +53,8 @@ def to_file(current_product):
         product_arr = json.load(file)
 
     # load current product
-    #  with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "r+") as file:
-        #  current_product = json.load(file)
+    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "r+") as file:
+        current_product = json.load(file)
 
         # checks if current product is logged and return the index.
         found_index = index(product_arr, current_product)
@@ -74,7 +76,7 @@ def to_file(current_product):
         # add current product to list
         product_arr.append(current_product)
 
-        print("product saved:", current_product)
+        pprint("product saved:", current_product)
 
     with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/products.json", "w+") as file:
         json.dump(product_arr, file, indent=4)
@@ -84,7 +86,9 @@ def main():
     load_dotenv()
     url = str(os.getenv("url"))
     print(url)
-    #  return
+
+    client = MongoClient(os.getenv("key"))
+    db = client.penguin_magic.open_box
 
     html_page = requests.get(url).text
     soup = BeautifulSoup(html_page, "html.parser")
