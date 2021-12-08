@@ -13,102 +13,130 @@ sys.path.insert(1, '/home/shawn/python/web_scraping/penguin_bots/') # utils
 import utils  # type: ignore
 from pprint import pprint
 
-def to_object(title:str, discount:str, price:str):
-    return {
-            "title": title,
-            "average_discount": discount,
-            "average_price": price
-            }
-
-# check if current product is different from the product in current_product.json
-def validate(product) -> bool:
-    current_product_json = "/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json"
-    # read current product from current_product.json
-    with open(current_product_json, "W") as file:
-        file_product = json.load(file)
-
-    # save current product to current_product.json
-    with open(current_product_json, "W") as file:
-        json.dump(product, file, indent=4)
-
-    # if product from file is same as current product on site, return false
-    if file_product["title"] == product["title"]:
-        return False
-    else:
-        return True
-
-# return in the index which the search term appears in the array. -1 if nothing is found
-def index(array, search_term) -> int:
-    index = 0
-    for current in array:
-        if current["title"] == search_term["title"]:
-            return index
-        index = index + 1
-    return -1
-
-# add the current product to products.json
-def save():
-    # load current product
-    with open("current_product.json", "r") as file:
-        current_product = json.load(file)
-
-    # checks if current product is logged
-    found = db.find_one({ "title": { "$eq": current_product["title"] }})
-    old_data = found
-    # print("old data is ", old_data)
-
-    # if product is logged, ...
-    if found:
-
-        # update appearances
-        found["appearances"] = found["appearances"] + 1
-        # update price
-        found["average_price"] = (float(current_product["average_price"]) + found["average_price"]) / found["appearances"]
-        # calculate average percentage
-        found["average_discount"] = found["average_discount"] / found["appearances"];
-        # print("found is ", found)
-
-        db.update_one({ "_id": old_data["_id"] }, { #type: ignore
-            "$set": {
-                "appearances": found["appearances"],
-                "average_price": found["average_price"],
-                "average_discount": found["average_discount"]
+class Tracker:
+    def __init__(self):
+        self.product = {
+                "title": "",
+                "average_discount": "",
+                "average_price": ""
                 }
-            })
-        print("product updated")
-        pprint(found)
-    else:
-        db.insert_one(current_product)
-        print("product saved:")
-        pprint(current_product)
+        load_dotenv()
+        # url of penguin open box website
+        url = str(os.getenv("url"))
+        html_page = requests.get(url).text
+        self.soup = BeautifulSoup(html_page, "html.parser")
+
+        client = MongoClient(os.getenv("key"))
+        # reference to the database collection
+        self.db = client.penguin_magic.open_box
+
+
+    def __to_object(self, title:str, discount_percentage:str, discount_price:str):
+        return {
+                "title": title,
+                "average_discount": discount_percentage,
+                "average_price": discount_price
+                }
+
+    # retrieves product info from penguin and returns an object.
+    def get_product_info(self):
+        title = utils.get_title(self.soup)
+        discount_percentage = utils.get_discount_percentage(self.soup)
+        discounted_price = utils.get_discounted_price(self.soup)
+
+        return self.__to_object(title, discount_percentage, discounted_price)
+
+
+
+    # check if current product from penguin is different from the product in
+    # `current_product.json`
+    def valid(self) -> bool:
+        current_product_json = "/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json"
+        # read current product from current_product.json
+        with open(current_product_json, "w+") as file:
+            file_product = json.load(file)
+            # save current product to file
+            json.dump(self.product, file, indent=4)
+
+        # if product from file is same as current product on site, return false
+        if file_product["title"] == self.product["title"]:
+            return False
+        else:
+            return True
+
+    # add the current product to products.json
+    def save(self):
+        # load current product
+        with open("current_product.json", "r") as file:
+            current_product = json.load(file)
+
+        # checks if current product is logged
+        found = self.db.find_one({ "title": { "$eq": current_product["title"] }})
+        old_data = found
+        # print("old data is ", old_data)
+
+        # if product is logged, ...
+        if found:
+            # update appearances
+            found["appearances"] = found["appearances"] + 1
+            # update price
+            found["average_price"] = (float(current_product["average_price"]) + found["average_price"]) / found["appearances"]
+            # calculate average percentage
+            found["average_discount"] = found["average_discount"] / found["appearances"];
+            # print("found is ", found)
+
+            self.db.update_one({ "_id": old_data["_id"] }, { #type: ignore
+                "$set": {
+                    "appearances": found["appearances"],
+                    "average_price": found["average_price"],
+                    "average_discount": found["average_discount"]
+                    }
+                })
+            print("product updated")
+            pprint(found)
+        else:
+            self.db.insert_one(current_product)
+            print("product saved:")
+            pprint(current_product)
+
+    @staticmethod
+    def run():
+        tracker = Tracker()
+        tracker.get_product_info()
+        if not tracker.valid():
+            print("Product has not changed:")
+            pprint(tracker.product)
+
+        tracker.save()
 
 
 def main():
-    load_dotenv()
-    url = str(os.getenv("url"))
-    print(url)
+    Tracker.run()
+    # load_dotenv()
+    # url = str(os.getenv("url"))
+    # print(url)
 
-    client = MongoClient(os.getenv("key"))
-    global db
-    db = client.penguin_magic.open_box
+    # client = MongoClient(os.getenv("key"))
+    # global db
+    # db = client.penguin_magic.open_box
 
-    html_page = requests.get(url).text
-    soup = BeautifulSoup(html_page, "html.parser")
+    # html_page = requests.get(url).text
+    # soup = BeautifulSoup(html_page, "html.parser")
 
-    product_title = utils.get_title(soup)
-    product_discount_percentage = utils.get_discount_percentage(soup)
-    product_discount_price = utils.get_discounted_price(soup)
+    # product_title = utils.get_title(soup)
+    # product_discount_percentage = utils.get_discount_percentage(soup)
+    # product_discount_price = utils.get_discounted_price(soup)
 
-    product = to_object(product_title, product_discount_percentage, product_discount_price) #type: ignore
+    # product = to_object(product_title, product_discount_percentage, product_discount_price) #type: ignore
 
     # if product has not changed, save product to file and don't parse json
     # file
-    if not validate(product):
-        print("Product has not changed")
-        print(product)
-        exit(0)
+    # if not validate(product):
+        # print("Product has not changed")
+        # print(product)
+        # exit(0)
 
-    save()
+    # save()
 
 if __name__ == "__main__":
     main()
