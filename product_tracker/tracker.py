@@ -16,19 +16,19 @@ from pprint import pprint
 def to_object(title:str, discount:str, price:str):
     return {
             "title": title,
-            "discount_percent": discount,
-            "price": price
+            "average_discount": discount,
+            "average_price": price
             }
 
 # check if current product is different from the product in current_product.json
 def validate(product) -> bool:
-
+    current_product_json = "/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json"
     # read current product from current_product.json
-    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "r") as file:
+    with open(current_product_json, "W") as file:
         file_product = json.load(file)
 
     # save current product to current_product.json
-    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "w") as file:
+    with open(current_product_json, "W") as file:
         json.dump(product, file, indent=4)
 
     # if product from file is same as current product on site, return false
@@ -47,39 +47,40 @@ def index(array, search_term) -> int:
     return -1
 
 # add the current product to products.json
-def to_file(current_product):
-    # load all products
-    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/products.json", "r+") as file:
-        product_arr = json.load(file)
-
+def save():
     # load current product
-    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json", "r+") as file:
+    with open("current_product.json", "r") as file:
         current_product = json.load(file)
 
-        # checks if current product is logged and return the index.
-        found_index = index(product_arr, current_product)
+    # checks if current product is logged
+    found = db.find_one({ "title": { "$eq": current_product["title"] }})
+    old_data = found
+    # print("old data is ", old_data)
 
-        # if product is logged, remove the product from list
-        if found_index != -1:
-            removed_product = product_arr.pop(found_index)
+    # if product is logged, ...
+    if found:
 
-            # not all products saved has a appearance attribute
-            if "appearances" not in removed_product:
-                current_product["appearances"] = 1
-            else:
-                current_product["appearances"] = removed_product["appearances"] + 1
-                current_product["price"] =  current_product["price"] / current_product["appearances"]
+        # update appearances
+        found["appearances"] = found["appearances"] + 1
+        # update price
+        found["average_price"] = (float(current_product["average_price"]) + found["average_price"]) / found["appearances"]
+        # calculate average percentage
+        found["average_discount"] = found["average_discount"] / found["appearances"];
+        # print("found is ", found)
 
-            # calculate average percentage
-            current_product["discount_percent"] = (current_product["discount_percent"] + removed_product["discount_percent"]) / current_product["appearances"];
-
-        # add current product to list
-        product_arr.append(current_product)
-
-        pprint("product saved:", current_product)
-
-    with open("/home/shawn/python/web_scraping/penguin_bots/product_tracker/products.json", "w+") as file:
-        json.dump(product_arr, file, indent=4)
+        db.update_one({ "_id": old_data["_id"] }, { #type: ignore
+            "$set": {
+                "appearances": found["appearances"],
+                "average_price": found["average_price"],
+                "average_discount": found["average_discount"]
+                }
+            })
+        print("product updated")
+        pprint(found)
+    else:
+        db.insert_one(current_product)
+        print("product saved:")
+        pprint(current_product)
 
 
 def main():
@@ -88,6 +89,7 @@ def main():
     print(url)
 
     client = MongoClient(os.getenv("key"))
+    global db
     db = client.penguin_magic.open_box
 
     html_page = requests.get(url).text
@@ -106,8 +108,7 @@ def main():
         print(product)
         exit(0)
 
-    to_file(product)
-
+    save()
 
 if __name__ == "__main__":
     main()
