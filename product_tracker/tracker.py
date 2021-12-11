@@ -58,18 +58,18 @@ class Tracker:
         # if product from file is same as current product on site, return false
         if current_product["title"] == self.product["title"]:
             with open("current_product.json", "w") as file:
-                # save current product to file
+                # update product in current_product.json
                 json.dump(self.product, file, indent=4)
             return False
         else:
             return True
 
-    # add the current product to products.json
+    # save current product to database
     def save(self):
         # load current product
-
         with open("current_product.json", "r") as file:
             current_product = json.load(file)
+            print("current product is ", current_product)
 
         # checks if current product is logged
         found = self.db.find_one({ "title": { "$eq":current_product["title"] }})
@@ -91,15 +91,17 @@ class Tracker:
                     "average_discount": found["average_discount"],
                     }
                 })
+
             print("product updated")
             pprint(found)
         else:
-            self.db.insert_one(self.product)
+            self.db.insert_one(current_product)
+
             print("product saved:")
-            pprint(self.product)
+            pprint(current_product)
 
         with open("current_product.json", "w") as file:
-            # save current product to file
+            # save current product from penguin to file
             json.dump(self.product, file, indent=4)
 
 
