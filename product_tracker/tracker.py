@@ -105,6 +105,7 @@ class Tracker:
         if not tracker.valid():
             print("Product has not changed:")
             pprint(tracker.product)
+            return
 
         tracker.save()
 
