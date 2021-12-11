@@ -3,6 +3,7 @@ import json
 from pprint import pprint
 import os
 from dotenv import load_dotenv
+import sys
 
 
 def save():
@@ -53,4 +54,4 @@ product = {
 # pprint(product)
 # db.open_box.insert_one(product)
 
-save()
+print(os.path.dirname(sys.path[0]))

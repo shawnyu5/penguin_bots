@@ -9,7 +9,7 @@ import requests
 import json
 import os
 from dotenv import load_dotenv
-sys.path.insert(1, '/home/shawn/python/web_scraping/penguin_bots/') # utils
+sys.path.insert(1, os.path.dirname(sys.path[0])) # utils
 import utils  # type: ignore
 from pprint import pprint
 
@@ -112,31 +112,6 @@ class Tracker:
 
 def main():
     Tracker.run()
-    # load_dotenv()
-    # url = str(os.getenv("url"))
-    # print(url)
-
-    # client = MongoClient(os.getenv("key"))
-    # global db
-    # db = client.penguin_magic.open_box
-
-    # html_page = requests.get(url).text
-    # soup = BeautifulSoup(html_page, "html.parser")
-
-    # product_title = utils.get_title(soup)
-    # product_discount_percentage = utils.get_discount_percentage(soup)
-    # product_discount_price = utils.get_discounted_price(soup)
-
-    # product = to_object(product_title, product_discount_percentage, product_discount_price) #type: ignore
-
-    # if product has not changed, save product to file and don't parse json
-    # file
-    # if not validate(product):
-        # print("Product has not changed")
-        # print(product)
-        # exit(0)
-
-    # save()
 
 if __name__ == "__main__":
     main()
