@@ -18,7 +18,8 @@ class Tracker:
         self.product = {
                 "title": "",
                 "average_discount": "",
-                "average_price": ""
+                "average_price": "",
+                "appearances": 1
                 }
         load_dotenv()
         # url of penguin open box website
@@ -36,7 +37,8 @@ class Tracker:
         return {
                 "title": title,
                 "average_discount": discount_percentage,
-                "average_price": discount_price
+                "average_price": discount_price,
+                "appearances": 1
                 }
 
     # retrieves product info from penguin and returns an object.
@@ -49,12 +51,11 @@ class Tracker:
     # check if current product from penguin is different from the product in
     # `current_product.json`
     def valid(self) -> bool:
-        current_product_json = "/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json"
         # read current product from current_product.json
-        with open(current_product_json, "r") as file:
+        with open("current_product.json", "r") as file:
             file_product = json.load(file)
 
-        with open(current_product_json, "w") as file:
+        with open("current_product.json", "w") as file:
             # save current product to file
             json.dump(self.product, file, indent=4)
 
@@ -82,13 +83,12 @@ class Tracker:
             found["average_price"] = (float(current_product["average_price"]) + found["average_price"]) / found["appearances"]
             # calculate average percentage
             found["average_discount"] = found["average_discount"] / found["appearances"];
-            # print("found is ", found)
 
             self.db.update_one({ "_id": old_data["_id"] }, { #type: ignore
                 "$set": {
                     "appearances": found["appearances"],
                     "average_price": found["average_price"],
-                    "average_discount": found["average_discount"]
+                    "average_discount": found["average_discount"],
                     }
                 })
             print("product updated")
