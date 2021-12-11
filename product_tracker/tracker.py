@@ -53,14 +53,13 @@ class Tracker:
     def valid(self) -> bool:
         # read current product from current_product.json
         with open("current_product.json", "r") as file:
-            file_product = json.load(file)
-
-        with open("current_product.json", "w") as file:
-            # save current product to file
-            json.dump(self.product, file, indent=4)
+            current_product = json.load(file)
 
         # if product from file is same as current product on site, return false
-        if file_product["title"] == self.product["title"]:
+        if current_product["title"] == self.product["title"]:
+            with open("current_product.json", "w") as file:
+                # save current product to file
+                json.dump(self.product, file, indent=4)
             return False
         else:
             return True
@@ -72,7 +71,7 @@ class Tracker:
             current_product = json.load(file)
 
         # checks if current product is logged
-        found = self.db.find_one({ "title": { "$eq": current_product["title"] }})
+        found = self.db.find_one({ "title": { "$eq":current_product["title"] }})
         old_data = found
 
         # if product is logged, ...
@@ -94,9 +93,14 @@ class Tracker:
             print("product updated")
             pprint(found)
         else:
-            self.db.insert_one(current_product)
+            self.db.insert_one(self.product)
             print("product saved:")
-            pprint(current_product)
+            pprint(self.product)
+
+        with open("current_product.json", "w") as file:
+            # save current product to file
+            json.dump(self.product, file, indent=4)
+
 
     @staticmethod
     def run():
