@@ -1,5 +1,5 @@
 # !/usr/bin/env python3
-# purpose of this file:
+# purpose of this file: penguin open box tracker
 # Date: 2021-10-13
 # ---------------------------------
 from pymongo import MongoClient
@@ -31,6 +31,7 @@ class Tracker:
         self.db = client.penguin_magic.open_box
 
 
+    # turns the paramers passed in into an object.
     def __to_object(self, title:str, discount_percentage:str, discount_price:str):
         return {
                 "title": title,
@@ -43,18 +44,17 @@ class Tracker:
         title = utils.get_title(self.soup)
         discount_percentage = utils.get_discount_percentage(self.soup)
         discounted_price = utils.get_discounted_price(self.soup)
-
-        return self.__to_object(title, discount_percentage, discounted_price)
-
-
+        self.product = self.__to_object(title, discount_percentage, discounted_price)
 
     # check if current product from penguin is different from the product in
     # `current_product.json`
     def valid(self) -> bool:
         current_product_json = "/home/shawn/python/web_scraping/penguin_bots/product_tracker/current_product.json"
         # read current product from current_product.json
-        with open(current_product_json, "w+") as file:
+        with open(current_product_json, "r") as file:
             file_product = json.load(file)
+
+        with open(current_product_json, "w") as file:
             # save current product to file
             json.dump(self.product, file, indent=4)
 
@@ -73,7 +73,6 @@ class Tracker:
         # checks if current product is logged
         found = self.db.find_one({ "title": { "$eq": current_product["title"] }})
         old_data = found
-        # print("old data is ", old_data)
 
         # if product is logged, ...
         if found:
