@@ -53,10 +53,10 @@ class Tracker:
     def valid(self) -> bool:
         # read current product from current_product.json
         with open("current_product.json", "r") as file:
-            current_product = json.load(file)
+            file_product = json.load(file)
 
         # if product from file is same as current product on site, return false
-        if current_product["title"] == self.product["title"]:
+        if file_product["title"] == self.product["title"]:
             with open("current_product.json", "w") as file:
                 # update product in current_product.json
                 json.dump(self.product, file, indent=4)
@@ -69,7 +69,7 @@ class Tracker:
         # load current product
         with open("current_product.json", "r") as file:
             current_product = json.load(file)
-            print("current product is ", current_product)
+            # print("current product is ", current_product)
 
         # checks if current product is logged
         found = self.db.find_one({ "title": { "$eq":current_product["title"] }})
@@ -84,7 +84,7 @@ class Tracker:
             # calculate average percentage
             found["average_discount"] = found["average_discount"] / found["appearances"];
 
-            self.db.update_one({ "_id": old_data["_id"] }, { #type: ignore
+            self.db.update_one({ "title": old_data["title"] }, { #type: ignore
                 "$set": {
                     "appearances": found["appearances"],
                     "average_price": found["average_price"],
