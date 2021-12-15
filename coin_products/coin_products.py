@@ -27,11 +27,8 @@ def validate(product):
             )
 
     # print(product["description"].lower())
-    if ("coin " or "coins ") not in product["description"].lower() and ("coin " or "coins ") not in product["title"].lower():
+    if ("coin" or "coins") not in product["description"].lower() and ("coin" or "coins") not in product["title"].lower():
         not_coin_product(product["title"])
-    # else:
-        # print("a coin product")
-        # exit (0)
 
     with open("product_info.txt", "+r") as file:
         # if file.read() == product_title:
