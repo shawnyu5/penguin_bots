@@ -9,18 +9,20 @@ import requests
 import json
 import os
 from dotenv import load_dotenv
-sys.path.insert(1, os.path.dirname(sys.path[0])) # utils
+
+sys.path.insert(1, os.path.dirname(sys.path[0]))  # utils
 import utils  # type: ignore
 from pprint import pprint
+
 
 class Tracker:
     def __init__(self):
         self.product = {
-                "title": "",
-                "average_discount": "",
-                "average_price": "",
-                "appearances": 1
-                }
+            "title": "",
+            "average_discount": "",
+            "average_price": "",
+            "appearances": 1,
+        }
         load_dotenv()
         # url of penguin open box website
         url = str(os.getenv("url"))
@@ -31,15 +33,14 @@ class Tracker:
         # reference to the database collection
         self.db = client.penguin_magic.open_box
 
-
     # turns the paramers passed in into an object.
-    def __to_object(self, title:str, discount_percentage:str, discount_price:str):
+    def __to_object(self, title: str, discount_percentage: str, discount_price: str):
         return {
-                "title": title,
-                "average_discount": discount_percentage,
-                "average_price": discount_price,
-                "appearances": 1
-                }
+            "title": title,
+            "average_discount": discount_percentage,
+            "average_price": discount_price,
+            "appearances": 1,
+        }
 
     # retrieves product info from penguin and returns an object.
     def get_product_info(self):
@@ -72,7 +73,7 @@ class Tracker:
             # print("current product is ", current_product)
 
         # checks if current product is logged
-        found = self.db.find_one({ "title": { "$eq":current_product["title"] }})
+        found = self.db.find_one({"title": {"$eq": current_product["title"]}})
         old_data = found
 
         # if product is logged, ...
@@ -80,17 +81,24 @@ class Tracker:
             # update appearances
             found["appearances"] = found["appearances"] + 1
             # update price
-            found["average_price"] = (float(current_product["average_price"]) + found["average_price"]) / found["appearances"]
+            found["average_price"] = (
+                float(current_product["average_price"]) + found["average_price"]
+            ) / found["appearances"]
             # calculate average percentage
-            found["average_discount"] = found["average_discount"] / found["appearances"];
+            found["average_discount"] = (
+                found["average_discount"] + current_product["average_discount"]
+            ) / found["appearances"]
 
-            self.db.update_one({ "title": old_data["title"] }, { #type: ignore
-                "$set": {
-                    "appearances": found["appearances"],
-                    "average_price": found["average_price"],
-                    "average_discount": found["average_discount"],
-                    }
-                })
+            # self.db.update_one(
+            # {"title": old_data["title"]},
+            # {  # type: ignore
+            # "$set": {
+            # "appearances": found["appearances"],
+            # "average_price": found["average_price"],
+            # "average_discount": found["average_discount"],
+            # }
+            # },
+            # )
 
             print("product updated")
             pprint(found)
@@ -104,15 +112,15 @@ class Tracker:
             # save current product from penguin to file
             json.dump(self.product, file, indent=4)
 
-
     @staticmethod
     def run():
         tracker = Tracker()
+
         tracker.get_product_info()
-        if not tracker.valid():
-            print("Product has not changed:")
-            pprint(tracker.product)
-            return
+        # if not tracker.valid():
+        # print("Product has not changed:")
+        # pprint(tracker.product)
+        # return
 
         tracker.save()
 
@@ -120,6 +128,6 @@ class Tracker:
 def main():
     Tracker.run()
 
+
 if __name__ == "__main__":
     main()
-
