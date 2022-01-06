@@ -1,10 +1,6 @@
-import json
-from pprint import pprint
 import subprocess
 import unittest
 import os
-import tracker
-from dotenv import load_dotenv
 
 
 class TestTracker(unittest.TestCase):
@@ -13,21 +9,14 @@ class TestTracker(unittest.TestCase):
 
     # validates the output of the tracker script
     def __validate_output(self, output):
-        #  try:
-        #  output.index("'appearances': 2")
-        #  except ValueError:
-        #  print("Not found")
-        #  else:
-        #  print("Found!!")
-        #  #  if "'appearances': 2" and "'average_discount': 50.0" in output:
-        str = "'appearances': 2"
-        #  output = ""
-        #  output = json.load(output)
         print(output)
-        if str.encode() in output:
+        if (
+            "'appearances': 2".encode() and "'average_discount': 50.0".encode()
+        ) in output:
             assert True
             return True
         else:
+            print("Outputs do no match...")
             assert False
 
     def test_ratings(self):
@@ -35,14 +24,13 @@ class TestTracker(unittest.TestCase):
         # append to end of .env file
         with open(".env", "a") as file:
             file.write('url = "https://www.penguinmagic.com/p/3901"\n')
-            file.write("dev = True")
+            file.write("dev = True\n")
 
+        # capture output of script
         process = subprocess.run(
             "python3 tracker.py", shell=True, stdout=subprocess.PIPE
         )
         output = process.stdout
-
-        #  print(output)
 
         try:
             self.__validate_output(output)
