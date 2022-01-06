@@ -85,18 +85,20 @@ class Tracker:
                 float(current_product["average_price"]) + found["average_price"]
             ) / found["appearances"]
             # calculate average percentage
-            found["average_discount"] = found["average_discount"] / found["appearances"]
+            found["average_discount"] = (
+                found["average_discount"] + current_product["average_discount"]
+            ) / found["appearances"]
 
-            self.db.update_one(
-                {"title": old_data["title"]},
-                {  # type: ignore
-                    "$set": {
-                        "appearances": found["appearances"],
-                        "average_price": found["average_price"],
-                        "average_discount": found["average_discount"],
-                    }
-                },
-            )
+            # self.db.update_one(
+            # {"title": old_data["title"]},
+            # {  # type: ignore
+            # "$set": {
+            # "appearances": found["appearances"],
+            # "average_price": found["average_price"],
+            # "average_discount": found["average_discount"],
+            # }
+            # },
+            # )
 
             print("product updated")
             pprint(found)
@@ -113,11 +115,12 @@ class Tracker:
     @staticmethod
     def run():
         tracker = Tracker()
+
         tracker.get_product_info()
-        if not tracker.valid():
-            print("Product has not changed:")
-            pprint(tracker.product)
-            return
+        # if not tracker.valid():
+        # print("Product has not changed:")
+        # pprint(tracker.product)
+        # return
 
         tracker.save()
 
