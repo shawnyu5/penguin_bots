@@ -89,16 +89,19 @@ class Tracker:
                 found["average_discount"] + current_product["average_discount"]
             ) / found["appearances"]
 
-            # self.db.update_one(
-            # {"title": old_data["title"]},
-            # {  # type: ignore
-            # "$set": {
-            # "appearances": found["appearances"],
-            # "average_price": found["average_price"],
-            # "average_discount": found["average_discount"],
-            # }
-            # },
-            # )
+            # only save to database when dev is false
+            if os.getenv("dev") == "False":
+                self.db.update_one(
+                    {"title": old_data["title"]},
+                    {  # type: ignore
+                        "$set": {
+                            "appearances": found["appearances"],
+                            "average_price": found["average_price"],
+                            "average_discount": found["average_discount"],
+                        }
+                    },
+                )
+
 
             print("product updated")
             pprint(found)
