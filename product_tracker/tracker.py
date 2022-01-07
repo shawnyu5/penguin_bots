@@ -102,7 +102,6 @@ class Tracker:
                     },
                 )
 
-
             print("product updated")
             pprint(found)
         else:
@@ -120,10 +119,10 @@ class Tracker:
         tracker = Tracker()
 
         tracker.get_product_info()
-        # if not tracker.valid():
-        # print("Product has not changed:")
-        # pprint(tracker.product)
-        # return
+        if not tracker.valid():
+            print("Product has not changed:")
+            pprint(tracker.product)
+        return
 
         tracker.save()
 
