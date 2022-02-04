@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "concurrently": "^7.0.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.2.0"
+  },
+  "name": "penguin_bot",
+  "version": "1.0.0",
+  "main": "./src/js/api/api.js",
+  "scripts": {
+    "compile": "tsc -w",
+    "run": "nodemon",
+    "start": "concurrently \"npm:run\" \"npm:compile\"",
+    "test": "jest --watch"
+  },
+  "jest": {
+    "testMatch": [
+      "**/?(*.)+(spec|test).[j]s?(x)"
+    ]
+  },
+  "author": "Shawn Yu",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "@types/mocha": "^9.1.0",
+    "jest": "^27.4.7",
+    "ts-jest": "^27.1.3"
+  }
+}
