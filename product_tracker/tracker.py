@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import os
-import discord
 from dotenv import load_dotenv
 
 sys.path.insert(1, os.path.dirname(sys.path[0]))  # utils
