@@ -35,7 +35,7 @@ class Api {
     async findByName(searchTerm) {
         // return this.open_box.findOne(name).exec();
         return new Promise((resolve, reject) => {
-            this.open_box.findOne(searchTerm, (err, data) => {
+            this.open_box.find(searchTerm, (err, data) => {
                 if (err) {
                     reject(err);
                 }
@@ -46,9 +46,9 @@ class Api {
     async findNameByRegex(title) {
         return new Promise((resolve, reject) => {
             // convert title to regular expression
-            title = new RegExp(title);
-            this.open_box.findOne({
-                title: title + ".*",
+            title = new RegExp(title, "i");
+            this.open_box.find({
+                title: title,
             }, (error, data) => {
                 if (error) {
                     reject(error);
@@ -62,6 +62,7 @@ exports.Api = Api;
 async function main() {
     let api = new Api();
     try {
+        // @ts-ignore
         await api.init(process.env.key);
         let obj = {
             _id: new mongoose_1.Types.ObjectId("61dceb6228b23db27260d4e0"),
@@ -70,10 +71,8 @@ async function main() {
             average_price: 3.3000000000000003,
             appearances: 3,
         };
-        let data = await api.findNameByRegex({
-            title: "Play Money by Nick Diffatte",
-        });
-        console.log("main data: %s", data); // __AUTO_GENERATED_PRINT_VAR__
+        let data = await api.findNameByRegex("nick diffatte");
+        console.log(data);
     }
     catch (e) {
         console.log(`ERROR: ${e}`);

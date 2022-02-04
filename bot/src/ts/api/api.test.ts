@@ -6,9 +6,9 @@ describe("Find by name API", () => {
       try {
          let api = new Api();
          await api.init(process.env.key);
-         let product = await api.findByName({
-            title: "Play Money by Nick Diffatte (Instant Download)",
-         });
+         let product = await api.findByName(
+            "Play Money by Nick Diffatte (Instant Download)"
+         );
 
          let obj = {
             _id: new Types.ObjectId("61dceb6228b23db27260d4e0"),
@@ -23,25 +23,35 @@ describe("Find by name API", () => {
       }
    });
 
-   test("return name by partial match", async () => {
+   test("return product name by partial match", async () => {
       let api = new Api();
-      try {
-         await api.init(process.env.key);
-         let obj = {
-            _id: new Types.ObjectId("61dceb6228b23db27260d4e0"),
-            title: "Play Money by Nick Diffatte (Instant Download)",
-            average_discount: 33.333333333333336,
-            average_price: 3.3000000000000003,
-            appearances: 3,
-         };
+      await api.init(process.env.key);
+      let obj = {
+         _id: new Types.ObjectId("61dceb6228b23db27260d4e0"),
+         title: "Play Money by Nick Diffatte (Instant Download)",
+         average_discount: 33.333333333333336,
+         average_price: 3.3000000000000003,
+         appearances: 3,
+      };
 
-         let data = await api.findNameByRegex({
-            title: "Play Money by Nick Diffatte",
-         });
+      let data = await api.findNameByRegex("Play Money by Nick Diffatte");
 
-         // expect(data).toBe(obj);
-      } catch (e) {
-         console.log(`ERROR: ${e}`);
-      }
+      console.log("(anon)#(anon) data: %s", data); // __AUTO_GENERATED_PRINT_VAR__
+      // expect(data).toEqual(obj);
+   });
+
+   test("search by creator", async () => {
+      let api = new Api();
+      await api.init(process.env.key);
+      let obj = {
+         _id: new Types.ObjectId("61dceb6228b23db27260d4e0"),
+         title: "Play Money by Nick Diffatte (Instant Download)",
+         average_discount: 33.333333333333336,
+         average_price: 3.3000000000000003,
+         appearances: 3,
+      };
+
+      let data = await api.findNameByRegex("Nick Diffatte");
+      console.log("(anon)#(anon) data AUTHOR: %s", data); // __AUTO_GENERATED_PRINT_VAR__
    });
 });

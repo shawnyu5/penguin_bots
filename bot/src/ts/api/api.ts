@@ -35,10 +35,11 @@ export class Api {
       });
    }
 
-   async findByName(searchTerm: { title: string }) {
+   // return a product object by name exact name
+   async findByName(searchTerm: string) {
       // return this.open_box.findOne(name).exec();
       return new Promise((resolve, reject) => {
-         this.open_box.findOne(searchTerm, (err: any, data: any) => {
+         this.open_box.find(searchTerm, (err: any, data: any) => {
             if (err) {
                reject(err);
             }
@@ -47,13 +48,14 @@ export class Api {
       });
    }
 
+   // return a product object by regex matching
    async findNameByRegex(title: string | RegExp) {
       return new Promise((resolve, reject) => {
-         // convert title to regular expression
-         title = new RegExp(title);
-         this.open_box.findOne(
+         // convert title to case insenitive regular expression
+         title = new RegExp(title, "i");
+         this.open_box.find(
             {
-               title: title + ".*",
+               title: title,
             },
             (error: any, data: any) => {
                if (error) {
@@ -69,6 +71,7 @@ export class Api {
 async function main() {
    let api = new Api();
    try {
+      // @ts-ignore
       await api.init(process.env.key);
       let obj = {
          _id: new Types.ObjectId("61dceb6228b23db27260d4e0"),
@@ -78,11 +81,8 @@ async function main() {
          appearances: 3,
       };
 
-      let data = await api.findNameByRegex({
-         title: "Play Money by Nick Diffatte",
-      });
-
-      console.log("main data: %s", data); // __AUTO_GENERATED_PRINT_VAR__
+      let data = await api.findNameByRegex("nick diffatte");
+      console.log(data);
    } catch (e) {
       console.log(`ERROR: ${e}`);
    }
