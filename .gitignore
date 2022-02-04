@@ -1,3 +1,4 @@
 **.env
 **.vim
 __pycache__
+config.json
