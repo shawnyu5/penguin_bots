@@ -32,6 +32,7 @@ class Api {
             });
         });
     }
+    // return a product object by name exact name
     async findByName(searchTerm) {
         // return this.open_box.findOne(name).exec();
         return new Promise((resolve, reject) => {
@@ -43,9 +44,10 @@ class Api {
             });
         });
     }
+    // return a product object by regex matching
     async findNameByRegex(title) {
         return new Promise((resolve, reject) => {
-            // convert title to regular expression
+            // convert title to case insenitive regular expression
             title = new RegExp(title, "i");
             this.open_box.find({
                 title: title,

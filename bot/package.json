@@ -1,13 +1,16 @@
 {
   "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
     "concurrently": "^7.0.0",
+    "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "mongoose": "^6.2.0"
   },
   "name": "penguin_bot",
   "version": "1.0.0",
-  "main": "./src/js/api/api.js",
+  "main": "./src/js/bot.js",
   "scripts": {
     "compile": "tsc -w",
     "run": "nodemon",
