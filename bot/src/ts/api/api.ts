@@ -1,6 +1,13 @@
 import { createConnection, Schema, Types } from "mongoose";
 require("dotenv").config();
 
+interface IProduct {
+   _id: string;
+   title: string;
+   average_price: number;
+   average_discount: number;
+}
+
 const productSchema = new Schema({
    title: String,
    average_discount: Number,
@@ -49,7 +56,7 @@ export class Api {
    }
 
    // return a product object by regex matching
-   async findNameByRegex(title: string | RegExp) {
+   async findNameByRegex(title: string | RegExp): Promise<Array<IProduct>> {
       return new Promise((resolve, reject) => {
          // convert title to case insenitive regular expression
          title = new RegExp(title, "i");

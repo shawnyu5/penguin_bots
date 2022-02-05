@@ -5,6 +5,7 @@ const rest_1 = require("@discordjs/rest");
 const v9_1 = require("discord-api-types/v9");
 const { clientID, guildID, token } = require("../../config.json");
 const fs = require("fs");
+// container for all our commands
 const commands = [];
 const commandFiles = fs
     .readdirSync(__dirname + "/commands")
