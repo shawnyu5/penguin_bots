@@ -12,7 +12,7 @@ async function init() {
 init();
 async function getProductDetail(keyword) {
     let productData = await api.findNameByRegex(keyword);
-    console.log("getProductDetail productData: %s", JSON.stringify(productData)); // __AUTO_GENERATED_PRINT_VAR__
+    // console.log("getProductDetail productData: %s", JSON.stringify(productData)); // __AUTO_GENERATED_PRINT_VAR__
     let response = "";
     // if a single product is found
     if (productData.length == 1) {

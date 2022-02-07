@@ -21,7 +21,7 @@ init();
 
 async function getProductDetail(keyword: string) {
    let productData: Array<IProduct> = await api.findNameByRegex(keyword);
-   console.log("getProductDetail productData: %s", JSON.stringify(productData)); // __AUTO_GENERATED_PRINT_VAR__
+   // console.log("getProductDetail productData: %s", JSON.stringify(productData)); // __AUTO_GENERATED_PRINT_VAR__
    let response: string = "";
 
    // if a single product is found
