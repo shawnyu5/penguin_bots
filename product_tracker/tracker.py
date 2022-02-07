@@ -68,26 +68,31 @@ class Tracker:
     # save current product to database
     def save(self):
         # load current product
-        with open("current_product.json", "r") as file:
-            current_product = json.load(file)
-            # print("current product is ", current_product)
+        #  with open("current_product.json", "r") as file:
+        #  current_product = json.load(file)
+        # print("current product is ", current_product)
 
         # checks if current product is logged
-        found = self.db.find_one({"title": {"$eq": current_product["title"]}})
+        found = self.db.find_one({"title": {"$eq": self.product["title"]}})
         old_data = found
 
         # if product is logged, ...
         if found:
             # update appearances
             found["appearances"] = found["appearances"] + 1
-            # update price
-            found["average_price"] = (
-                float(current_product["average_price"]) + found["average_price"]
-            ) / found["appearances"]
-            # calculate average percentage
-            found["average_discount"] = (
-                found["average_discount"] + current_product["average_discount"]
-            ) / found["appearances"]
+
+            average: float = found["average_price"] * (found["appearances"] - 1)
+            average = (average + self.product["average_price"]) / found["appearances"]
+
+            # update average price
+            found["average_price"] = average
+
+            # update average discount
+            discount: float = found["average_discount"] * (found["appearances"] - 1)
+            discount = (discount + self.product["average_discount"]) / found[
+                "appearances"
+            ]
+            found["average_discount"] = discount
 
             # only save to database when dev is false
             if os.getenv("dev") == "False":
@@ -105,24 +110,26 @@ class Tracker:
             print("product updated")
             pprint(found)
         else:
-            self.db.insert_one(current_product)
+            self.db.insert_one(self.product)
 
             print("product saved:")
-            pprint(current_product)
+            pprint(self.product)
 
         with open("current_product.json", "w") as file:
             # save current product from penguin to file
             json.dump(self.product, file, indent=4)
+
+        return self.product
 
     @staticmethod
     def run():
         tracker = Tracker()
 
         tracker.get_product_info()
-        if not tracker.valid():
-            print("Product has not changed:")
-            pprint(tracker.product)
-            return
+        #  if not tracker.valid():
+        #  print("Product has not changed:")
+        #  pprint(tracker.product)
+        #  return
 
         tracker.save()
 

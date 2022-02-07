@@ -12,7 +12,7 @@ class TestRatings(unittest.TestCase):
     def setUp(self):
         print("starting test")
 
-    def test_valid_product(self):
+        pass
 
         print("test valid product")
         # open box
@@ -102,5 +102,5 @@ class TestRatings(unittest.TestCase):
     def tearDown(self):
         pass
 
-if __name__ == "__main__":
+    def test_valid_product(self):
     unittest.main()
