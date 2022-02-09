@@ -110,14 +110,14 @@ class Tracker:
             print("product updated")
             pprint(found)
         else:
-            self.db.insert_one(self.product)
-
             print("product saved:")
             pprint(self.product)
 
         with open("current_product.json", "w") as file:
             # save current product from penguin to file
             json.dump(self.product, file, indent=4)
+
+        self.db.insert_one(self.product) # NOTE: insert one adds "_id" attribute to object, which screws up writing to file
 
         return self.product
 
