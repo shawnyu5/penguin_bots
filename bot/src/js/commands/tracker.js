@@ -20,7 +20,8 @@ async function getProductDetail(keyword) {
         let product = productData[0];
         response = `title: ${product.title}
       average price: ${product.average_price}
-      average discount: ${product.average_discount}`;
+      average discount: ${product.average_discount}
+      appearances: ${product.appearances}`;
     }
     // no product is found
     else if (productData.length == 0) {
@@ -32,6 +33,7 @@ async function getProductDetail(keyword) {
             let currentResponse = `title: ${element.title}
          average discount: ${element.average_discount}
          average price: ${element.average_price}
+         appearances: ${element.appearances}
 
          `;
             response = response.concat(" ", currentResponse);
