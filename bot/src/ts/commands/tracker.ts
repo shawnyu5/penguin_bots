@@ -71,7 +71,7 @@ module.exports = {
       let response = await getProductDetail(userMessage);
 
       let message = new MessageEmbed()
-         .setTitle(`${userMessage}`)
+         .setTitle(`Search term: ${userMessage}`)
          .setDescription(response)
          .setColor("RANDOM");
       await interaction.reply({ embeds: [message] });

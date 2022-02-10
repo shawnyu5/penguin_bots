@@ -53,7 +53,7 @@ module.exports = {
         await api.init(process.env.key);
         let response = await getProductDetail(userMessage);
         let message = new discord_js_1.MessageEmbed()
-            .setTitle(`${userMessage}`)
+            .setTitle(`Search term: ${userMessage}`)
             .setDescription(response)
             .setColor("RANDOM");
         await interaction.reply({ embeds: [message] });
