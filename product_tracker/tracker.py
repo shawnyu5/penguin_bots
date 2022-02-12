@@ -72,7 +72,11 @@ class Tracker:
         #  current_product = json.load(file)
         # print("current product is ", current_product)
 
-        current_product = self.product
+        with open("current_product.json", "w") as file:
+            # save current product from penguin to file
+            json.dump(self.product, file, indent=4)
+
+
         # checks if current product is logged
         found = self.db.find_one({"title": {"$eq": self.product["title"]}})
         old_data = found
@@ -115,10 +119,6 @@ class Tracker:
             pprint(self.product)
 
             self.db.insert_one(self.product) # NOTE: insert one adds "_id" attribute to object, which screws up writing to file
-
-        with open("current_product.json", "w") as file:
-            # save current product from penguin to file
-            json.dump(current_product, file, indent=4)
 
         return self.product
 
