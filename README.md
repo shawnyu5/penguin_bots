@@ -1,10 +1,8 @@
 # Penguin bots
 
-A collection of penguin bots
+A collection of web scrappers to scrape <https://www.penguinmagic.com/openbox/>
 
 ## Utils
 
-A collection of utility functions to revive information from penguin website.
-
-All functions with the exception of `get_description` and `get_title` will
-return in integer value. ie `get_price()` will return the price without `$`.
+A collection of utility APIs to retrieve information from
+<https://www.penguinmagic.com/openbox/>
