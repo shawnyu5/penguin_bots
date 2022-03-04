@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import os
 import sys
 
-sys.path.insert(1, '/home/shawn/python/web_scraping/penguin_bots/')   # add directory to system path in this program
+sys.path.insert(1, '/home/shawn/python//penguin_bots/')   # add directory to system path in this program
 import utils # type: ignore
 
 # gets url from .env and returns a soup object

@@ -8,7 +8,7 @@ import requests
 
 # check if current product is interesting, returns true or false
 def if_interested(title) -> bool:
-    with open("/home/shawn/python/web_scraping/penguin_bots/not_interested_products.csv", newline = "") as file:
+    with open("/home/shawn/python/penguin_bots/not_interested_products.csv", newline = "") as file:
         # read products from cvs
         product = csv.reader(file, quotechar='|')
         product_titles = []
