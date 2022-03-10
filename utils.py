@@ -7,7 +7,18 @@ from bs4 import BeautifulSoup
 import requests
 
 # check if current product is interesting, returns true or false
-def if_interested(title) -> bool:
+def if_interested(title: str) -> bool:
+    """
+    checks if the product title argument is interesting by reading the `not_interested_products.csv`
+
+    Args:
+        title (): str
+
+    Returns:
+        True: product is intersting
+        False: product is not interesting
+
+    """
     with open("/home/shawn/python/penguin_bots/not_interested_products.csv", newline = "") as file:
         # read products from cvs
         product = csv.reader(file, quotechar='|')
@@ -33,6 +44,16 @@ def if_interested(title) -> bool:
 
 # the price of product, without $
 def get_price(soup) -> float:
+    """
+    get the price of the product from a soup object
+
+    Args:
+        soup (): BeautifulSoup
+
+    Returns:
+        float:
+            price of product
+    """
     try:
         price = soup.find("table", class_ = "product_price_details").strike.text.replace("$", "")
         return float(price)
