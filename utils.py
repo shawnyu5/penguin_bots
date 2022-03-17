@@ -32,12 +32,11 @@ def if_interested(title: str) -> bool:
         for i in range(len(product_titles)):
             product_titles[i] = product_titles[i].lower()
 
-        print("Not interested products:", *product_titles, sep=" \n- ")
-        print("\n")
-        print("Current product:", title)
+        #  print("Not interested products:", *product_titles, sep=" \n- ")
+        #  print("\n")
+        #  print("Current product:", title)
 
         if title.lower() in product_titles:
-            print("Product is not intersting")
             return False
         else:
             print("Product is interesting")

@@ -7,6 +7,7 @@ require("./deploy-commands");
 const client = new discord_js_1.Client({
     intents: [discord_js_1.Intents.FLAGS.GUILDS, discord_js_1.Intents.FLAGS.GUILD_MESSAGES],
 });
+//@ts-ignore
 client.commands = new discord_js_1.Collection();
 const commandFiles = fs
     .readdirSync(__dirname + "/commands")
@@ -15,6 +16,7 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     // Set a new item in the Collection
     // With the key as the command name and the value as the exported module
+    // @ts-ignore
     client.commands.set(command.data.name, command);
 }
 client.on("ready", () => {
@@ -24,6 +26,7 @@ client.on("ready", () => {
 client.on("interactionCreate", async (interaction) => {
     if (!interaction.isCommand())
         return;
+    // @ts-ignore
     const command = client.commands.get(interaction.commandName);
     if (!command)
         return;
@@ -38,5 +41,4 @@ client.on("interactionCreate", async (interaction) => {
         });
     }
 });
-// console.log(require("../../config.json").token);
 client.login(require("../../config.json").token);
