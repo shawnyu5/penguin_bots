@@ -4,7 +4,6 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 import { Api } from "../api/api";
 let config = require("../../../config.json");
 
-//hi
 interface IProduct {
    _id: string;
    title: string;
