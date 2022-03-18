@@ -5,25 +5,42 @@ import {
    SlashCommandStringOption,
 } from "@discordjs/builders";
 import { Interaction, User } from "discord.js";
-import { writeFile } from "fs";
+import { writeFileSync, readFileSync } from "fs";
+import { Error } from "mongoose";
 import config from "../../config.json";
 const exec = require("child_process").exec;
 
-interface Iconfig {
+interface IConfig {
    token: string;
    guildID: string;
    clientID: string;
    coin_product_alert_users: Array<string>;
 }
 
-function updateUsers(user: any) {
-   let updatedConfig: Iconfig = config;
+/**
+ * Adds a user id to config object and return the new modified object
+ *
+ * @param user - id of user to be added to alert
+ * @returns new json config object with the user added
+ */
+function addUser(user: any): IConfig {
+   let updatedConfig: IConfig = config;
 
-   let newUsers: Array<string> = updatedConfig.coin_product_alert_users;
-   newUsers.push(user.id);
-   updatedConfig = { ...updatedConfig, coin_product_alert_users: newUsers };
+   let users: Array<string> = updatedConfig.coin_product_alert_users;
+   // only add user if it is not recorded right now
+   let found = users.find((element) => {
+      element == user.id;
+   });
+
+   if (found) {
+      users.push(user.id);
+   }
+   updatedConfig = { ...updatedConfig, coin_product_alert_users: users };
    return updatedConfig;
 }
+
+// TODO: implement function to delete a user
+function deleteUser(user: any): IConfig {}
 
 function checkCoinProduct() {
    let output: string;
@@ -34,7 +51,6 @@ function checkCoinProduct() {
       (err: any, stdout: any, stderr: any) => {
          console.log("execute#(anon) err: %s", err.code); // __AUTO_GENERATED_PRINT_VAR__
          console.log("(anon) stdout: %s", stdout); // __AUTO_GENERATED_PRINT_VAR__
-
          // only record output if script exited successfull
          if (err.code == 0) {
             output = stdout;
@@ -60,11 +76,27 @@ module.exports = {
    async execute(interaction: Interaction) {
       let userChoice = String(interaction).split(":")[1];
       let user: User = interaction.user; // get the user that sent the command
-      let newConfig: Iconfig = updateUsers(user); // TODO: update user should be based on user selection
-      console.log("execute newConfig: %s", newConfig.coin_product_alert_users); // __AUTO_GENERATED_PRINT_VAR__
 
-      await interaction.reply(
-         `<@${newConfig.coin_product_alert_users}> recorded`
-      );
+      if (userChoice == "on") {
+         let newConfig: IConfig = addUser(user);
+         // console.log("execute newConfig: %s", newConfig); // __AUTO_GENERATED_PRINT_VAR__
+
+         console.log(readFileSync("./config.json", "utf8"));
+
+         writeFileSync(
+            "./config.json",
+            JSON.stringify(newConfig),
+            (err: any) => {
+               if (!err) {
+                  console.log("Config.json updated");
+               } else {
+                  console.log("Config.json failed up date");
+               }
+            }
+         );
+         await interaction.reply(`<@${user}> recorded`);
+      } else {
+         await interaction.reply("Nothing to do!");
+      }
    },
 };
