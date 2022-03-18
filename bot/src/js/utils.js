@@ -9,10 +9,12 @@ function sendMessage(client, channelName, message) {
      */
     const channel = client.channels.cache.find((ch) => {
         // console.log("(anon)#(anon) ch.name: %s", ch.name); // __AUTO_GENERATED_PRINT_VAR__
+        // @ts-ignore
         return ch.name == "development";
     });
     console.log("(anon)#(anon) channel: %s", channel); // __AUTO_GENERATED_PRINT_VAR__
     if (channel) {
+        // @ts-ignore
         channel.send(message);
         return true;
     }
