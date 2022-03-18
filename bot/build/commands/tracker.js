@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const api_1 = require("../api/api");
-let config = require("../../../config.json");
+let config = require("../../config.json");
 let api;
 async function init() {
     api = new api_1.Api();

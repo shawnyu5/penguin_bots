@@ -6,13 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import { ApplicationCommandType } from "discord-api-types";
 // import { MessageEmbed } from "discord.js";
 const builders_1 = require("@discordjs/builders");
-const config_json_1 = __importDefault(require("../../../config.json"));
-const Iconfig = require("../../js/types/config.js");
+const config_json_1 = __importDefault(require("../../config.json"));
 const exec = require("child_process").exec;
-function updateUser(user) {
-    console.log("execute user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
+function updateUsers(user) {
     let updatedConfig = config_json_1.default;
-    console.log("updateUser updatedConfig: %s", updatedConfig); // __AUTO_GENERATED_PRINT_VAR__
     let newUsers = updatedConfig.coin_product_alert_users;
     newUsers.push(user.id);
     updatedConfig = { ...updatedConfig, coin_product_alert_users: newUsers };
@@ -36,17 +33,15 @@ module.exports = {
         .setName("alert")
         .setDescription("opt into coin product alerts")
         .addStringOption((option) => option
-        .setName("choice")
+        .setName("notification")
         .setDescription("Choose weather to opt in or out of coin product notifications")
         .setRequired(true)
-        .addChoice("in", "in")
-        .addChoice("out", "out")),
+        .addChoice("on", "on")
+        .addChoice("off", "off")),
     async execute(interaction) {
         let userChoice = String(interaction).split(":")[1];
-        console.log("execute userChoice : %s", userChoice); // __AUTO_GENERATED_PRINT_VAR__
-        // checkCoinProduct();
         let user = interaction.user; // get the user that sent the command
-        let newConfig = updateUser(user);
+        let newConfig = updateUsers(user); // TODO: update user should be based on user selection
         console.log("execute newConfig: %s", newConfig.coin_product_alert_users); // __AUTO_GENERATED_PRINT_VAR__
         await interaction.reply(`<@${newConfig.coin_product_alert_users}> recorded`);
     },

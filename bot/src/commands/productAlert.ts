@@ -4,9 +4,9 @@ import {
    SlashCommandBuilder,
    SlashCommandStringOption,
 } from "@discordjs/builders";
+import { Interaction, User } from "discord.js";
 import { writeFile } from "fs";
-import config from "../../../config.json";
-const Iconfig = require("../../js/types/config.js");
+import config from "../../config.json";
 const exec = require("child_process").exec;
 
 interface Iconfig {
@@ -16,11 +16,8 @@ interface Iconfig {
    coin_product_alert_users: Array<string>;
 }
 
-function updateUser(user: any) {
-   console.log("execute user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
-
+function updateUsers(user: any) {
    let updatedConfig: Iconfig = config;
-   console.log("updateUser updatedConfig: %s", updatedConfig); // __AUTO_GENERATED_PRINT_VAR__
 
    let newUsers: Array<string> = updatedConfig.coin_product_alert_users;
    newUsers.push(user.id);
@@ -51,23 +48,19 @@ module.exports = {
       .setDescription("opt into coin product alerts")
       .addStringOption((option: SlashCommandStringOption) =>
          option
-            .setName("choice")
+            .setName("notification")
             .setDescription(
                "Choose weather to opt in or out of coin product notifications"
             )
             .setRequired(true)
-            .addChoice("in", "in")
-            .addChoice("out", "out")
+            .addChoice("on", "on")
+            .addChoice("off", "off")
       ),
 
-   async execute(interaction: any) {
+   async execute(interaction: Interaction) {
       let userChoice = String(interaction).split(":")[1];
-      console.log("execute userChoice : %s", userChoice); // __AUTO_GENERATED_PRINT_VAR__
-
-      // checkCoinProduct();
-
-      let user: string = interaction.user; // get the user that sent the command
-      let newConfig: Iconfig = updateUser(user);
+      let user: User = interaction.user; // get the user that sent the command
+      let newConfig: Iconfig = updateUsers(user); // TODO: update user should be based on user selection
       console.log("execute newConfig: %s", newConfig.coin_product_alert_users); // __AUTO_GENERATED_PRINT_VAR__
 
       await interaction.reply(

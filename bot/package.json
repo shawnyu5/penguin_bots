@@ -10,7 +10,7 @@
   },
   "name": "penguin_bot",
   "version": "1.0.0",
-  "main": "./src/js/bot.js",
+  "main": "./build/bot.js",
   "scripts": {
     "compile": "tsc -w",
     "run": "nodemon",

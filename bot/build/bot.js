@@ -41,4 +41,4 @@ client.on("interactionCreate", async (interaction) => {
         });
     }
 });
-client.login(require("../../config.json").token);
+client.login(require("../config.json").token);

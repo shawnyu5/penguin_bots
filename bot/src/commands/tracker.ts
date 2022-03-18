@@ -2,7 +2,7 @@ import { ApplicationCommandType } from "discord-api-types";
 import { MessageEmbed } from "discord.js";
 const { SlashCommandBuilder } = require("@discordjs/builders");
 import { Api } from "../api/api";
-let config = require("../../../config.json");
+let config = require("../../config.json");
 
 interface IProduct {
    _id: string;

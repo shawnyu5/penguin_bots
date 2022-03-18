@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import { SlashCommandBuilder } from "@discordjs/builders";
 const rest_1 = require("@discordjs/rest");
 const v9_1 = require("discord-api-types/v9");
-const { clientID, guildID, token } = require("../../config.json");
+const { clientID, guildID, token } = require("../config.json");
 const fs = require("fs");
 // container for all our commands
 const commands = [];
