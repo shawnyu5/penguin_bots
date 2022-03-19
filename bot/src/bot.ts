@@ -1,8 +1,9 @@
+import { Utils } from "discord-api-types";
 import { Client, Collection, Intents } from "discord.js";
 require("dotenv").config();
 const fs = require("fs");
 require("./deploy-commands");
-import { checkCoinProduct } from "./utils";
+import { checkCoinProduct, sendMessage } from "./utils";
 
 const client = new Client({
    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -31,6 +32,9 @@ client.on("ready", () => {
    setInterval(() => {
       let coinProduct = checkCoinProduct();
       console.log("(anon)#(anon) coinProduct: %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
+      if (coinProduct) {
+         sendMessage(client, "development", coinProduct);
+      }
    }, 5000);
 });
 

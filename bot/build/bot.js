@@ -26,6 +26,9 @@ client.on("ready", () => {
     setInterval(() => {
         let coinProduct = (0, utils_1.checkCoinProduct)();
         console.log("(anon)#(anon) coinProduct: %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
+        if (coinProduct) {
+            (0, utils_1.sendMessage)(client, "development", coinProduct);
+        }
     }, 5000);
 });
 client.on("interactionCreate", async (interaction) => {

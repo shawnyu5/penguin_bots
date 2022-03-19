@@ -30,10 +30,8 @@ function sendMessage(
  * check if the current product on penguin open box is a coin product
  * @return {boolean} whether the product is a coin product
  */
-function checkCoinProduct(): boolean {
+function checkCoinProduct(): string {
    let output: string | null = null;
-   // const channel = <client>.channels.cache.get('<id>');
-   // channel.send("<content>");
    exec(
       "python3 /home/shawn/python/penguin_bots/coin_products/coin_products.py",
       (err: any, stdout: any, stderr: any) => {
@@ -47,9 +45,9 @@ function checkCoinProduct(): boolean {
    );
 
    if (output != null) {
-      return true;
+      return output;
    } else {
-      return false;
+      return "";
    }
 }
 

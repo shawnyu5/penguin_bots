@@ -18,18 +18,29 @@ const exec = require("child_process").exec;
 function addUser(user) {
     let updatedConfig = config_json_1.default;
     let users = updatedConfig.coin_product_alert_users;
-    // only add user if it is not recorded right now
     let found = users.find((element) => {
         element == user.id;
     });
-    if (found) {
+    // only add user if it is not recorded right now
+    if (!found) {
         users.push(user.id);
     }
     updatedConfig = { ...updatedConfig, coin_product_alert_users: users };
     return updatedConfig;
 }
-// TODO: implement function to delete a user
-function deleteUser(user) { }
+/**
+ * @param user - the user to be deleted
+ * @returns the updated config object with the user removed
+ */
+function deleteUser(user) {
+    let updatedConfig = config_json_1.default;
+    console.log(updatedConfig); // __AUTO_GENERATED_PRINT_VAR__
+    let index = updatedConfig.coin_product_alert_users.findIndex((element) => element == user.id);
+    if (index >= 0) {
+        updatedConfig.coin_product_alert_users.splice(index, 1);
+    }
+    return updatedConfig;
+}
 module.exports = {
     data: new builders_1.SlashCommandBuilder()
         .setName("alert")
@@ -45,8 +56,7 @@ module.exports = {
         let user = interaction.user; // get the user that sent the command
         if (userChoice == "on") {
             let newConfig = addUser(user);
-            // console.log("execute newConfig: %s", newConfig); // __AUTO_GENERATED_PRINT_VAR__
-            console.log((0, fs_1.readFileSync)("./config.json", "utf8"));
+            console.log("execute#if JSON.stringify(newConfig): %s", JSON.stringify(newConfig)); // __AUTO_GENERATED_PRINT_VAR__
             (0, fs_1.writeFileSync)("./config.json", JSON.stringify(newConfig), (err) => {
                 if (!err) {
                     console.log("Config.json updated");
@@ -58,6 +68,15 @@ module.exports = {
             await interaction.reply(`${user} recorded`);
         }
         else {
+            let newConfig = deleteUser(user);
+            (0, fs_1.writeFileSync)("./config.json", JSON.stringify(newConfig), (err) => {
+                if (!err) {
+                    console.log("Config.json updated");
+                }
+                else {
+                    console.log("Config.json failed up date");
+                }
+            });
             await interaction.reply("Nothing to do!");
         }
     },

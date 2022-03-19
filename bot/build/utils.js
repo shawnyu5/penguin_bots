@@ -27,8 +27,6 @@ exports.sendMessage = sendMessage;
  */
 function checkCoinProduct() {
     let output = null;
-    // const channel = <client>.channels.cache.get('<id>');
-    // channel.send("<content>");
     exec("python3 /home/shawn/python/penguin_bots/coin_products/coin_products.py", (err, stdout, stderr) => {
         console.log("execute#(anon) err: %s", err.code); // __AUTO_GENERATED_PRINT_VAR__
         console.log("(anon) stdout: %s", stdout); // __AUTO_GENERATED_PRINT_VAR__
@@ -38,10 +36,10 @@ function checkCoinProduct() {
         }
     });
     if (output != null) {
-        return true;
+        return output;
     }
     else {
-        return false;
+        return "";
     }
 }
 exports.checkCoinProduct = checkCoinProduct;
