@@ -1,17 +1,7 @@
-let { spawn } = require("child_process");
-let exec = require("child_process").exec;
+const { Injectable, Logger } = require('@nestjs/common');
+const { Cron } = require('@nestjs/schedule');
 
-let output = spawn("python3", [
-   "/home/shawn/python/penguin_bots/bot/src/scratch/scratch.py",
-]);
-
-output.stdout.on("data", (data) => {
-   // console.log("(anon) data: %s", data); // __AUTO_GENERATED_PRINT_VAR__
-});
-
-exec(
-   "python3 /home/shawn/python/penguin_bots/bot/src/scratch/scratch.py",
-   (err, stdout, stderr) => {
-      console.log("(anon) stdout: %s", stdout); // __AUTO_GENERATED_PRINT_VAR__
-   }
-);
+ @Cron('45 * * * * *')
+function handleCron() {
+   this.logger.debug('Called when the current second is 45');
+}

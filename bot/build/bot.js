@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 require("dotenv").config();
 const fs = require("fs");
 require("./deploy-commands");
+const utils_1 = require("./utils");
 const client = new discord_js_1.Client({
     intents: [discord_js_1.Intents.FLAGS.GUILDS, discord_js_1.Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -22,6 +23,10 @@ for (const file of commandFiles) {
 client.on("ready", () => {
     // @ts-ignore
     console.log(`${client.user.tag} logged in`);
+    setInterval(() => {
+        let coinProduct = (0, utils_1.checkCoinProduct)();
+        console.log("(anon)#(anon) coinProduct: %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
+    }, 5000);
 });
 client.on("interactionCreate", async (interaction) => {
     if (!interaction.isCommand())

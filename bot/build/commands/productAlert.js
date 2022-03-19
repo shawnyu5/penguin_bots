@@ -30,19 +30,6 @@ function addUser(user) {
 }
 // TODO: implement function to delete a user
 function deleteUser(user) { }
-function checkCoinProduct() {
-    let output;
-    // const channel = <client>.channels.cache.get('<id>');
-    // channel.send("<content>");
-    exec("python3 /home/shawn/python/penguin_bots/coin_products/coin_products.py", (err, stdout, stderr) => {
-        console.log("execute#(anon) err: %s", err.code); // __AUTO_GENERATED_PRINT_VAR__
-        console.log("(anon) stdout: %s", stdout); // __AUTO_GENERATED_PRINT_VAR__
-        // only record output if script exited successfull
-        if (err.code == 0) {
-            output = stdout;
-        }
-    });
-}
 module.exports = {
     data: new builders_1.SlashCommandBuilder()
         .setName("alert")
@@ -68,7 +55,7 @@ module.exports = {
                     console.log("Config.json failed up date");
                 }
             });
-            await interaction.reply(`<@${user}> recorded`);
+            await interaction.reply(`${user} recorded`);
         }
         else {
             await interaction.reply("Nothing to do!");
