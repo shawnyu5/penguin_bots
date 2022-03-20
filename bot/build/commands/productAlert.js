@@ -31,6 +31,7 @@ function addUser(user) {
     return updatedConfig;
 }
 /**
+ * delete a user from config object and return the newly modified object
  * @param user - user object to be deleted
  * @returns the updated config object with the user removed
  */

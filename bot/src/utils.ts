@@ -35,7 +35,7 @@ function sendMessage(
 }
 
 /**
- * @returns the current product if it is a coin product. Other wise return null
+ * @returns check if the current product from python script is a coin product. Other wise return null
  */
 function checkCoinProduct(): string | null {
    let output: string | null = null;

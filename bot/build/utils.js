@@ -29,7 +29,7 @@ function sendMessage(client, channelName, message) {
 }
 exports.sendMessage = sendMessage;
 /**
- * @returns the current product if it is a coin product. Other wise return null
+ * @returns check if the current product from python script is a coin product. Other wise return null
  */
 function checkCoinProduct() {
     let output = null;
