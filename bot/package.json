@@ -15,7 +15,7 @@
   "scripts": {
     "compile": "tsc -w",
     "run": "nodemon",
-    "start": "concurrently \"npm:run\" \"npm:compile\"",
+    "start": "node .",
     "test": "jest --watch"
   },
   "jest": {

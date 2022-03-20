@@ -39,7 +39,6 @@ def if_interested(title: str) -> bool:
         if title.lower() in product_titles:
             return False
         else:
-            print("Product is interesting")
             return True
 
 

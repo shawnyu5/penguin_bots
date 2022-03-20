@@ -1,12 +1,20 @@
 import { Client } from "discord.js";
 import { writeFileSync } from "fs";
-const exec = require("child_process").exec;
+// const exec = require("child_process").execSync;
+import { execSync } from "child_process";
 
-/* sends a message to a channel name
+/*
  * @param {Client} client the client
  * @param {string} channelName the channel name to send the message
  * @param {string} message the message to send
  * @return {boolean} if the message was successfully send
+ */
+
+/**
+ * @param client - the client
+ * @param channelName - name of the channel to send the message
+ * @param message - the message to be sent
+ * @returns if message was send successfully
  */
 function sendMessage(
    client: Client,
@@ -15,7 +23,7 @@ function sendMessage(
 ): boolean {
    const channel = client.channels.cache.find((ch) => {
       // @ts-ignore
-      return ch.name == "development";
+      return ch.name == channelName;
    });
 
    if (channel) {
@@ -26,29 +34,15 @@ function sendMessage(
    return false;
 }
 
-/*
- * check if the current product on penguin open box is a coin product
- * @return {boolean} whether the product is a coin product
+/**
+ * @returns the current product if it is a coin product. Other wise return null
  */
-function checkCoinProduct(): string {
+function checkCoinProduct(): string | null {
    let output: string | null = null;
-   exec(
-      "python3 /home/shawn/python/penguin_bots/coin_products/coin_products.py",
-      (err: any, stdout: any, stderr: any) => {
-         console.log("execute#(anon) err: %s", err.code); // __AUTO_GENERATED_PRINT_VAR__
-         console.log("(anon) stdout: %s", stdout); // __AUTO_GENERATED_PRINT_VAR__
-         // only record output if script exited successfull
-         if (err.code == 0) {
-            output = stdout;
-         }
-      }
-   );
+   let result = execSync("python3 ../coin_products/coin_products.py");
+   console.log("checkCoinProduct result: %s", result); // __AUTO_GENERATED_PRINT_VAR__
 
-   if (output != null) {
-      return output;
-   } else {
-      return "";
-   }
+   return output;
 }
 
 export { checkCoinProduct, sendMessage };

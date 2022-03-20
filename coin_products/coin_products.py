@@ -12,32 +12,41 @@ sys.path.insert(
 )  # add directory to system path in this program
 import utils  # type: ignore
 
-# gets url from .env and returns a soup object
 def get_webpage(product: dict):
+    """
+
+    Args:
+        product (dict): product dictiry
+
+    Returns:
+        BeautifulSoup object from the webpage
+    """
     url = product["url"]
     # get web html
     html_page = requests.get(url).text
     return BeautifulSoup(html_page, "html.parser")
 
 
-def validate(product):
-    # make sure it's a coin product
-    not_coin_product = lambda title: (print(title, "is not a coin product"), exit(1))
+def validate(product: dict):
+    """
+    makes sure the product is a coin product
 
+    Args:
+        product (dict): the product to be validated
+    """
     if ("coin" or "coins") not in product["description"].lower() or (
         "coin" or "coins"
     ) not in product["title"].lower():
-        not_coin_product(product["title"])
+        print(product["title"], "is not a coin product")
+        exit(1)
 
     with open("product_info.txt", "+r") as file:
         if file.read() != product["title"]:
-            print("product changed")
+            #  print("product changed")
 
             # overwrite current product title
             with open("product_info.txt", "w") as file:
                 file.write(product["title"])
-        else:
-            print("product has not changed")
 
 
 def get_product_info(soup, product):
@@ -47,10 +56,11 @@ def get_product_info(soup, product):
         # product description
         product["description"] = soup.find("div", class_="product_subsection").text.format()  # type: ignore
     except:
-        print("There are no open box product currently")
+        raise AttributeError("There are no open box products currently")
+        #  print("There are no open box product currently")
 
     # escape all "
-    product["description"] = product["description"].replace('"', '\\"')
+    #  product["description"] = product["description"].replace('"', '\\"')
 
 
 def main():
@@ -69,7 +79,7 @@ def main():
         print("Product is not interesting...")
         exit(1)
 
-    # make sure current product is different from previous product sent in email
+    # current product is a coin product
     validate(product)
 
     print(json.dumps(product))
