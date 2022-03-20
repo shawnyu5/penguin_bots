@@ -45,15 +45,6 @@ client.on("ready", () => {
    // @ts-ignore
    console.log(`${client.user.tag} logged in`);
 
-   try {
-      let coinProduct = checkCoinProduct();
-      let message: string = buildMessage("This is a coin product");
-      sendMessage(client, "development", message);
-   } catch (error) {
-      console.log("ERROR: " + error);
-   }
-   // run python script every 5 minutes
-   // setInterval(() => {
    // try {
    // let coinProduct = checkCoinProduct();
    // let message: string = buildMessage("This is a coin product");
@@ -61,7 +52,16 @@ client.on("ready", () => {
    // } catch (error) {
    // console.log("ERROR: " + error);
    // }
-   // }, 300000);
+   // run python script every 5 minutes
+   setInterval(() => {
+      try {
+         let coinProduct = checkCoinProduct();
+         let message: string = buildMessage("This is a coin product");
+         sendMessage(client, "development", message);
+      } catch (error) {
+         console.log("ERROR: " + error);
+      }
+   }, 300000);
    // 300000 - 5 mins in milliseconds
 });
 
