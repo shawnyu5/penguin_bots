@@ -1,12 +1,13 @@
 import { Utils } from "discord-api-types";
-import { Client, Collection, Intents } from "discord.js";
+import { Client, Collection, Intents, MessageEmbed } from "discord.js";
 require("dotenv").config();
 const fs = require("fs");
 require("./deploy-commands");
-import { checkCoinProduct, sendMessage } from "./utils";
+import { checkCoinProduct, getChannelByName } from "./utils";
 import { IConfig } from "./types/config";
 import { execSync } from "child_process";
 import config from "../config.json";
+import { ICoinProduct } from "./types/coinProduct";
 
 const client = new Client({
    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -32,12 +33,14 @@ for (const file of commandFiles) {
  * @param coinProduct - the coin product
  * @returns a message pining all users in config.json about the coinProduct
  */
-function buildMessage(coinProduct: string): string {
+function buildMessage(coinProduct: ICoinProduct): string {
    let message: string = "";
    let users = config.coin_product_alert_users.forEach((user) => {
-      message += `<@${user}> `;
+      message += `<@${user}>
+      `;
    });
-   message += coinProduct;
+   message += `title: ${coinProduct.title}
+   url: ${coinProduct.url}`;
    return message;
 }
 
@@ -45,18 +48,22 @@ client.on("ready", () => {
    // @ts-ignore
    console.log(`${client.user.tag} logged in`);
 
-   // run python script every 5 minutes
-   let execution = 0;
+   // // run python script every 5 minutes
+   // let execution = 0;
    setInterval(() => {
-      try {
-         let coinProduct = checkCoinProduct();
-         let message: string = buildMessage("This is a coin product");
-         sendMessage(client, "notifications", message);
-      } catch (error) {
-         console.log("ERROR: " + error);
+      let coinProduct = checkCoinProduct();
+      let message: string = buildMessage(coinProduct);
+      console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
+      let channel = getChannelByName(client, "notifications");
+
+      if (channel) {
+         let embed = new MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("Coin product alert")
+            .setDescription(message);
+
+         channel.send({ embeds: [embed] });
       }
-      console.log(`Execution ${execution}`);
-      execution++;
    }, 120000);
    // 120000 - 2 minutes in milliseconds
    // 300000 - 5 mins in milliseconds

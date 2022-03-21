@@ -1,7 +1,8 @@
-import { Client } from "discord.js";
+import { AnyChannel, Channel, Client } from "discord.js";
 import { writeFileSync } from "fs";
 // const exec = require("child_process").execSync;
 import { execSync } from "child_process";
+import { ICoinProduct } from "./types/coinProduct";
 
 /*
  * @param {Client} client the client
@@ -11,38 +12,28 @@ import { execSync } from "child_process";
  */
 
 /**
- * @param client - the client
- * @param channelName - name of the channel to send the message
- * @param message - the message to be sent
- * @returns if message was send successfully
+ * @param client - discord client
+ * @param channelName - name of channel to search for
+ * @returns channel information with the name passed in. If not found. undefined
  */
-function sendMessage(
+function getChannelByName(
    client: Client,
-   channelName: string,
-   message: string
-): boolean {
+   channelName: string
+): AnyChannel | undefined {
    const channel = client.channels.cache.find((ch) => {
       // @ts-ignore
       return ch.name == channelName;
    });
-
-   if (channel) {
-      // @ts-ignore
-      channel.send(message);
-      return true;
-   }
-   return false;
+   return channel;
 }
 
 /**
- * @returns check if the current product from python script is a coin product. Other wise return null
+ * @returns return json message from python script. Other wise return null
  */
-function checkCoinProduct(): string | null {
-   let output: string | null = null;
+function checkCoinProduct(): ICoinProduct {
    let result = execSync("python3 ../coin_products/coin_products.py");
-   console.log("checkCoinProduct result: %s", result); // __AUTO_GENERATED_PRINT_VAR__
 
-   return output;
+   return JSON.parse(String(result));
 }
 
-export { checkCoinProduct, sendMessage };
+export { checkCoinProduct, getChannelByName };

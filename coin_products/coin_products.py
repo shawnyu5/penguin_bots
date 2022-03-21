@@ -7,10 +7,14 @@ import os
 import sys
 import json
 
+path = os.getcwd()
+parent_dir = os.path.abspath(os.path.join(path, os.pardir))
+
 sys.path.insert(
-    1, "/home/shawn/python/penguin_bots/"
-)  # add directory to system path in this program
-import utils  # type: ignore
+    1, parent_dir
+)  # add parent directory to system path in this program to access utils
+import utils
+
 
 def get_webpage(product: dict):
     """
@@ -65,7 +69,7 @@ def get_product_info(soup, product):
 
 def main():
 
-    product = {"title": str, "description": None, "url": None}
+    product = {"title": str, "description": str, "url": str}
 
     product["url"] = "https://www.penguinmagic.com/openbox/"
 
@@ -82,6 +86,7 @@ def main():
     # current product is a coin product
     validate(product)
 
+    del product["description"]
     print(json.dumps(product))
 
 

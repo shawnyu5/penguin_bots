@@ -31,27 +31,30 @@ for (const file of commandFiles) {
 function buildMessage(coinProduct) {
     let message = "";
     let users = config_json_1.default.coin_product_alert_users.forEach((user) => {
-        message += `<@${user}> `;
+        message += `<@${user}>
+      `;
     });
-    message += coinProduct;
+    message += `title: ${coinProduct.title}
+   url: ${coinProduct.url}`;
     return message;
 }
 client.on("ready", () => {
     // @ts-ignore
     console.log(`${client.user.tag} logged in`);
-    // run python script every 5 minutes
-    let execution = 0;
+    // // run python script every 5 minutes
+    // let execution = 0;
     setInterval(() => {
-        try {
-            let coinProduct = (0, utils_1.checkCoinProduct)();
-            let message = buildMessage("This is a coin product");
-            (0, utils_1.sendMessage)(client, "notifications", message);
+        let coinProduct = (0, utils_1.checkCoinProduct)();
+        let message = buildMessage(coinProduct);
+        console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
+        let channel = (0, utils_1.getChannelByName)(client, "notifications");
+        if (channel) {
+            let embed = new discord_js_1.MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Coin product alert")
+                .setDescription(message);
+            channel.send({ embeds: [embed] });
         }
-        catch (error) {
-            console.log("ERROR: " + error);
-        }
-        console.log(`Execution ${execution}`);
-        execution++;
     }, 120000);
     // 120000 - 2 minutes in milliseconds
     // 300000 - 5 mins in milliseconds
