@@ -1,8 +1,8 @@
 import { AnyChannel, Channel, Client } from "discord.js";
-import { writeFileSync } from "fs";
 // const exec = require("child_process").execSync;
 import { execSync } from "child_process";
 import { ICoinProduct } from "./types/coinProduct";
+import config from "../config.json";
 
 /*
  * @param {Client} client the client
@@ -36,4 +36,19 @@ function checkCoinProduct(): ICoinProduct {
    return JSON.parse(String(result));
 }
 
-export { checkCoinProduct, getChannelByName };
+/**
+ * @param coinProduct - the coin product
+ * @returns a message pining all users in config.json about the coinProduct
+ */
+function buildMessage(coinProduct: ICoinProduct): string {
+   let message: string = "";
+   config.coin_product_alert_users.forEach((user) => {
+      message += `<@${user}>
+      `;
+   });
+   message += `title: ${coinProduct.title}
+   url: ${coinProduct.url}`;
+   return message;
+}
+
+export { checkCoinProduct, getChannelByName, buildMessage };

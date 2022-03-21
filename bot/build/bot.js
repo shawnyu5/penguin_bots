@@ -5,16 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 require("dotenv").config();
-const fs = require("fs");
-require("./deploy-commands");
+const fs_1 = __importDefault(require("fs"));
+const deploy_commands_1 = require("./deploy-commands");
 const utils_1 = require("./utils");
 const config_json_1 = __importDefault(require("../config.json"));
 const client = new discord_js_1.Client({
     intents: [discord_js_1.Intents.FLAGS.GUILDS, discord_js_1.Intents.FLAGS.GUILD_MESSAGES],
 });
+const onStart = new deploy_commands_1.OnStart();
 //@ts-ignore
 client.commands = new discord_js_1.Collection();
-const commandFiles = fs
+const commandFiles = fs_1.default
     .readdirSync(__dirname + "/commands")
     .filter((file) => file.endsWith(".js"));
 for (const file of commandFiles) {
@@ -24,28 +25,12 @@ for (const file of commandFiles) {
     // @ts-ignore
     client.commands.set(command.data.name, command);
 }
-/**
- * @param coinProduct - the coin product
- * @returns a message pining all users in config.json about the coinProduct
- */
-function buildMessage(coinProduct) {
-    let message = "";
-    let users = config_json_1.default.coin_product_alert_users.forEach((user) => {
-        message += `<@${user}>
-      `;
-    });
-    message += `title: ${coinProduct.title}
-   url: ${coinProduct.url}`;
-    return message;
-}
 client.on("ready", () => {
     // @ts-ignore
     console.log(`${client.user.tag} logged in`);
-    // // run python script every 5 minutes
-    // let execution = 0;
     setInterval(() => {
         let coinProduct = (0, utils_1.checkCoinProduct)();
-        let message = buildMessage(coinProduct);
+        let message = (0, utils_1.buildMessage)(coinProduct);
         console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
         let channel = (0, utils_1.getChannelByName)(client, "notifications");
         if (channel) {
@@ -76,5 +61,9 @@ client.on("interactionCreate", async (interaction) => {
             ephemeral: true,
         });
     }
+});
+client.on("guildCreate", function (guild) {
+    let allCommands = onStart.readAllCommands();
+    onStart.registerCommands(config_json_1.default.clientID, guild.id, allCommands);
 });
 client.login(require("../config.json").token);
