@@ -23,7 +23,25 @@ class OnStart {
         }
         return commands;
     }
-    commands = this.readAllCommands();
+    /**
+     * read all help docs from command modules and store in array
+     * @returns json array of help docs
+     */
+    readAllHelpDocs() {
+        const helpDocs = [];
+        const commandFiles = fs_1.default
+            .readdirSync(__dirname + "/commands")
+            .filter((file) => file.endsWith(".js"));
+        for (const file of commandFiles) {
+            const command = require(`${__dirname}/commands/${file}`);
+            helpDocs.push(command.help);
+        }
+        // console.log(
+        // "OnStart#readAllHelpDocs helpDocs: %s",
+        // JSON.stringify(helpDocs)
+        // ); // __AUTO_GENERATED_PRINT_VAR__
+        return helpDocs;
+    }
     /**
      * @param clientID - ClientID
      * @param guildID - guildID

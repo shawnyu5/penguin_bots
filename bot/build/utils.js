@@ -27,7 +27,7 @@ function getChannelByName(client, channelName) {
 }
 exports.getChannelByName = getChannelByName;
 /**
- * @returns return json message from python script. Other wise return null
+ * @returns return json string from python script. Other wise return null
  */
 function checkCoinProduct() {
     let result = (0, child_process_1.execSync)("python3 ../coin_products/coin_products.py");

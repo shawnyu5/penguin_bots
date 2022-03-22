@@ -84,4 +84,9 @@ module.exports = {
          await interaction.reply(`${user} removed from notifications list`);
       }
    },
+   help: {
+      name: "alert",
+      Description: "Chose to opt in or out of coin product alerts",
+      usage: "/alert notification: on | off",
+   },
 };

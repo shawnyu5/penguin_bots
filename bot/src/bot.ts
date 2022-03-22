@@ -30,6 +30,13 @@ for (const file of commandFiles) {
 client.on("ready", () => {
    // @ts-ignore
    console.log(`${client.user.tag} logged in`);
+   // let allCommands = onStart.readAllCommands();
+   // onStart.registerCommands(config.clientID, guild.id, allCommands);
+
+   let allCommands = onStart.readAllCommands();
+   client.guilds.cache.forEach((guild) => {
+      onStart.registerCommands(config.clientID, guild.id, allCommands);
+   });
 
    setInterval(() => {
       let coinProduct = checkCoinProduct();
