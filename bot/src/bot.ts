@@ -38,6 +38,7 @@ client.on("ready", () => {
       onStart.registerCommands(config.clientID, guild.id, allCommands);
    });
 
+   let interval = 0;
    setInterval(() => {
       let coinProduct = checkCoinProduct();
       if (!coinProduct) {
@@ -56,6 +57,8 @@ client.on("ready", () => {
 
          channel.send({ embeds: [embed] });
       }
+      console.log(interval);
+      interval++;
    }, 120000);
    // 120000 - 2 minutes in milliseconds
    // 300000 - 5 mins in milliseconds
