@@ -36,9 +36,12 @@ client.on("ready", () => {
     });
     setInterval(() => {
         let coinProduct = (0, utils_1.checkCoinProduct)();
+        if (!coinProduct) {
+            return;
+        }
         let message = (0, utils_1.buildMessage)(coinProduct);
         console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
-        let channel = (0, utils_1.getChannelByName)(client, "notifications");
+        let channel = (0, utils_1.getChannelByName)(client, "development");
         if (channel) {
             let embed = new discord_js_1.MessageEmbed()
                 .setColor("RANDOM")

@@ -12,13 +12,11 @@ module.exports = {
         .setDescription("name of command to get help page of")),
     async execute(interaction) {
         let userInput = String(interaction).split(":")[1];
-        console.log("execute Interaction: %s", interaction); // __AUTO_GENERATED_PRINT_VAR__
         const onStart = new deploy_commands_1.OnStart();
         if (userInput) {
             let helpDocs = onStart.readAllHelpDocs();
             console.log("execute helpDocs: %s", JSON.stringify(helpDocs)); // __AUTO_GENERATED_PRINT_VAR__
             helpDocs.forEach((doc) => {
-                console.log("execute#if#(anon) doc: %s", doc); // __AUTO_GENERATED_PRINT_VAR__
                 if (doc && doc.name == userInput) {
                     let reply = new discord_js_1.MessageEmbed()
                         .setColor("RANDOM")
@@ -28,10 +26,16 @@ module.exports = {
                                   Usage: ${doc.usage}
                                   `);
                     interaction.reply({ embeds: [reply] });
-                    return;
                 }
             });
         }
-        // interaction.reply("hi");
+        else {
+            interaction.reply("Fuck you, google it");
+        }
+    },
+    help: {
+        name: "help",
+        Description: "A help page for this bot",
+        usage: "/help (command: <command name>)",
     },
 };

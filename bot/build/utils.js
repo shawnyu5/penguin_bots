@@ -30,13 +30,22 @@ exports.getChannelByName = getChannelByName;
  * @returns return json string from python script. Other wise return null
  */
 function checkCoinProduct() {
-    let result = (0, child_process_1.execSync)("python3 ../coin_products/coin_products.py");
-    return JSON.parse(String(result));
+    // let result = execSync("python3 ../coin_products/coin_products.py");
+    try {
+        let result = (0, child_process_1.execSync)("python3 ../coin_products/coin_products.py");
+        console.log("checkCoinProduct result: %s", result); // __AUTO_GENERATED_PRINT_VAR__
+        return JSON.parse(String(result));
+    }
+    catch (error) {
+        // console.log(error);
+        return null;
+    }
 }
 exports.checkCoinProduct = checkCoinProduct;
 /**
+ * generates a message pinging all users in config.json about the coinProduct
  * @param coinProduct - the coin product
- * @returns a message pining all users in config.json about the coinProduct
+ * @returns A message string
  */
 function buildMessage(coinProduct) {
     let message = "";

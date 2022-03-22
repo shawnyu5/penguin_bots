@@ -18,13 +18,11 @@ module.exports = {
 
    async execute(interaction: Interaction) {
       let userInput = String(interaction).split(":")[1];
-      console.log("execute Interaction: %s", interaction); // __AUTO_GENERATED_PRINT_VAR__
       const onStart = new OnStart();
       if (userInput) {
          let helpDocs: Array<IHelpDocs> = onStart.readAllHelpDocs();
          console.log("execute helpDocs: %s", JSON.stringify(helpDocs)); // __AUTO_GENERATED_PRINT_VAR__
          helpDocs.forEach((doc) => {
-            console.log("execute#if#(anon) doc: %s", doc); // __AUTO_GENERATED_PRINT_VAR__
             if (doc && doc.name == userInput) {
                let reply = new MessageEmbed()
                   .setColor("RANDOM")
@@ -34,10 +32,16 @@ module.exports = {
                                   Usage: ${doc.usage}
                                   `);
                interaction.reply({ embeds: [reply] });
-               return;
             }
          });
+      } else {
+         interaction.reply("Fuck you, google it");
       }
-      // interaction.reply("hi");
+   },
+
+   help: {
+      name: "help",
+      Description: "A help page for this bot",
+      usage: "/help (command: <command name>)",
    },
 };

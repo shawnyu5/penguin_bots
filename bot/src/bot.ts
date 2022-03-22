@@ -40,9 +40,13 @@ client.on("ready", () => {
 
    setInterval(() => {
       let coinProduct = checkCoinProduct();
+      if (!coinProduct) {
+         return;
+      }
+
       let message: string = buildMessage(coinProduct);
       console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
-      let channel = getChannelByName(client, "notifications");
+      let channel = getChannelByName(client, "development");
 
       if (channel) {
          let embed = new MessageEmbed()

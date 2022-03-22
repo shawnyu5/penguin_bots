@@ -58,4 +58,9 @@ module.exports = {
             .setColor("RANDOM");
         await interaction.reply({ embeds: [message] });
     },
+    help: {
+        name: "average",
+        Description: "Reteieves the average price based on a search keyword",
+        usage: "/average keyword: <search word>",
+    },
 };
