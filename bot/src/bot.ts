@@ -46,7 +46,7 @@ client.on("ready", () => {
 
       let message: string = buildMessage(coinProduct);
       console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
-      let channel = getChannelByName(client, "development");
+      let channel = getChannelByName(client, "notifications");
 
       if (channel) {
          let embed = new MessageEmbed()
