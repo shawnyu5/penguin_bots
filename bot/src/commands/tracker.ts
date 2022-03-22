@@ -78,7 +78,7 @@ module.exports = {
 
    help: {
       name: "average",
-      Description: "Reteieves the average price based on a search keyword",
+      Description: "Retrieves the average price based on a search keyword",
       usage: "/average keyword: <search word>",
    },
 };
