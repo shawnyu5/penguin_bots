@@ -6,9 +6,11 @@ from bs4 import BeautifulSoup
 import os
 import sys
 import json
+from pprint import pprint
 
-path = os.getcwd()
-parent_dir = os.path.abspath(os.path.join(path, os.pardir))
+cwd = os.getcwd()
+parent_dir = os.path.abspath(os.path.join(cwd, os.pardir))
+print(f" parent_dir: {str(parent_dir)}")  # __AUTO_GENERATED_PRINT_VAR__
 
 sys.path.insert(
     1, parent_dir
@@ -38,22 +40,40 @@ def validate(product: dict):
     Args:
         product (dict): the product to be validated
     """
-    if ("coin" or "coins") not in product["description"].lower() or (
+    # NOTE: condition should be `and`
+    if ("coin" or "coins") not in product["description"].lower() and (
         "coin" or "coins"
     ) not in product["title"].lower():
         print(product["title"], "is not a coin product")
         exit(1)
 
-    with open("product_info.txt", "+r") as file:
+    with open(
+        os.path.join(os.path.dirname(__file__), "product_info.txt"), "+r"
+    ) as file:
         if file.read() != product["title"]:
             #  print("product changed")
 
             # overwrite current product title
-            with open("product_info.txt", "w") as file:
+            with open(
+                os.path.join(os.path.dirname(__file__), "product_info.txt"), "w"
+            ) as file:
                 file.write(product["title"])
+        else:
+            # product is the same
+            raise AttributeError("Product has not changed")
 
 
 def get_product_info(soup, product):
+    """
+    get the product info of a product
+
+    Args:
+        soup (): The soup object of the product
+        product (): The product dictionary
+
+    Returns:
+        None
+    """
     try:
         # find product title
         product["title"] = soup.find("div", id="product_name").h1.text  # type:ignore
@@ -63,15 +83,12 @@ def get_product_info(soup, product):
         raise AttributeError("There are no open box products currently")
         #  print("There are no open box product currently")
 
-    # escape all "
-    #  product["description"] = product["description"].replace('"', '\\"')
-
 
 def main():
-
     product = {"title": str, "description": str, "url": str}
 
     product["url"] = "https://www.penguinmagic.com/openbox/"
+    # product["url"] = "https://www.penguinmagic.com/p/1797"
 
     # create soup object
     soup = get_webpage(product=product)
@@ -86,7 +103,10 @@ def main():
     # current product is a coin product
     validate(product)
 
+    # delete the description
     del product["description"]
+
+    # print product dictionary to stdout
     print(json.dumps(product))
 
 

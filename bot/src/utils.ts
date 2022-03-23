@@ -48,13 +48,14 @@ function checkCoinProduct(): ICoinProduct | null {
  * @returns A message string
  */
 function buildMessage(coinProduct: ICoinProduct): string {
-   let message: string = "";
+   let message: string = "COIN PRODUCT ALERT! ";
    config.coin_product_alert_users.forEach((user) => {
-      message += `<@${user}>
-      `;
+      message += `<@${user}> `;
    });
-   message += `title: ${coinProduct.title}
-   url: ${coinProduct.url}`;
+   message += `
+
+title: ${coinProduct.title}
+url: ${coinProduct.url}`;
    return message;
 }
 

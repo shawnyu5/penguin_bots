@@ -46,13 +46,14 @@ exports.checkCoinProduct = checkCoinProduct;
  * @returns A message string
  */
 function buildMessage(coinProduct) {
-    let message = "";
+    let message = "COIN PRODUCT ALERT! ";
     config_json_1.default.coin_product_alert_users.forEach((user) => {
-        message += `<@${user}>
-      `;
+        message += `<@${user}> `;
     });
-    message += `title: ${coinProduct.title}
-   url: ${coinProduct.url}`;
+    message += `
+
+title: ${coinProduct.title}
+url: ${coinProduct.url}`;
     return message;
 }
 exports.buildMessage = buildMessage;

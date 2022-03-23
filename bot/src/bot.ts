@@ -30,8 +30,6 @@ for (const file of commandFiles) {
 client.on("ready", () => {
    // @ts-ignore
    console.log(`${client.user.tag} logged in`);
-   // let allCommands = onStart.readAllCommands();
-   // onStart.registerCommands(config.clientID, guild.id, allCommands);
 
    let allCommands = onStart.readAllCommands();
    client.guilds.cache.forEach((guild) => {
@@ -41,22 +39,8 @@ client.on("ready", () => {
    let coinProduct = checkCoinProduct();
    console.log("(anon) coinProduct : %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
    if (!coinProduct) {
-      console.log("Invaid coin product results");
+      console.log("Invaid coin product");
       return;
-   }
-
-   let message: string = buildMessage(coinProduct);
-   console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
-   let channel = getChannelByName(client, "notifications");
-   // let channel = getChannelByName(client, "development");
-
-   if (channel) {
-      let embed = new MessageEmbed()
-         .setColor("RANDOM")
-         .setTitle("Coin product alert")
-         .setDescription(message);
-
-      channel.send({ embeds: [embed] });
    }
 
    let interval = 0;
@@ -64,14 +48,10 @@ client.on("ready", () => {
       let message: string = buildMessage(coinProduct);
       console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
       let channel = getChannelByName(client, "notifications");
+      // let channel = getChannelByName(client, "development");
 
       if (channel) {
-         let embed = new MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("Coin product alert")
-            .setDescription(message);
-
-         channel.send({ embeds: [embed] });
+         channel.send(message);
       }
    }, 120000);
    // 120000 - 2 minutes in milliseconds
