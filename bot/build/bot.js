@@ -47,6 +47,7 @@ client.on("ready", () => {
         if (channel) {
             channel.send(message);
         }
+        console.log(`Execution count: ${interval}`);
     }, 120000);
     // 120000 - 2 minutes in milliseconds
     // 300000 - 5 mins in milliseconds
