@@ -28,8 +28,6 @@ for (const file of commandFiles) {
 client.on("ready", () => {
     // @ts-ignore
     console.log(`${client.user.tag} logged in`);
-    // let allCommands = onStart.readAllCommands();
-    // onStart.registerCommands(config.clientID, guild.id, allCommands);
     let allCommands = onStart.readAllCommands();
     client.guilds.cache.forEach((guild) => {
         onStart.registerCommands(config_json_1.default.clientID, guild.id, allCommands);
@@ -37,32 +35,19 @@ client.on("ready", () => {
     let coinProduct = (0, utils_1.checkCoinProduct)();
     console.log("(anon) coinProduct : %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
     if (!coinProduct) {
-        console.log("Invaid coin product results");
+        console.log("Invaid coin product");
         return;
-    }
-    let message = (0, utils_1.buildMessage)(coinProduct);
-    console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
-    let channel = (0, utils_1.getChannelByName)(client, "notifications");
-    // let channel = getChannelByName(client, "development");
-    if (channel) {
-        let embed = new discord_js_1.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle("Coin product alert")
-            .setDescription(message);
-        channel.send({ embeds: [embed] });
     }
     let interval = 0;
     setInterval(() => {
         let message = (0, utils_1.buildMessage)(coinProduct);
         console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
         let channel = (0, utils_1.getChannelByName)(client, "notifications");
+        // let channel = getChannelByName(client, "development");
         if (channel) {
-            let embed = new discord_js_1.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle("Coin product alert")
-                .setDescription(message);
-            channel.send({ embeds: [embed] });
+            channel.send(message);
         }
+        console.log(`Execution count: ${interval}`);
     }, 120000);
     // 120000 - 2 minutes in milliseconds
     // 300000 - 5 mins in milliseconds
