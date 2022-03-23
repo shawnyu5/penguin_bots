@@ -38,13 +38,29 @@ client.on("ready", () => {
       onStart.registerCommands(config.clientID, guild.id, allCommands);
    });
 
+   let coinProduct = checkCoinProduct();
+   console.log("(anon) coinProduct : %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
+   if (!coinProduct) {
+      console.log("Invaid coin product results");
+      return;
+   }
+
+   let message: string = buildMessage(coinProduct);
+   console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
+   let channel = getChannelByName(client, "notifications");
+   // let channel = getChannelByName(client, "development");
+
+   if (channel) {
+      let embed = new MessageEmbed()
+         .setColor("RANDOM")
+         .setTitle("Coin product alert")
+         .setDescription(message);
+
+      channel.send({ embeds: [embed] });
+   }
+
    let interval = 0;
    setInterval(() => {
-      let coinProduct = checkCoinProduct();
-      if (!coinProduct) {
-         return;
-      }
-
       let message: string = buildMessage(coinProduct);
       console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
       let channel = getChannelByName(client, "notifications");
@@ -57,8 +73,6 @@ client.on("ready", () => {
 
          channel.send({ embeds: [embed] });
       }
-      console.log(interval);
-      interval++;
    }, 120000);
    // 120000 - 2 minutes in milliseconds
    // 300000 - 5 mins in milliseconds

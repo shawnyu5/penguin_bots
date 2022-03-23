@@ -4,12 +4,7 @@ import { execSync } from "child_process";
 import { ICoinProduct } from "./types/coinProduct";
 import config from "../config.json";
 
-/*
- * @param {Client} client the client
- * @param {string} channelName the channel name to send the message
- * @param {string} message the message to send
- * @return {boolean} if the message was successfully send
- */
+// TODO: Unit test this stuff
 
 /**
  * @param client - discord client
@@ -33,9 +28,14 @@ function getChannelByName(
 function checkCoinProduct(): ICoinProduct | null {
    // let result = execSync("python3 ../coin_products/coin_products.py");
    try {
-      let result = execSync("python3 ../coin_products/coin_products.py");
-      console.log("checkCoinProduct result: %s", result); // __AUTO_GENERATED_PRINT_VAR__
-      return JSON.parse(String(result));
+      let result = execSync(
+         "python3 ../coin_products/coin_products.py"
+      ).toString();
+      // console.log("checkCoinProduct result.toString(): %s", result); // __AUTO_GENERATED_PRINT_VAR__
+      result = result.split("{")[1];
+      result = "{" + result;
+      // console.log(JSON.parse(result)); // __AUTO_GENERATED_PRINT_VAR__
+      return JSON.parse(result);
    } catch (error) {
       // console.log(error);
       return null;

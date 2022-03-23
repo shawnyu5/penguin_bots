@@ -7,12 +7,7 @@ exports.buildMessage = exports.getChannelByName = exports.checkCoinProduct = voi
 // const exec = require("child_process").execSync;
 const child_process_1 = require("child_process");
 const config_json_1 = __importDefault(require("../config.json"));
-/*
- * @param {Client} client the client
- * @param {string} channelName the channel name to send the message
- * @param {string} message the message to send
- * @return {boolean} if the message was successfully send
- */
+// TODO: Unit test this stuff
 /**
  * @param client - discord client
  * @param channelName - name of channel to search for
@@ -32,9 +27,12 @@ exports.getChannelByName = getChannelByName;
 function checkCoinProduct() {
     // let result = execSync("python3 ../coin_products/coin_products.py");
     try {
-        let result = (0, child_process_1.execSync)("python3 ../coin_products/coin_products.py");
-        console.log("checkCoinProduct result: %s", result); // __AUTO_GENERATED_PRINT_VAR__
-        return JSON.parse(String(result));
+        let result = (0, child_process_1.execSync)("python3 ../coin_products/coin_products.py").toString();
+        // console.log("checkCoinProduct result.toString(): %s", result); // __AUTO_GENERATED_PRINT_VAR__
+        result = result.split("{")[1];
+        result = "{" + result;
+        // console.log(JSON.parse(result)); // __AUTO_GENERATED_PRINT_VAR__
+        return JSON.parse(result);
     }
     catch (error) {
         // console.log(error);
