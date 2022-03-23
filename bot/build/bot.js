@@ -32,14 +32,16 @@ client.on("ready", () => {
     client.guilds.cache.forEach((guild) => {
         onStart.registerCommands(config_json_1.default.clientID, guild.id, allCommands);
     });
-    let coinProduct = (0, utils_1.checkCoinProduct)();
-    console.log("(anon) coinProduct : %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
-    if (!coinProduct) {
-        console.log("Invaid coin product");
-        return;
-    }
     let interval = 0;
     setInterval(() => {
+        console.log(`Execution count: ${interval}`);
+        interval++;
+        let coinProduct = (0, utils_1.checkCoinProduct)();
+        console.log("(anon) coinProduct : %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
+        if (!coinProduct) {
+            console.log("Invaid coin product");
+            return;
+        }
         let message = (0, utils_1.buildMessage)(coinProduct);
         console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
         let channel = (0, utils_1.getChannelByName)(client, "notifications");
@@ -47,7 +49,6 @@ client.on("ready", () => {
         if (channel) {
             channel.send(message);
         }
-        console.log(`Execution count: ${interval}`);
     }, 120000);
     // 120000 - 2 minutes in milliseconds
     // 300000 - 5 mins in milliseconds

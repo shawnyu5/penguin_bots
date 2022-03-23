@@ -23,7 +23,7 @@ function getChannelByName(
 }
 
 /**
- * @returns return json string from python script. Other wise return null
+ * @returns return json parsed string from `coin_products.py`. Other wise return null
  */
 function checkCoinProduct(): ICoinProduct | null {
    // let result = execSync("python3 ../coin_products/coin_products.py");
