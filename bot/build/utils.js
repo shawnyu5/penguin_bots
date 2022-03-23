@@ -7,8 +7,8 @@ exports.buildMessage = exports.getChannelByName = exports.checkCoinProduct = voi
 // const exec = require("child_process").execSync;
 const child_process_1 = require("child_process");
 const config_json_1 = __importDefault(require("../config.json"));
-// TODO: Unit test this stuff
 /**
+ * return a channel information by name
  * @param client - discord client
  * @param channelName - name of channel to search for
  * @returns channel information with the name passed in. If not found. undefined
@@ -22,6 +22,7 @@ function getChannelByName(client, channelName) {
 }
 exports.getChannelByName = getChannelByName;
 /**
+ * check if the current product is a coin product
  * @returns return json parsed string from `coin_products.py`. Other wise return null
  */
 function checkCoinProduct() {

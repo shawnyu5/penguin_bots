@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-     "types": ["node"],
+     "types": ["node", "jest"],
      "resolveJsonModule": true,
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
@@ -101,7 +101,7 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
-    "exclude": ["scratch/**"]
+     "exclude": ["scratch/**", "**/*.test.ts"]
 
   }
 }
