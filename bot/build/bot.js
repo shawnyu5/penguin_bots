@@ -44,8 +44,8 @@ client.on("ready", () => {
         }
         let message = (0, utils_1.buildMessage)(coinProduct);
         console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
-        let channel = (0, utils_1.getChannelByName)(client, "notifications");
-        // let channel = getChannelByName(client, "development");
+        // let channel = getChannelByName(client, "notifications");
+        let channel = (0, utils_1.getChannelByName)(client, "development");
         if (channel) {
             channel.send(message);
         }

@@ -17,18 +17,18 @@ import { IConfig } from "../types/config";
  * @param user - user object
  * @returns new json config object with the user added
  */
-function addUser(user: any): IConfig {
+export function addUser(user: User): IConfig {
    let updatedConfig: IConfig = config;
 
    let users: Array<string> = updatedConfig.coin_product_alert_users;
 
    // look for the user id passes in in config.json array
-   let found = users.find((element) => {
-      element == user.id;
+   let found = users.findIndex((element) => {
+      return element == user.id;
    });
 
    // only add user if it is not recorded
-   if (!found) {
+   if (found === -1) {
       users.push(user.id);
       console.log(`User ${user.username} successfully added`);
    }
@@ -37,15 +37,16 @@ function addUser(user: any): IConfig {
 }
 
 /**
- * delete a user from config object and return the newly modified object
+ * delete a user from config.json and return the newly modified object
  * @param user - user object to be deleted
  * @returns the updated config object with the user removed
  */
-function deleteUser(user: any): IConfig {
+export function deleteUser(user: User): IConfig {
    let updatedConfig: IConfig = config;
-   let index = updatedConfig.coin_product_alert_users.findIndex(
-      (element) => element == user.id
-   );
+
+   let index = updatedConfig.coin_product_alert_users.findIndex((element) => {
+      return element == user.id;
+   });
 
    if (index >= 0) {
       updatedConfig.coin_product_alert_users.splice(index, 1);
@@ -72,6 +73,7 @@ module.exports = {
    async execute(interaction: Interaction) {
       let userChoice = String(interaction).split(":")[1];
       let user: User = interaction.user; // get the user that sent the command
+      console.log("execute user: %s", JSON.stringify(user)); // __AUTO_GENERATED_PRINT_VAR__
 
       if (userChoice == "on") {
          let newConfig: IConfig = addUser(user);
@@ -79,7 +81,8 @@ module.exports = {
 
          await interaction.reply(`${user} recorded`);
       } else {
-         let newConfig: IConfig = deleteUser(user);
+         console.log("execute#if user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
+         let newConfig = deleteUser(user);
          writeFileSync("./config.json", JSON.stringify(newConfig));
          await interaction.reply(`${user} removed from notifications list`);
       }
@@ -89,4 +92,6 @@ module.exports = {
       Description: "Chose to opt in or out of coin product alerts",
       usage: "/alert notification: on | off",
    },
+   addUser: addUser,
+   deleteUser: deleteUser,
 };
