@@ -1,97 +1,114 @@
-#purpose of this file: scrape penguin magic open box section for coin products
-#Date: 2021-09-03
-#---------------------------------
-from dotenv import load_dotenv
+# purpose of this file: scrape penguin magic open box section for coin products
+# Date: 2021-09-03
+# ---------------------------------
 import requests
 from bs4 import BeautifulSoup
 import os
 import sys
+import json
+from pprint import pprint
 
-sys.path.insert(1, '/home/shawn/python//penguin_bots/')   # add directory to system path in this program
-import utils # type: ignore
+cwd = os.getcwd()
+parent_dir = os.path.abspath(os.path.join(cwd, os.pardir))
+print(f" parent_dir: {str(parent_dir)}")  # __AUTO_GENERATED_PRINT_VAR__
 
-# gets url from .env and returns a soup object
-def get_webpage():
-    load_dotenv()
-    url = str(os.environ.get("url"))
+sys.path.insert(
+    1, parent_dir
+)  # add parent directory to system path in this program to access utils
+import utils
 
+
+def get_webpage(product: dict):
+    """
+
+    Args:
+        product (dict): product dictiry
+
+    Returns:
+        BeautifulSoup object from the webpage
+    """
+    url = product["url"]
     # get web html
     html_page = requests.get(url).text
     return BeautifulSoup(html_page, "html.parser")
 
-def validate(product):
-    # make sure it's a coin product
-    not_coin_product = lambda title: (
-            print(title, "is not a coin product"),
-            exit(1)
-            )
 
-    # print(product["description"].lower())
-    if ("coin" or "coins") not in product["description"].lower() and ("coin" or "coins") not in product["title"].lower():
-        not_coin_product(product["title"])
+def validate(product: dict):
+    """
+    makes sure the product is a coin product
 
-    with open("product_info.txt", "+r") as file:
-        # if file.read() == product_title:
+    Args:
+        product (dict): the product to be validated
+    """
+    # NOTE: condition should be `and`
+    if ("coin" or "coins") not in product["description"].lower() and (
+        "coin" or "coins"
+    ) not in product["title"].lower():
+        print(product["title"], "is not a coin product")
+        exit(1)
+
+    with open(
+        os.path.join(os.path.dirname(__file__), "product_info.txt"), "+r"
+    ) as file:
         if file.read() != product["title"]:
-            print("product changed")
+            #  print("product changed")
 
             # overwrite current product title
-            with open("product_info.txt", "w") as file:
+            with open(
+                os.path.join(os.path.dirname(__file__), "product_info.txt"), "w"
+            ) as file:
                 file.write(product["title"])
-
-            send_email(product)
         else:
-            print("product has not changed")
+            # product is the same
+            raise AttributeError("Product has not changed")
 
-def send_email(product: dict):
-    load_dotenv()
-    recipients = os.environ.get("recipients")
-
-    title = product["title"]
-    description = product["description"]
-    url = product["url"]
-
-    command = (f"printf \"***{title}***is available at penguin right now!!!\n\nDescription: {description}\n\nURL: {url}\" | neomutt -s \"Coin open box product right now!!!\" \" {recipients}\" &> /dev/null")
-    # print("command is ", command)
-
-    os.system(command)
-    print("email sent!!!")
 
 def get_product_info(soup, product):
+    """
+    get the product info of a product
+
+    Args:
+        soup (): The soup object of the product
+        product (): The product dictionary
+
+    Returns:
+        None
+    """
     try:
         # find product title
-        product["title"] = soup.find("div", id = "product_name").h1.text #type:ignore
+        product["title"] = soup.find("div", id="product_name").h1.text  # type:ignore
         # product description
-        product["description"] = soup.find("div", class_ = "product_subsection").text.format() #type: ignore
+        product["description"] = soup.find("div", class_="product_subsection").text.format()  # type: ignore
     except:
-        print("There are no open box product currently")
+        raise AttributeError("There are no open box products currently")
+        #  print("There are no open box product currently")
 
-    # escape all "
-    product["description"] = product["description"].replace("\"", '\\"')
 
 def main():
+    product = {"title": str, "description": str, "url": str}
 
-    product = {
-        "title": None,
-        "description": None,
-        "url": None
-    }
-
-    load_dotenv()
-    product["url"] = str(os.environ.get("url")) #type: ignore
+    product["url"] = "https://www.penguinmagic.com/openbox/"
+    # product["url"] = "https://www.penguinmagic.com/p/1797"
 
     # create soup object
-    soup = get_webpage()
+    soup = get_webpage(product=product)
 
     # get product title and description
     get_product_info(soup, product)
 
     if not utils.if_interested(product["title"]):
+        print("Product is not interesting...")
         exit(1)
 
-    # make sure current product is different from previous product sent in email
+    # current product is a coin product
     validate(product)
+
+    # delete the description
+    del product["description"]
+
+    # print product dictionary to stdout
+    print(json.dumps(product))
+
 
 if __name__ == "__main__":
     main()
-

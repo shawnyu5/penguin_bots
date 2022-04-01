@@ -37,6 +37,10 @@ class TestUtils(unittest.TestCase):
         title = utils.get_title(soup)
         self.assertEqual(title, "Play Money by Nick Diffatte (Instant Download)")
 
+    def test_if_interested(self):
+        title = "fjskdlkfja"
+        self.assertFalse(utils.if_interested(title))
+
 
 if __name__ == "__main__":
     unittest.main()

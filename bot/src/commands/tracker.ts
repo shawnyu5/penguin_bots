@@ -2,9 +2,8 @@ import { ApplicationCommandType } from "discord-api-types";
 import { MessageEmbed } from "discord.js";
 const { SlashCommandBuilder } = require("@discordjs/builders");
 import { Api } from "../api/api";
-let config = require("../../../config.json");
+let config = require("../../config.json");
 
-//hi
 interface IProduct {
    _id: string;
    title: string;
@@ -75,5 +74,11 @@ module.exports = {
          .setDescription(response)
          .setColor("RANDOM");
       await interaction.reply({ embeds: [message] });
+   },
+
+   help: {
+      name: "average",
+      Description: "Retrieves the average price based on a search keyword",
+      usage: "/average keyword: <search word>",
    },
 };
