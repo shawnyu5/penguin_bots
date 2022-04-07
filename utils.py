@@ -6,6 +6,7 @@ import csv
 from bs4 import BeautifulSoup
 import requests
 import os
+from pprint import pprint
 
 # path of current file
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -13,7 +14,6 @@ cwd = os.getcwd()
 parent_dir = os.path.abspath(os.path.join(cwd, os.pardir))
 # print(f"Utils cwd : {str(cwd )}")  # __AUTO_GENERATED_PRINT_VAR__
 
-# check if current product is interesting, returns true or false
 def if_interested(title: str) -> bool:
     """checks if the product title argument is interesting by reading the `not_interested_products.csv`
 
@@ -41,10 +41,12 @@ def if_interested(title: str) -> bool:
         #  print("\n")
         #  print("Current product:", title)
 
+        pprint(product_titles)
+        print(f"if_interested title.lower(): {str(title.lower())}")# __AUTO_GENERATED_PRINT_VAR__
         if title.lower() in product_titles:
-            return True
-        else:
             return False
+        else:
+            return True
 
 
 # the price of product, without $
