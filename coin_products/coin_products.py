@@ -6,11 +6,11 @@ from bs4 import BeautifulSoup
 import os
 import sys
 import json
-from pprint import pprint
+# from pprint import pprint
 
 cwd = os.getcwd()
 parent_dir = os.path.abspath(os.path.join(cwd, os.pardir))
-print(f" parent_dir: {str(parent_dir)}")  # __AUTO_GENERATED_PRINT_VAR__
+# print(f" parent_dir: {str(parent_dir)}")  # __AUTO_GENERATED_PRINT_VAR__
 
 sys.path.insert(
     1, parent_dir

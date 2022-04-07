@@ -25,7 +25,7 @@ class Tracker:
         }
         load_dotenv()
         # url of penguin open box website
-        url = str(os.getenv("url"))
+        url = "https://www.penguinmagic.com/openbox/"
         html_page = requests.get(url).text
         self.soup = BeautifulSoup(html_page, "html.parser")
 

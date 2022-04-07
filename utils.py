@@ -7,9 +7,11 @@ from bs4 import BeautifulSoup
 import requests
 import os
 
+# path of current file
+current_dir = os.path.dirname(os.path.abspath(__file__))
 cwd = os.getcwd()
 parent_dir = os.path.abspath(os.path.join(cwd, os.pardir))
-print(f" cwd : {str(cwd )}")  # __AUTO_GENERATED_PRINT_VAR__
+# print(f"Utils cwd : {str(cwd )}")  # __AUTO_GENERATED_PRINT_VAR__
 
 # check if current product is interesting, returns true or false
 def if_interested(title: str) -> bool:
@@ -23,7 +25,7 @@ def if_interested(title: str) -> bool:
         False: product is not interesting
 
     """
-    with open(f"{parent_dir}/not_interested_products.csv", newline="") as file:
+    with open(f"{current_dir}/not_interested_products.csv", newline="") as file:
         # read products from cvs
         product = csv.reader(file, quotechar="|")
         product_titles = []
@@ -186,7 +188,7 @@ def add_not_interested(product_title) -> None:
         product_title (): string
     """
     # Parse file to make sure current product is not on not interested list
-    with open(f"{parent_dir}/not_interested_products.csv", "r") as file:
+    with open(f"{current_dir}/not_interested_products.csv", "r") as file:
         contents = file.read()
         if product_title in contents:
             print(f"{product_title} is already on not interested list. Aborting")
@@ -197,7 +199,7 @@ def add_not_interested(product_title) -> None:
     )
     if choice == ("y" or "Y"):
         with open(
-            f"{parent_dir}/not_interested_products.csv",
+            f"{current_dir}/not_interested_products.csv",
             "a",
         ) as file:
             file.write(product_title + "\n")
