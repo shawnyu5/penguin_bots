@@ -18,5 +18,5 @@ python-dotenv==0.19.2
 requests==2.22.0
 soupsieve==2.3.1
 tomli==2.0.1
-urllib3==1.25.11
+urllib3==1.26.5
 utils==1.0.1
