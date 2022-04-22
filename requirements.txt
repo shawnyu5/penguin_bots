@@ -23,7 +23,7 @@ setuptools-rust==1.2.0
 soupsieve==2.3.1
 tomli==2.0.1
 typing_extensions==4.2.0
-urllib3==1.25.11
+urllib3==1.26.5
 utils==1.0.1
 wcwidth==0.2.5
 wincertstore==0.2
