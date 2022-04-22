@@ -49,33 +49,42 @@ class Tracker:
         discounted_price = utils.get_discounted_price(self.soup)
         self.product = self.__to_object(title, discount_percentage, discounted_price)
 
-    # check if current product from penguin is different from the product in
-    # `current_product.json`
     def valid(self) -> bool:
+        """
+        check if current product from penguin is different from the product in
+
+        Returns:
+
+            True: if current product is different from the product in `current_product.txt`
+
+            False: if current product is the same as the product in `current_product.txt`
+
+        """
         # read current product from current_product.json
-        with open("current_product.json", "r") as file:
-            file_product = json.load(file)
+        with open("current_product.txt", "r") as file:
+            file_product = file.read()
 
         # if product from file is same as current product on site, return false
-        if file_product["title"] == self.product["title"]:
-            with open("current_product.json", "w") as file:
-                # update product in current_product.json
-                json.dump(self.product, file, indent=4)
+        if file_product == self.product["title"]:
+            with open("current_product.txt", "w") as file:
+                # update product in current_product.txt with product title
+                file.write(self.product["title"])
             return False
         else:
             return True
 
-    # save current product to database
     def save(self):
+        """
+        save current product to database
+        """
         # load current product
         #  with open("current_product.json", "r") as file:
         #  current_product = json.load(file)
         # print("current product is ", current_product)
 
-        with open("current_product.json", "w") as file:
+        with open("current_product.txt", "w") as file:
             # save current product from penguin to file
-            json.dump(self.product, file, indent=4)
-
+            file.write(self.product["title"])
 
         # checks if current product is logged
         found = self.db.find_one({"title": {"$eq": self.product["title"]}})
@@ -118,7 +127,9 @@ class Tracker:
             print("product saved:")
             pprint(self.product)
 
-            self.db.insert_one(self.product) # NOTE: insert one adds "_id" attribute to object, which screws up writing to file
+            self.db.insert_one(
+                self.product
+            )  # NOTE: insert one adds "_id" attribute to object, which screws up writing to file
 
         return self.product
 

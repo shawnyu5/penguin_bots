@@ -3,8 +3,6 @@
 # Date: 2021-09-23
 # ---------------------------------
 import csv
-from bs4 import BeautifulSoup
-import requests
 import os
 from pprint import pprint
 
