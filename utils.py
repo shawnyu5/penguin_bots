@@ -13,13 +13,17 @@ parent_dir = os.path.abspath(os.path.join(cwd, os.pardir))
 # print(f"Utils cwd : {str(cwd )}")  # __AUTO_GENERATED_PRINT_VAR__
 
 def if_interested(title: str) -> bool:
-    """checks if the product title argument is interesting by reading the `not_interested_products.csv`
+    """
+    checks if the product title argument is interesting by reading the `not_interested_products.csv`
 
     Args:
+
         title (): str
 
     Returns:
+
         True: product is intersting
+
         False: product is not interesting
 
     """
@@ -39,8 +43,7 @@ def if_interested(title: str) -> bool:
         #  print("\n")
         #  print("Current product:", title)
 
-        pprint(product_titles)
-        print(f"if_interested title.lower(): {str(title.lower())}")# __AUTO_GENERATED_PRINT_VAR__
+        # return false if product is not interesting, ie in list
         if title.lower() in product_titles:
             return False
         else:
@@ -49,12 +52,15 @@ def if_interested(title: str) -> bool:
 
 # the price of product, without $
 def get_price(soup) -> float:
-    """get the non discounted price of the product from a soup object
+    """
+    get the non discounted price of the product from a soup object
 
     Args:
+
         soup (): BeautifulSoup
 
     Returns:
+
         float: price of product
     """
     try:
@@ -67,12 +73,15 @@ def get_price(soup) -> float:
 
 
 def get_discount_percentage(soup) -> int:  # type: ignore
-    """Return the discount percentage of a product
+    """
+    Return the discount percentage of a product
 
     Args:
+
       soup (): BeautifulSoup
 
     Returns:
+
         int: discount percentage
 
     """
@@ -88,15 +97,19 @@ def get_discount_percentage(soup) -> int:  # type: ignore
 
 
 def get_discounted_price(soup) -> float:
-    """Return the discount price of a product
+    """
+    Return the discount price of a product
 
     Args:
+
         soup (): BeautifulSoup
 
     Returns:
+
         float: discounted price of a product
 
     Raises:
+
         ValueError: if no discount is found
 
     """
