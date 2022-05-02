@@ -4,12 +4,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.addUser = void 0;
-// import { ApplicationCommandType } from "discord-api-types";
-// import { MessageEmbed } from "discord.js";
 const builders_1 = require("@discordjs/builders");
 const fs_1 = require("fs");
 const config_json_1 = __importDefault(require("../../config.json"));
 const exec = require("child_process").exec;
+module.exports = {
+    data: new builders_1.SlashCommandBuilder()
+        .setName("alert")
+        .setDescription("opt into coin product alerts")
+        .addStringOption((option) => option
+        .setName("notification")
+        .setDescription("Choose weather to opt in or out of coin product notifications")
+        .setRequired(true)
+        .addChoice("on", "on")
+        .addChoice("off", "off")),
+    async execute(interaction) {
+        let userChoice = String(interaction).split(":")[1];
+        let user = interaction.user; // get the user that sent the command
+        console.log("execute user: %s", JSON.stringify(user)); // __AUTO_GENERATED_PRINT_VAR__
+        if (userChoice == "on") {
+            let newConfig = addUser(user);
+            (0, fs_1.writeFileSync)("./config.json", JSON.stringify(newConfig));
+            await interaction.reply(`${user} recorded`);
+        }
+        else {
+            console.log("execute#if user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
+            let newConfig = deleteUser(user);
+            (0, fs_1.writeFileSync)("./config.json", JSON.stringify(newConfig));
+            await interaction.reply(`${user} removed from notifications list`);
+        }
+    },
+    help: {
+        name: "alert",
+        Description: "Chose to opt in or out of coin product alerts",
+        usage: "/alert notification: on | off",
+    },
+    addUser: addUser,
+    deleteUser: deleteUser,
+};
 /**
  * Adds a user id to config object and return the new modified object
  *
@@ -49,37 +81,3 @@ function deleteUser(user) {
     return updatedConfig;
 }
 exports.deleteUser = deleteUser;
-module.exports = {
-    data: new builders_1.SlashCommandBuilder()
-        .setName("alert")
-        .setDescription("opt into coin product alerts")
-        .addStringOption((option) => option
-        .setName("notification")
-        .setDescription("Choose weather to opt in or out of coin product notifications")
-        .setRequired(true)
-        .addChoice("on", "on")
-        .addChoice("off", "off")),
-    async execute(interaction) {
-        let userChoice = String(interaction).split(":")[1];
-        let user = interaction.user; // get the user that sent the command
-        console.log("execute user: %s", JSON.stringify(user)); // __AUTO_GENERATED_PRINT_VAR__
-        if (userChoice == "on") {
-            let newConfig = addUser(user);
-            (0, fs_1.writeFileSync)("./config.json", JSON.stringify(newConfig));
-            await interaction.reply(`${user} recorded`);
-        }
-        else {
-            console.log("execute#if user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
-            let newConfig = deleteUser(user);
-            (0, fs_1.writeFileSync)("./config.json", JSON.stringify(newConfig));
-            await interaction.reply(`${user} removed from notifications list`);
-        }
-    },
-    help: {
-        name: "alert",
-        Description: "Chose to opt in or out of coin product alerts",
-        usage: "/alert notification: on | off",
-    },
-    addUser: addUser,
-    deleteUser: deleteUser,
-};

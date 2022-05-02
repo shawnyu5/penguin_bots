@@ -3,6 +3,7 @@ import { Routes } from "discord-api-types/v9";
 import { clientID, guildID, token } from "../config.json";
 import fs from "fs";
 import { IHelpDocs } from "./types/helpDocs";
+import { Guild } from "discord.js";
 
 class OnStart {
    /**
@@ -41,19 +42,37 @@ class OnStart {
    }
    /**
     * @param clientID - ClientID
-    * @param guildID - guildID
+    * @param guild - guildID
     * @param commands - array of commands
     */
-   registerCommands(clientID: string, guildID: string, commands: Array<any>) {
+   registerCommands(clientID: string, guild: Guild, commands: any): void {
       const rest = new REST({ version: "9" }).setToken(token);
-      rest
-         .put(Routes.applicationGuildCommands(clientID, guildID), {
-            body: commands,
-         })
-         .then(() =>
-            console.log("Successfully registered application commands.")
-         )
-         .catch(console.error);
+      (async () => {
+         try {
+            console.log(
+               `Started refreshing application (/) commands for ${guild.name}`
+            );
+
+            if (!global) {
+               await rest.put(
+                  Routes.applicationGuildCommands(clientID, guild.id),
+                  {
+                     body: commands,
+                  }
+               );
+            } else {
+               await rest.put(Routes.applicationCommands(clientID), {
+                  body: commands,
+               });
+            }
+
+            console.log(
+               `Successfully reloaded application (/) commands for ${guild.name}`
+            );
+         } catch (error) {
+            console.error(error);
+         }
+      })();
    }
 }
 

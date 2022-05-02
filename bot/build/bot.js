@@ -30,7 +30,7 @@ client.on("ready", () => {
     console.log(`${client.user.tag} logged in`);
     let allCommands = onStart.readAllCommands();
     client.guilds.cache.forEach((guild) => {
-        onStart.registerCommands(config_json_1.default.clientID, guild.id, allCommands);
+        onStart.registerCommands(config_json_1.default.clientID, guild, allCommands);
     });
     let interval = 0;
     setInterval(() => {

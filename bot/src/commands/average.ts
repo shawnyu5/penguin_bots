@@ -1,8 +1,6 @@
-import { ApplicationCommandType } from "discord-api-types";
-import { MessageEmbed } from "discord.js";
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import { CommandInteraction, MessageEmbed } from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
 import { Api } from "../api/api";
-let config = require("../../config.json");
 
 interface IProduct {
    _id: string;
@@ -11,6 +9,40 @@ interface IProduct {
    average_discount: number;
    appearances: number;
 }
+
+module.exports = {
+   data: new SlashCommandBuilder()
+      .setName("average")
+      .setDescription("Replies the average product for a price")
+      .addStringOption((option: any) =>
+         option
+            .setName("keyword")
+            .setDescription("The product you want to search for")
+            .setRequired(true)
+      ),
+
+   async execute(interaction: CommandInteraction) {
+      await interaction.deferReply();
+      let userMessage = interaction.options.getString("keyword");
+      let api = new Api();
+
+      // @ts-ignore
+      await api.init(process.env.key);
+      let response = await getProductDetail(userMessage as string);
+
+      let message = new MessageEmbed()
+         .setTitle(`Search term: ${userMessage}`)
+         .setDescription(response)
+         .setColor("RANDOM");
+      await interaction.editReply({ embeds: [message] });
+   },
+
+   help: {
+      name: "average",
+      Description: "Retrieves the average price based on a search keyword",
+      usage: "/average keyword: <search word>",
+   },
+};
 
 let api: any;
 async function init() {
@@ -49,36 +81,5 @@ async function getProductDetail(keyword: string) {
          response = response.concat(" ", currentResponse);
       });
    }
-
    return response;
 }
-
-module.exports = {
-   data: new SlashCommandBuilder()
-      .setName("average")
-      .setDescription("Replies the average product for a price")
-      .addStringOption((option: any) =>
-         option.setName("keyword").setDescription("A string").setRequired(true)
-      ),
-
-   async execute(interaction: any) {
-      let userMessage = interaction.options._hoistedOptions[0].value;
-      let api = new Api();
-
-      // @ts-ignore
-      await api.init(process.env.key);
-      let response = await getProductDetail(userMessage);
-
-      let message = new MessageEmbed()
-         .setTitle(`Search term: ${userMessage}`)
-         .setDescription(response)
-         .setColor("RANDOM");
-      await interaction.reply({ embeds: [message] });
-   },
-
-   help: {
-      name: "average",
-      Description: "Retrieves the average price based on a search keyword",
-      usage: "/average keyword: <search word>",
-   },
-};

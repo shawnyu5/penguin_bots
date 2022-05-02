@@ -44,17 +44,30 @@ class OnStart {
     }
     /**
      * @param clientID - ClientID
-     * @param guildID - guildID
+     * @param guild - guildID
      * @param commands - array of commands
      */
-    registerCommands(clientID, guildID, commands) {
+    registerCommands(clientID, guild, commands) {
         const rest = new rest_1.REST({ version: "9" }).setToken(config_json_1.token);
-        rest
-            .put(v9_1.Routes.applicationGuildCommands(clientID, guildID), {
-            body: commands,
-        })
-            .then(() => console.log("Successfully registered application commands."))
-            .catch(console.error);
+        (async () => {
+            try {
+                console.log(`Started refreshing application (/) commands for ${guild.name}`);
+                if (!global) {
+                    await rest.put(v9_1.Routes.applicationGuildCommands(clientID, guild.id), {
+                        body: commands,
+                    });
+                }
+                else {
+                    await rest.put(v9_1.Routes.applicationCommands(clientID), {
+                        body: commands,
+                    });
+                }
+                console.log(`Successfully reloaded application (/) commands for ${guild.name}`);
+            }
+            catch (error) {
+                console.error(error);
+            }
+        })();
     }
 }
 exports.OnStart = OnStart;

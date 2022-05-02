@@ -33,7 +33,7 @@ client.on("ready", () => {
 
    let allCommands = onStart.readAllCommands();
    client.guilds.cache.forEach((guild) => {
-      onStart.registerCommands(config.clientID, guild.id, allCommands);
+      onStart.registerCommands(config.clientID, guild, allCommands);
    });
 
    let interval = 0;

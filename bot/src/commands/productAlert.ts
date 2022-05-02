@@ -1,5 +1,3 @@
-// import { ApplicationCommandType } from "discord-api-types";
-// import { MessageEmbed } from "discord.js";
 import {
    SlashCommandBuilder,
    SlashCommandStringOption,
@@ -11,6 +9,46 @@ import config from "../../config.json";
 const exec = require("child_process").exec;
 import { IConfig } from "../types/config";
 
+module.exports = {
+   data: new SlashCommandBuilder()
+      .setName("alert")
+      .setDescription("opt into coin product alerts")
+      .addStringOption((option: SlashCommandStringOption) =>
+         option
+            .setName("notification")
+            .setDescription(
+               "Choose weather to opt in or out of coin product notifications"
+            )
+            .setRequired(true)
+            .addChoice("on", "on")
+            .addChoice("off", "off")
+      ),
+
+   async execute(interaction: Interaction) {
+      let userChoice = String(interaction).split(":")[1];
+      let user: User = interaction.user; // get the user that sent the command
+      console.log("execute user: %s", JSON.stringify(user)); // __AUTO_GENERATED_PRINT_VAR__
+
+      if (userChoice == "on") {
+         let newConfig: IConfig = addUser(user);
+         writeFileSync("./config.json", JSON.stringify(newConfig));
+
+         await interaction.reply(`${user} recorded`);
+      } else {
+         console.log("execute#if user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
+         let newConfig = deleteUser(user);
+         writeFileSync("./config.json", JSON.stringify(newConfig));
+         await interaction.reply(`${user} removed from notifications list`);
+      }
+   },
+   help: {
+      name: "alert",
+      Description: "Chose to opt in or out of coin product alerts",
+      usage: "/alert notification: on | off",
+   },
+   addUser: addUser,
+   deleteUser: deleteUser,
+};
 /**
  * Adds a user id to config object and return the new modified object
  *
@@ -55,43 +93,3 @@ export function deleteUser(user: User): IConfig {
    return updatedConfig;
 }
 
-module.exports = {
-   data: new SlashCommandBuilder()
-      .setName("alert")
-      .setDescription("opt into coin product alerts")
-      .addStringOption((option: SlashCommandStringOption) =>
-         option
-            .setName("notification")
-            .setDescription(
-               "Choose weather to opt in or out of coin product notifications"
-            )
-            .setRequired(true)
-            .addChoice("on", "on")
-            .addChoice("off", "off")
-      ),
-
-   async execute(interaction: Interaction) {
-      let userChoice = String(interaction).split(":")[1];
-      let user: User = interaction.user; // get the user that sent the command
-      console.log("execute user: %s", JSON.stringify(user)); // __AUTO_GENERATED_PRINT_VAR__
-
-      if (userChoice == "on") {
-         let newConfig: IConfig = addUser(user);
-         writeFileSync("./config.json", JSON.stringify(newConfig));
-
-         await interaction.reply(`${user} recorded`);
-      } else {
-         console.log("execute#if user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
-         let newConfig = deleteUser(user);
-         writeFileSync("./config.json", JSON.stringify(newConfig));
-         await interaction.reply(`${user} removed from notifications list`);
-      }
-   },
-   help: {
-      name: "alert",
-      Description: "Chose to opt in or out of coin product alerts",
-      usage: "/alert notification: on | off",
-   },
-   addUser: addUser,
-   deleteUser: deleteUser,
-};
