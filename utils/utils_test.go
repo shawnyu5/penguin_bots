@@ -26,6 +26,12 @@ func beforeEach() {
 	)
 }
 
+func handleError() {
+	c.OnError(func(r *colly.Response, err error) { // Set error handler
+		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
+	})
+}
+
 func TestGetDiscount(t *testing.T) {
 	beforeEach()
 	output := GetDiscountPercentage(c)
@@ -37,11 +43,20 @@ func TestGetDiscount(t *testing.T) {
 func TestGetPrice(t *testing.T) {
 	beforeEach()
 	output := GetPrice(c)
-	c.OnError(func(r *colly.Response, err error) { // Set error handler
-		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
-	})
+	handleError()
 
 	if output != 4.949999809265137 {
 		t.Errorf("Price %v incorrect...", output)
+	}
+}
+
+func TestGetDiscountPrice(t *testing.T) {
+	beforeEach()
+	output := GetDiscountPrice(c)
+	expected := 5.050000190734863
+	handleError()
+
+	if output != expected {
+		t.Errorf("discounted price %f is incorrect. Expected %f", output, expected)
 	}
 }
