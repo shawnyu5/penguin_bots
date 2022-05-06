@@ -56,3 +56,7 @@ func GetDiscountPercentage(c *colly.Collector) float64 {
 	c.Visit("https://www.penguinmagic.com/p/3901")
 	return discountPercentage
 }
+
+func GetDiscountPrice(c *colly.HTMLElement) float64 {
+
+}

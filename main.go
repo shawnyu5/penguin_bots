@@ -10,6 +10,7 @@ import (
 func main() {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),
+		// colly.Async(true), // TODO: figure out async stuff
 	)
 
 	output := utils.GetDiscountPercentage(c)
