@@ -57,15 +57,17 @@ func GetDiscountPercentage(c *colly.Collector) float64 {
 	return discountPercentage
 }
 
+// GetDiscountPrice return the discount price of the product
 func GetDiscountPrice(c *colly.Collector) float64 {
 
 	var discountPrice float64
 	c.OnHTML(".yousave", func(e *colly.HTMLElement) {
 		discountPriceString := strings.TrimSpace(e.Text)
 
-		dollarSign := strings.Index(discountPriceString, "$")
+		discountPriceString = strings.Replace(discountPriceString, "$", "", 1)
 		firstSpace := strings.Index(discountPriceString, " ")
-		discountPriceString = discountPriceString[dollarSign+1 : firstSpace]
+		// get string up to first space
+		discountPriceString = discountPriceString[:firstSpace]
 
 		value, err := strconv.ParseFloat(discountPriceString, 32)
 		if err != nil {
@@ -75,7 +77,7 @@ func GetDiscountPrice(c *colly.Collector) float64 {
 		discountPrice = value
 	})
 
-	c.OnError(func(r *colly.Response, err error) { // Set error handler
+	c.OnError(func(r *colly.Response, err error) {
 		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
 	})
 

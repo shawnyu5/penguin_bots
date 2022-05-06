@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -20,7 +19,6 @@ func TestMain(m *testing.M) {
 
 // beforeEach call before each test case
 func beforeEach() {
-	fmt.Println("before each")
 	c = colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),
 	)

@@ -16,5 +16,4 @@ func main() {
 	output := utils.GetDiscountPrice(c)
 	fmt.Println(fmt.Sprintf("main output: %v", output)) // __AUTO_GENERATED_PRINT_VAR__
 	// c.Visit("https://www.penguinmagic.com/p/3901")
-
 }
