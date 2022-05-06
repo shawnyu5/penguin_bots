@@ -32,7 +32,7 @@ func handleError() {
 	})
 }
 
-func TestGetDiscount(t *testing.T) {
+func TestGetDiscountPercentage(t *testing.T) {
 	beforeEach()
 	output := GetDiscountPercentage(c)
 	if output != 50 {

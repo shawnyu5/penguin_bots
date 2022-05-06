@@ -35,11 +35,11 @@ func GetDiscountPercentage(c *colly.Collector) float64 {
 	var discountPercentage float64
 
 	c.OnHTML(".yousave", func(e *colly.HTMLElement) {
-		discountPercentageString := e.Text
+		discountPercentageString := strings.TrimSpace(e.Text)
 
-		index := strings.Index(discountPercentageString, "(")
-		discountPercentageString = discountPercentageString[index+1:]
-		discountPercentageString = discountPercentageString[:len(discountPercentageString)-2]
+		openBracket := strings.Index(discountPercentageString, "(")
+		percentSign := strings.Index(discountPercentageString, "%")
+		discountPercentageString = discountPercentageString[openBracket+1 : percentSign]
 
 		value, err := strconv.ParseFloat(discountPercentageString, 32)
 		if err != nil {
