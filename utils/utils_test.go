@@ -32,7 +32,7 @@ func handleError() {
 
 func TestGetDiscountPercentage(t *testing.T) {
 	beforeEach()
-	output := GetDiscountPercentage(c)
+	output := GetDiscountPercentage()
 	if output != 50 {
 		t.Errorf("Discount precentage %f is incorrect", output)
 	}
@@ -40,7 +40,7 @@ func TestGetDiscountPercentage(t *testing.T) {
 
 func TestGetPrice(t *testing.T) {
 	beforeEach()
-	output := GetPrice(c)
+	output := GetPrice()
 	handleError()
 
 	if output != 4.949999809265137 {
@@ -50,7 +50,7 @@ func TestGetPrice(t *testing.T) {
 
 func TestGetDiscountPrice(t *testing.T) {
 	beforeEach()
-	output := GetDiscountPrice(c)
+	output := GetDiscountPrice()
 	expected := 5.050000190734863
 	handleError()
 
