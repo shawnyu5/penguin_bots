@@ -50,7 +50,7 @@ func TestGetPrice(t *testing.T) {
 
 func TestGetDiscountPrice(t *testing.T) {
 	beforeEach()
-	output := GetDiscountPrice()
+	output := GetDiscountedPrice(c)
 	expected := 5.050000190734863
 	handleError()
 

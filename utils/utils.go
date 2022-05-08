@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/gocolly/colly"
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -63,13 +63,9 @@ func GetDiscountPercentage() float64 {
 	return discountPercentage
 }
 
-// GetDiscountPrice return the discount price of the product
-func GetDiscountPrice() float64 {
-	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),
-	)
+// GetDiscountedPrice return the discount price of the product
+func GetDiscountedPrice(c *colly.Collector, price *float64) {
 
-	var discountPrice float64
 	c.OnHTML(".yousave", func(e *colly.HTMLElement) {
 		discountPriceString := strings.TrimSpace(e.Text)
 
@@ -83,15 +79,14 @@ func GetDiscountPrice() float64 {
 			log.Fatalf("Can not convert price %s to interger", e.Text)
 		}
 
-		discountPrice = value
+		*price = value
+		fmt.Println(fmt.Sprintf("GetDiscountedPrice value: %v", value))  // __AUTO_GENERATED_PRINT_VAR__
+		fmt.Println(fmt.Sprintf("GetDiscountedPrice price: %v", *price)) // __AUTO_GENERATED_PRINT_VAR__
 	})
 
 	c.OnError(func(r *colly.Response, err error) {
 		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
 	})
-
-	c.Visit(webAddress)
-	return discountPrice
 }
 
 // GetStarRating return the number of starts this product has
