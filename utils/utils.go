@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+const webAddress = "https://www.penguinmagic.com/p/3901"
+
 // GetPrice get the price of an product
 func GetPrice() float64 {
 	c := colly.NewCollector(
@@ -27,7 +29,7 @@ func GetPrice() float64 {
 		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
 	})
 
-	c.Visit("https://www.penguinmagic.com/p/3901")
+	c.Visit(webAddress)
 	return price
 }
 
@@ -57,7 +59,7 @@ func GetDiscountPercentage() float64 {
 		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
 	})
 
-	c.Visit("https://www.penguinmagic.com/p/3901")
+	c.Visit(webAddress)
 	return discountPercentage
 }
 
@@ -88,7 +90,7 @@ func GetDiscountPrice() float64 {
 		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
 	})
 
-	c.Visit("https://www.penguinmagic.com/p/3901")
+	c.Visit(webAddress)
 	return discountPrice
 }
 
@@ -108,6 +110,6 @@ func GetStarRating() int64 {
 		rating = stringRating
 	})
 
-	c.Visit("https://www.penguinmagic.com/p/3901")
+	c.Visit(webAddress)
 	return rating
 }
