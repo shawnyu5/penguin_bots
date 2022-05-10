@@ -1,20 +1,24 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 	"strings"
+
+	"github.com/gocolly/colly"
 )
 
 const webAddress = "https://www.penguinmagic.com/p/3901"
 
+// handleError provides a generic implenation of colly.OnError
+func handleError(c *colly.Collector) {
+	c.OnError(func(r *colly.Response, err error) { // Set error handler
+		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
+	})
+}
+
 // GetPrice get the price of an product
-func GetPrice() float64 {
-	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),
-	)
-	var price float64
+func GetPrice(c *colly.Collector, price *float64) {
 	c.OnHTML(".ourprice", func(e *colly.HTMLElement) {
 		stringPrice := e.Text[2:]
 
@@ -22,23 +26,16 @@ func GetPrice() float64 {
 		if err != nil {
 			log.Fatalf("Can not convert price %s to interger", e.Text)
 		}
-		price = value
+		price = &value
 	})
 
-	c.OnError(func(r *colly.Response, err error) { // Set error handler
-		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
-	})
+	handleError(c)
 
-	c.Visit(webAddress)
-	return price
+	// c.Visit(webAddress)
 }
 
 // GetDiscountPercentage returns the discount percentage of the product passed in
-func GetDiscountPercentage() float64 {
-	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),
-	)
-	var discountPercentage float64
+func GetDiscountPercentage(c *colly.Collector, discountPercentage *float64) {
 
 	c.OnHTML(".yousave", func(e *colly.HTMLElement) {
 		discountPercentageString := strings.TrimSpace(e.Text)
@@ -52,15 +49,11 @@ func GetDiscountPercentage() float64 {
 			log.Fatalf("Can not convert price %s to interger", e.Text)
 		}
 
-		discountPercentage = value
+		*discountPercentage = value
 	})
 
-	c.OnError(func(r *colly.Response, err error) { // Set error handler
-		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
-	})
-
-	c.Visit(webAddress)
-	return discountPercentage
+	handleError(c)
+	// c.Visit(webAddress)
 }
 
 // GetDiscountedPrice return the discount price of the product
@@ -80,21 +73,16 @@ func GetDiscountedPrice(c *colly.Collector, price *float64) {
 		}
 
 		*price = value
-		fmt.Println(fmt.Sprintf("GetDiscountedPrice value: %v", value))  // __AUTO_GENERATED_PRINT_VAR__
-		fmt.Println(fmt.Sprintf("GetDiscountedPrice price: %v", *price)) // __AUTO_GENERATED_PRINT_VAR__
 	})
 
-	c.OnError(func(r *colly.Response, err error) {
-		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
-	})
+	handleError(c)
+
+	// c.Visit(webAddress)
 }
 
 // GetStarRating return the number of starts this product has
-func GetStarRating() int64 {
-	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),
-	)
-	var rating int64
+func GetStarRating(c *colly.Collector, rating *int64) {
+
 	c.OnHTML("#review_summary", func(e *colly.HTMLElement) {
 		ratingLink := e.ChildAttr("img", "src")
 		lastSlash := strings.LastIndex(ratingLink, "/")
@@ -102,9 +90,8 @@ func GetStarRating() int64 {
 		if err != nil {
 			log.Fatalf("Unable to convert rating %v to int", ratingLink[lastSlash+1:])
 		}
-		rating = stringRating
+		*rating = stringRating
 	})
 
-	c.Visit(webAddress)
-	return rating
+	handleError(c)
 }

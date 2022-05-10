@@ -13,8 +13,16 @@ func main() {
 		// colly.Async(true), // TODO: figure out async stuff
 	)
 
-	var price float64
-	utils.GetDiscountedPrice(c, &price)
+	type Product struct {
+		price      float64
+		discount   float64
+		starRating int64
+	}
+	product := Product{price: 0, discount: 0}
+
+	utils.GetStarRating(c, &product.starRating)
+
 	c.Visit("https://www.penguinmagic.com/p/3901")
-	fmt.Println(fmt.Sprintf("main price: %v", price)) // __AUTO_GENERATED_PRINT_VAR__
+	fmt.Println(fmt.Sprintf("main product.starRating: %v", product.starRating)) // __AUTO_GENERATED_PRINT_VAR__
+
 }

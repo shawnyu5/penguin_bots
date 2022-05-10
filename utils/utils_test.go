@@ -2,20 +2,12 @@ package utils
 
 import (
 	"log"
-	"os"
 	"testing"
 
 	"github.com/gocolly/colly"
 )
 
 var c *colly.Collector
-
-func TestMain(m *testing.M) {
-	// setUp()
-	exitVal := m.Run()
-	c.Visit("https://www.penguinmagic.com/p/3901")
-	os.Exit(exitVal)
-}
 
 // beforeEach call before each test case
 func beforeEach() {
@@ -24,37 +16,46 @@ func beforeEach() {
 	)
 }
 
-func handleError() {
-	c.OnError(func(r *colly.Response, err error) { // Set error handler
-		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
-	})
-}
-
 func TestGetDiscountPercentage(t *testing.T) {
 	beforeEach()
-	output := GetDiscountPercentage()
+	var output float64
+	GetDiscountPercentage(c, &output)
+
+	c.Visit("https://www.penguinmagic.com/p/3901")
+
 	if output != 50 {
-		t.Errorf("Discount precentage %f is incorrect", output)
+		t.Errorf("Expected %v, got %v", 50, output)
 	}
 }
 
-func TestGetPrice(t *testing.T) {
+func TestGetStarRating(t *testing.T) {
 	beforeEach()
-	output := GetPrice()
-	handleError()
-
-	if output != 4.949999809265137 {
-		t.Errorf("Price %v incorrect...", output)
+	var output int64
+	GetStarRating(c, &output)
+	if output != 5 {
+		t.Fatalf("Expected %d, got %d", 5, output)
 	}
 }
 
-func TestGetDiscountPrice(t *testing.T) {
-	beforeEach()
-	output := GetDiscountedPrice(c)
-	expected := 5.050000190734863
-	handleError()
+// func TestGetPrice(t *testing.T) {
+// beforeEach()
+// var output float64
+// GetPrice(c, &output)
+// handleError()
 
-	if output != expected {
-		t.Errorf("discounted price %f is incorrect. Expected %f", output, expected)
-	}
-}
+// if output != 4.949999809265137 {
+// t.Errorf("Price %v incorrect...", output)
+// }
+// }
+
+// func TestGetDiscountPrice(t *testing.T) {
+// beforeEach()
+// var output float64
+// GetDiscountedPrice(c, &output)
+// expected := 5.050000190734863
+// handleError()
+
+// if output != expected {
+// t.Errorf("Got %f. Expected %f", output, expected)
+// }
+// }
