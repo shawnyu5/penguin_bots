@@ -10,7 +10,7 @@ import (
 
 const webAddress = "https://www.penguinmagic.com/p/3901"
 
-// handleError provides a generic implenation of colly.OnError
+// handleError provided a generic implenation of colly.OnError
 func handleError(c *colly.Collector) {
 	c.OnError(func(r *colly.Response, err error) { // Set error handler
 		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
@@ -26,7 +26,7 @@ func GetPrice(c *colly.Collector, price *float64) {
 		if err != nil {
 			log.Fatalf("Can not convert price %s to interger", e.Text)
 		}
-		price = &value
+		*price = value
 	})
 
 	handleError(c)
@@ -76,8 +76,6 @@ func GetDiscountedPrice(c *colly.Collector, price *float64) {
 	})
 
 	handleError(c)
-
-	// c.Visit(webAddress)
 }
 
 // GetStarRating return the number of starts this product has
@@ -92,6 +90,24 @@ func GetStarRating(c *colly.Collector, rating *int64) {
 		}
 		*rating = stringRating
 	})
+	handleError(c)
+}
 
+// GetTitle gets the title of a product
+func GetTitle(c *colly.Collector, title *string) {
+	c.OnHTML("#product_name", func(e *colly.HTMLElement) {
+		*title = e.ChildText("h1")
+	})
+	handleError(c)
+}
+
+// GetDescription get the description of a product
+func GetDescription(c *colly.Collector, description *string) {
+	c.OnHTML(".product_subsection", func(e *colly.HTMLElement) {
+		des := e.ChildText("p")
+		if des != "" {
+			*description = des
+		}
+	})
 	handleError(c)
 }
