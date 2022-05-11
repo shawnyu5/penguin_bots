@@ -1,11 +1,12 @@
 package utils
 
 import (
+	"fmt"
+	"github.com/gocolly/colly"
 	"log"
+	"os"
 	"strconv"
 	"strings"
-
-	"github.com/gocolly/colly"
 )
 
 const webAddress = "https://www.penguinmagic.com/p/3901"
@@ -110,4 +111,29 @@ func GetDescription(c *colly.Collector, description *string) {
 		}
 	})
 	handleError(c)
+}
+
+// addNotInterested add a product to the not interested list. Return true if product was successfully written to file. False other wise
+func addNotInterested(productTitle string) bool {
+	// open a csv file
+	file, err := os.OpenFile("not_interested.csv", os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		fmt.Printf("Unable to open file: %v", err)
+		return false
+	}
+	defer file.Close()
+
+	// ask for user confirmation before writing to file
+	fmt.Printf("Are you sure you want to add %s to the not interested list? (y/n)", productTitle)
+	var answer string
+	fmt.Scanln(&answer)
+
+	if answer == "y" {
+		// write the product title to the file if it is not already in the file
+		if _, err := file.WriteString(productTitle + "\n"); err != nil {
+			fmt.Printf("Unable to write to file: %v", err)
+		}
+		return true
+	}
+	return false
 }
