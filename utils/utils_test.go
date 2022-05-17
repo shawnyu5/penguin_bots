@@ -1,12 +1,21 @@
-package utils
+package utils_test
 
 import (
+	"log"
 	"testing"
 
 	"github.com/gocolly/colly"
+	"github.com/shawnyu5/penguin-utils"
 )
 
 var c *colly.Collector
+
+// handleError provided a generic implenation of colly.OnError
+func handleError(c *colly.Collector) {
+	c.OnError(func(r *colly.Response, err error) { // Set error handler
+		log.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
+	})
+}
 
 // beforeEach call before each test case
 func beforeEach() {
@@ -24,7 +33,7 @@ func visit(c *colly.Collector) {
 func TestGetDiscountPercentage(t *testing.T) {
 	beforeEach()
 	var output float64
-	GetDiscountPercentage(c, &output)
+	utils.GetDiscountPercentage(c, &output)
 
 	visit(c)
 
@@ -36,7 +45,7 @@ func TestGetDiscountPercentage(t *testing.T) {
 func TestGetStarRating(t *testing.T) {
 	beforeEach()
 	var output int64
-	GetStarRating(c, &output)
+	utils.GetStarRating(c, &output)
 
 	visit(c)
 
@@ -48,7 +57,7 @@ func TestGetStarRating(t *testing.T) {
 func TestGetPrice(t *testing.T) {
 	beforeEach()
 	var output float64
-	GetPrice(c, &output)
+	utils.GetPrice(c, &output)
 	handleError(c)
 
 	visit(c)
@@ -61,7 +70,7 @@ func TestGetPrice(t *testing.T) {
 func TestGetDiscountPrice(t *testing.T) {
 	beforeEach()
 	var output float64
-	GetDiscountedPrice(c, &output)
+	utils.GetDiscountedPrice(c, &output)
 	expected := 5.050000190734863
 	handleError(c)
 
@@ -78,7 +87,7 @@ func TestGetDescription(t *testing.T) {
 	var output string
 	expected := "Nick Diffatte has created a wonderful pocket illusion you can use ANYTIME you're going to pay for something.\n\nPull out a slip of Monopoly Money, and when the clerk informs you they don't accept that form of currency, visually change it in FULL VIEW."
 
-	GetDescription(c, &output)
+	utils.GetDescription(c, &output)
 
 	visit(c)
 

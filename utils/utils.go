@@ -9,8 +9,6 @@ import (
 	"strings"
 )
 
-const webAddress = "https://www.penguinmagic.com/p/3901"
-
 // handleError provided a generic implenation of colly.OnError
 func handleError(c *colly.Collector) {
 	c.OnError(func(r *colly.Response, err error) { // Set error handler
@@ -31,13 +29,10 @@ func GetPrice(c *colly.Collector, price *float64) {
 	})
 
 	handleError(c)
-
-	// c.Visit(webAddress)
 }
 
 // GetDiscountPercentage returns the discount percentage of the product passed in
 func GetDiscountPercentage(c *colly.Collector, discountPercentage *float64) {
-
 	c.OnHTML(".yousave", func(e *colly.HTMLElement) {
 		discountPercentageString := strings.TrimSpace(e.Text)
 
@@ -54,7 +49,6 @@ func GetDiscountPercentage(c *colly.Collector, discountPercentage *float64) {
 	})
 
 	handleError(c)
-	// c.Visit(webAddress)
 }
 
 // GetDiscountedPrice return the discount price of the product
