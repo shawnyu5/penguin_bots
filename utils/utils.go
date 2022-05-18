@@ -1,12 +1,14 @@
 package utils
 
 import (
+	"bufio"
 	"fmt"
-	"github.com/gocolly/colly"
 	"log"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/gocolly/colly"
 )
 
 // handleError provided a generic implenation of colly.OnError
@@ -108,7 +110,7 @@ func GetDescription(c *colly.Collector, description *string) {
 }
 
 // addNotInterested add a product to the not interested list. Return true if product was successfully written to file. False other wise
-func addNotInterested(productTitle string) bool {
+func AddNotInterested(productTitle string) bool {
 	// open a csv file
 	file, err := os.OpenFile("not_interested.csv", os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
@@ -130,4 +132,26 @@ func addNotInterested(productTitle string) bool {
 		return true
 	}
 	return false
+}
+
+// IfInterested check if the product passed in is interesting.
+// Return true if product is interesting. False otherwise
+func IfInterested(title string) bool {
+	// open a csv file
+	file, err := os.OpenFile("../not_interested_products.csv", os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		fmt.Printf("Unable to open file: %v", err)
+		return false
+	}
+	defer file.Close()
+
+	// read the file line by line
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		// if the product title is in the file, product is not intersting
+		if title == scanner.Text() {
+			return false
+		}
+	}
+	return true
 }

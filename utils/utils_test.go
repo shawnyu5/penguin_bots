@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/gocolly/colly"
-	"github.com/shawnyu5/penguin-utils"
+	utils "github.com/shawnyu5/penguin-utils"
 )
 
 var c *colly.Collector
@@ -93,5 +93,17 @@ func TestGetDescription(t *testing.T) {
 
 	if output != expected {
 		t.Fatalf("Expected: %s, got %s", expected, output)
+	}
+}
+
+func TestIfIntersting(t *testing.T) {
+	interesting := utils.IfInterested("jfdslfj")
+	notInteresting := utils.IfInterested("Code Red by Cody Nottingham (DVD & Download)")
+	if !interesting {
+		t.Fatalf("Expected true, got %v", interesting)
+	}
+
+	if notInteresting {
+		t.Fatalf("Expected false, got %v", notInteresting)
 	}
 }
