@@ -155,3 +155,18 @@ func IfInterested(title string) bool {
 	}
 	return true
 }
+
+func AddNotInterestedProduct(productTitle string) {
+	// open a csv file
+	file, err := os.OpenFile("../not_interested_products.csv", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0755)
+	if err != nil {
+		fmt.Printf("Unable to open file: %v", err)
+		return
+	}
+	defer file.Close()
+
+	// write the product title to end of the file if it is not already in the file
+	if _, err := file.WriteString(productTitle + "\n"); err != nil {
+		fmt.Printf("Unable to write to file: %v", err)
+	}
+}

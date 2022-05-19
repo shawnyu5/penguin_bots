@@ -97,6 +97,7 @@ func TestGetDescription(t *testing.T) {
 }
 
 func TestIfIntersting(t *testing.T) {
+
 	interesting := utils.IfInterested("jfdslfj")
 	notInteresting := utils.IfInterested("Code Red by Cody Nottingham (DVD & Download)")
 	if !interesting {
@@ -107,3 +108,9 @@ func TestIfIntersting(t *testing.T) {
 		t.Fatalf("Expected false, got %v", notInteresting)
 	}
 }
+
+// TODO: idk how to test this
+// func TestAddNotInterestedProduct(t *testing.T) {
+// utils.AddNotInterestedProduct("jfdslfj")
+// // delete jfdslfj from file
+// }
