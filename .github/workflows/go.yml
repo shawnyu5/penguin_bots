@@ -19,7 +19,7 @@ jobs:
         go-version: 1.18
 
     - name: Go to utils
-      run: ls
+      run: cd utils/
       
     - name: Build
       run: go build -v 
