@@ -19,7 +19,7 @@ jobs:
         go-version: 1.18
 
     - name: Go to utils
-      run: cd utils/
+      run: cd utils/ && ls
       
     - name: Test
       run: go test -v
