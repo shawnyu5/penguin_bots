@@ -2,6 +2,7 @@ package utils_test
 
 import (
 	"log"
+	"os/exec"
 	"testing"
 
 	"github.com/gocolly/colly"
@@ -109,8 +110,12 @@ func TestIfIntersting(t *testing.T) {
 	}
 }
 
-// TODO: idk how to test this
-// func TestAddNotInterestedProduct(t *testing.T) {
-// utils.AddNotInterestedProduct("jfdslfj")
-// // delete jfdslfj from file
-// }
+func TestAddNotInterestedProduct(t *testing.T) {
+	utils.AddNotInterestedProduct("jfdslfj")
+
+	// delete test string from file again
+	_, err := exec.Command("sed", "-i", "/jfdslfj/d", "../not_interested_products.csv").Output()
+	if err != nil {
+		panic(err)
+	}
+}
