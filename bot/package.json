@@ -1,38 +1,38 @@
 {
-  "dependencies": {
-    "@discordjs/builders": "^0.12.0",
-    "@discordjs/rest": "^0.3.0",
-    "@nestjs/schedule": "^1.0.2",
-    "concurrently": "^7.0.0",
-    "discord-api-types": "^0.26.1",
-    "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0",
-    "mongoose": "^6.2.0"
-  },
-  "name": "penguin_bot",
-  "version": "1.0.0",
-  "main": "./build/bot.js",
-  "scripts": {
-    "compile": "tsc -w",
-    "run": "nodemon",
-    "start": "node .",
-    "dev": "concurrently \"tsc -w\" \"nodemon ./build/bot.js\"",
-    "test": "jest --watch"
-  },
-  "jest": {
-    "testMatch": [
-      "**/?(*.)+(spec|test).[j]s?(x)"
-    ]
-  },
-  "author": "Shawn Yu",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@types/cron": "^1.7.3",
-    "@types/jest": "^27.4.1",
-    "@types/mocha": "^9.1.0",
-    "jest": "^27.4.7",
-    "nodemon": "^2.0.15",
-    "ts-jest": "^27.1.3"
-  }
+   "dependencies": {
+      "@discordjs/builders": "^0.12.0",
+      "@discordjs/rest": "^0.3.0",
+      "@nestjs/schedule": "^1.0.2",
+      "concurrently": "^7.0.0",
+      "discord-api-types": "^0.26.1",
+      "discord.js": "^13.6.0",
+      "dotenv": "^16.0.0",
+      "mongoose": "^6.2.0"
+   },
+   "name": "penguin_bot",
+   "version": "1.0.0",
+   "main": "./build/bot.js",
+   "scripts": {
+      "compile": "tsc -w",
+      "run": "nodemon",
+      "start": "node .",
+      "dev": "concurrently \"tsc -w\" \"nodemon ./build/bot.js\"",
+      "test": "jest --watch"
+   },
+   "jest": {
+      "testMatch": [
+         "**/?(*.)+(spec|test).[j]s?(x)"
+      ]
+   },
+   "author": "Shawn Yu",
+   "license": "ISC",
+   "description": "",
+   "devDependencies": {
+      "@types/cron": "^1.7.3",
+      "@types/jest": "^27.4.1",
+      "@types/mocha": "^9.1.0",
+      "jest": "^27.4.7",
+      "nodemon": "^2.0.15",
+      "ts-jest": "^27.1.3"
+   }
 }
