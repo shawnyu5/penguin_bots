@@ -94,7 +94,6 @@ func GetStarRating(c *colly.Collector, rating *int64) {
 func GetTitle(c *colly.Collector, title *string) {
 	c.OnHTML("#product_name", func(e *colly.HTMLElement) {
 		*title = e.ChildText("h1")
-		fmt.Println("Title:", *title)
 	})
 	handleError(c)
 }

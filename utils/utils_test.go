@@ -18,7 +18,7 @@ func handleError(c *colly.Collector) {
 	})
 }
 
-// beforeEach call before each test case
+// beforeEach create a new colly collector
 func beforeEach() {
 	c = colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),

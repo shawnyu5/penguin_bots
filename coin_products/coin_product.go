@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/gocolly/colly"
-	"github.com/gocolly/colly/debug"
 
 	utils "github.com/shawnyu5/penguin-utils"
 )
@@ -52,8 +51,7 @@ func saveProductToFile(product *Product) {
 
 func main() {
 	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com/openbox", "www.penguinmagic.com/p/3901", "www.penguinmagic.com/p/17235"),
-		colly.Debugger(&debug.LogDebugger{}),
+		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/17235", "www.penguinmagic.com/openbox", "www.penguinmagic.com/p/3901"),
 		// colly.Async(true),
 	)
 	// c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 6}) // limit the number of parallel requests
@@ -62,21 +60,19 @@ func main() {
 
 	getProductInfo(c, &product)
 
-	c.OnResponse(func(r *colly.Response) {
-		fmt.Println("OnResponse: ", r.StatusCode)
-	})
+	// c.OnResponse(func(r *colly.Response) {
+	// fmt.Println("OnResponse: ", r.StatusCode)
+	// })
 
 	// c.Visit("https://www.penguinmagic.com/openbox")
 	c.Visit("https://www.penguinmagic.com/p/17235")
 
-	fmt.Println(fmt.Sprintf("main product: %v", product)) // __AUTO_GENERATED_PRINT_VAR__
-
-	// if product is emppty, then openbox is down right now
+	// if product is empty, then openbox is down right now
 	if product == (Product{}) {
 		fmt.Println("There are no open box products currently")
 		os.Exit(1)
 	} else if !isCoinProduct(&product) {
-		fmt.Println("Product is not a coin product")
+		fmt.Println(fmt.Sprintf("Product %s is not a coin product", product.Title))
 		os.Exit(1)
 	}
 
