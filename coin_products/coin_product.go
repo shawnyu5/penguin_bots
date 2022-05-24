@@ -41,16 +41,23 @@ func isCoinProduct(product *Product) bool {
 
 func main() {
 	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/p/3901"),
+		colly.AllowedDomains("www.penguinmagic.com/openbox", "www.penguinmagic.com/p/3901"),
+		colly.Async(true),
 	)
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 6}) // limit the number of parallel requests
 
 	product := Product{}
 
 	getProductInfo(c, &product)
 
-	c.Visit("https://www.penguinmagic.com/p/3901")
+	c.Visit("https://www.penguinmagic.com/openbox")
+	// c.Visit("https://www.penguinmagic.com/p/3901")
 
-	if !isCoinProduct(&product) {
+	// if product is emppty, then openbox is down right now
+	if product == (Product{}) {
+		fmt.Println("There are no open box products currently")
+		os.Exit(1)
+	} else if !isCoinProduct(&product) {
 		fmt.Println("Product is not a coin product")
 		os.Exit(1)
 	}
