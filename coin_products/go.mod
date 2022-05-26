@@ -1,4 +1,4 @@
-module coin_product
+module check_coin_product
 
 go 1.18
 
