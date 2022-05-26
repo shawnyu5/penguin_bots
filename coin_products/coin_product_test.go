@@ -10,6 +10,7 @@ import (
 var c *colly.Collector
 
 func TestIsCoinProduct(t *testing.T) {
+	// create a product that is a coin product
 	coinProduct := Product{Title: "Coin fjdsljf",
 		Description:   "jfldsjf coin",
 		OriginalPrice: 0.00}
@@ -18,6 +19,7 @@ func TestIsCoinProduct(t *testing.T) {
 		t.Errorf("Coin product not detected")
 	}
 
+	// create a non coin product
 	notCoinProduct := Product{Title: "jfsdjfsljf",
 		Description:   "jfldsfjf jjfdsl",
 		OriginalPrice: 0.00}
@@ -39,7 +41,8 @@ func TestSaveProductToFile(t *testing.T) {
 	// original contents of file
 	oldfileProduct, err := ioutil.ReadFile("product_info.txt")
 	handleError(err)
-	// create new product and write it to file
+
+	// create new product and call saveProductToFile
 	newProduct := Product{Title: "new product"}
 	saveProductToFile(&newProduct)
 	newfileProduct, err := ioutil.ReadFile("product_info.txt")
@@ -49,7 +52,7 @@ func TestSaveProductToFile(t *testing.T) {
 		t.Errorf("Product not saved to file")
 	}
 
-	// replace new product with old product
+	// replace file contents with orginal contents
 	err = ioutil.WriteFile("product_info.txt", oldfileProduct, 0644)
 	handleError(err)
 }

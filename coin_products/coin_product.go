@@ -19,6 +19,7 @@ type Product struct {
 	DiscountPrice      float64
 	DiscountPercentage float64
 	Rating             int64
+	IsCoinProduct      bool
 }
 
 // getProductInfo get the product currently on penguin open box
@@ -64,27 +65,28 @@ func saveProductToFile(product *Product) {
 	}
 }
 
-// Check gets the current product from open box, and checks if it's a coin product.
+// Check gets the product from the url passed in, and checks if it's a coin product.
 // Returns a json object with the product info
-func Check() string {
+func Check(url string) string {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com",
 			"www.penguinmagic.com/p/17235", "www.penguinmagic.com/openbox",
-			"www.penguinmagic.com/p/3901"),
+			"www.penguinmagic.com/p/3901", url),
 	)
 
 	product := Product{}
 
-	getProductInfo(c, &product, "https://www.penguinmagic.com/openbox")
+	getProductInfo(c, &product, url)
 
 	saveProductToFile(&product)
 	// if product is empty, then openbox is down right now
 	if product == (Product{}) {
 		fmt.Println("There are no open box products currently")
-		os.Exit(1)
+		product.IsCoinProduct = false
+		// os.Exit(1)
 	} else if !isCoinProduct(&product) {
 		fmt.Println(fmt.Sprintf("Product %s is not a coin product", product.Title))
-		os.Exit(1)
+		product.IsCoinProduct = false
 	}
 
 	// parse into json
