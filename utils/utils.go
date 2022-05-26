@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/gocolly/colly"
+	"github.com/joho/godotenv"
 )
 
 // handleError provided a generic implenation of colly.OnError
@@ -101,6 +102,7 @@ func GetTitle(c *colly.Collector, title *string) {
 // GetDescription get the description of a product
 func GetDescription(c *colly.Collector, description *string) {
 	c.OnHTML(".product_subsection", func(e *colly.HTMLElement) {
+		// des := e.Text
 		des := e.ChildText("p")
 		if des != "" {
 			*description = des
@@ -169,4 +171,10 @@ func AddNotInterestedProduct(productTitle string) {
 	if _, err := file.WriteString(productTitle + "\n"); err != nil {
 		fmt.Printf("Unable to write to file: %v", err)
 	}
+}
+
+// GetFilePaths returns the file path of product_info.txt and not_interested_products.csv read from .env file
+func GetFilePaths() (string, string) {
+	godotenv.Load()
+	return os.Getenv("PRODUCT_INFO_FILE"), os.Getenv("NOT_INTERESTED_FILE")
 }
