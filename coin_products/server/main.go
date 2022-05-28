@@ -8,6 +8,10 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, "Method not allowed", 404)
+		return
+	}
 	productInfo := check_coin_product.Check("https://www.penguinmagic.com/openbox/")
 	fmt.Fprintf(w, productInfo)
 }
