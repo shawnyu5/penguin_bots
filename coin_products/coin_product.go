@@ -105,16 +105,16 @@ func Check(url string) string {
 		product.Reason = "There are no open box products currently"
 		// os.Exit(1)
 	}
-	if !isCoinProduct(&product) {
-		log.Println(fmt.Sprintf("Product %s is not a coin product", product.Title))
-		product.IsValid = false
-		product.Reason = fmt.Sprintf("Product *%s* is not a coin product", product.Title)
-		goto INVALIDPRODUCT // there will only be one failure message, not 2
-	}
 	if !hasProductChanged(&product) {
 		log.Println(fmt.Sprintf("Product %s has not changed", product.Title))
 		product.IsValid = false
 		product.Reason = fmt.Sprintf("Product *%s* has not changed", product.Title)
+		goto INVALIDPRODUCT // there will only be one failure message, not 2
+	}
+	if !isCoinProduct(&product) {
+		log.Println(fmt.Sprintf("Product %s is not a coin product", product.Title))
+		product.IsValid = false
+		product.Reason = fmt.Sprintf("Product *%s* is not a coin product", product.Title)
 	}
 
 INVALIDPRODUCT:
