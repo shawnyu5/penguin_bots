@@ -15,7 +15,7 @@
    "scripts": {
       "compile": "tsc -w",
       "run": "nodemon",
-      "start": "node .",
+      "start": "tsc; node .",
       "dev": "concurrently \"tsc -w\" \"nodemon ./build/bot.js\"",
       "test": "jest --watch"
    },
