@@ -9,8 +9,9 @@ import (
 	"strings"
 
 	"github.com/gocolly/colly"
-	"github.com/joho/godotenv"
 )
+
+var NOT_INTERESTED_FILE string
 
 // handleError provided a generic implenation of colly.OnError
 func handleError(c *colly.Collector) {
@@ -114,9 +115,10 @@ func GetDescription(c *colly.Collector, description *string) {
 // addNotInterested add a product to the not interested list. Return true if product was successfully written to file. False other wise
 func AddNotInterested(productTitle string) bool {
 	// open a csv file
-	file, err := os.OpenFile("not_interested.csv", os.O_RDWR|os.O_CREATE, 0755)
+	file, err := os.OpenFile(NOT_INTERESTED_FILE, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
-		fmt.Printf("Unable to open file: %v", err)
+		fmt.Printf("(AddNotInterested) Unable to open file: %v. Please set file paths using SetFilePath()", err)
+
 		return false
 	}
 	defer file.Close()
@@ -140,9 +142,9 @@ func AddNotInterested(productTitle string) bool {
 // Return true if product is interesting. False otherwise
 func IfInterested(title string) bool {
 	// open a csv file
-	file, err := os.OpenFile("../not_interested_products.csv", os.O_RDWR|os.O_CREATE, 0755)
+	file, err := os.OpenFile(NOT_INTERESTED_FILE, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
-		fmt.Printf("Unable to open file: %v", err)
+		fmt.Printf("(IfInterested) Unable to open file: %v. Please set file paths using SetFilePath()", err)
 		return false
 	}
 	defer file.Close()
@@ -160,9 +162,9 @@ func IfInterested(title string) bool {
 
 func AddNotInterestedProduct(productTitle string) {
 	// open a csv file
-	file, err := os.OpenFile("../not_interested_products.csv", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0755)
+	file, err := os.OpenFile(NOT_INTERESTED_FILE, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0755)
 	if err != nil {
-		fmt.Printf("Unable to open file: %v", err)
+		fmt.Printf("(AddNotInterested) Unable to open file: %v. Please set file paths using SetFilePath()", err)
 		return
 	}
 	defer file.Close()
@@ -173,8 +175,9 @@ func AddNotInterestedProduct(productTitle string) {
 	}
 }
 
-// GetFilePaths returns the file path of product_info.txt and not_interested_products.csv read from .env file
-func GetFilePaths() (string, string) {
-	godotenv.Load()
-	return os.Getenv("PRODUCT_INFO_FILE"), os.Getenv("NOT_INTERESTED_FILE")
+// GetFilePaths set the global variables for not interested product file location
+func SetFilePath(not_interested string) {
+	NOT_INTERESTED_FILE = not_interested
+	// godotenv.Load("~/python/penguin_bots/refactor_coin_product/.env")
+	// return os.Getenv("PRODUCT_INFO_FILE"), os.Getenv("NOT_INTERESTED_FILE")
 }
