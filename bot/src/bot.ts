@@ -1,9 +1,10 @@
 import { Client, Collection, Intents, MessageEmbed } from "discord.js";
-require("dotenv").config();
 import fs from "fs";
 import { OnStart } from "./deploy-commands";
 import { checkCoinProduct, getChannelByName, buildMessage } from "./utils";
 import config from "../config.json";
+import axios, { AxiosResponse } from "axios";
+import { CoinProduct } from "./types/coinProduct";
 
 const client = new Client({
    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -37,22 +38,31 @@ client.on("ready", () => {
    });
 
    let interval = 0;
-   setInterval(() => {
-      console.log(`Execution count: ${interval}`);
-      interval++;
-
-      let coinProduct = checkCoinProduct();
-      console.log("(anon) coinProduct : %s", coinProduct); // __AUTO_GENERATED_PRINT_VAR__
-      if (!coinProduct) {
-         console.log("Invaid coin product");
+   setInterval(async () => {
+      let response: AxiosResponse<any>;
+      try {
+         response = await axios.get("http://localhost:8080", {
+            timeout: 5000,
+         });
+      } catch (e) {
+         console.log("Axios error: " + e);
          return;
       }
 
-      let message: string = buildMessage(coinProduct);
-      console.log("(anon) message: %s", message); // __AUTO_GENERATED_PRINT_VAR__
-      let channel = getChannelByName(client, "notifications");
-      // let channel = getChannelByName(client, "development");
+      // @ts-ignore
+      let coinProduct: CoinProduct = response.data;
+      if (!coinProduct.IsValid) {
+         console.error(`Product *${coinProduct.Title}* is not valid`);
+         return;
+      }
 
+      // keep tack of execution count
+      console.log(`Execution count: ${interval}`);
+      interval++;
+
+      let message: string = buildMessage(coinProduct);
+      // let channel = getChannelByName(client, "notifications");
+      let channel = getChannelByName(client, "development");
       if (channel) {
          channel.send(message);
       }
