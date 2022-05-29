@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -17,8 +20,15 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 func main() {
 	http.HandleFunc("/", homeHandler)
-	fmt.Println("LISTENING ON PORT 8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	// load .env
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	// get from env
+	port := ":" + os.Getenv("PORT")
+	fmt.Println("LISTENING ON PORT " + port)
+	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatal(err)
 	}
 }
