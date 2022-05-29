@@ -99,7 +99,7 @@ func TestGetDescription(t *testing.T) {
 
 func TestIfIntersting(t *testing.T) {
 
-	utils.SetFilePath("~/python/penguin_bots/refactor_coin_product/not_interested_products.csv")
+	utils.SetFilePath("~/python/penguin_bots/not_interested_products.csv")
 	interesting := utils.IfInterested("jfdslfj")
 	notInteresting := utils.IfInterested("Code Red by Cody Nottingham (DVD & Download)")
 	if !interesting {
@@ -118,7 +118,7 @@ func TestIfIntersting(t *testing.T) {
 }
 
 func TestAddNotInterestedProduct(t *testing.T) {
-	utils.SetFilePath("~/python/penguin_bots/refactor_coin_product/not_interested_products.csv")
+	utils.SetFilePath("~/python/penguin_bots/not_interested_products.csv")
 	utils.AddNotInterestedProduct("jfdslfj")
 
 	// delete test string from file again
