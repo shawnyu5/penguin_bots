@@ -76,7 +76,7 @@ func saveProductToFile(product *Product) {
 // Returns a json object with the product info
 func Check(url string) string {
 	homeDir, err := os.UserHomeDir()
-	utils.SetFilePath(homeDir + "/python/penguin_bots/refactor_coin_product/not_interested_products.csv")
+	utils.SetFilePath(homeDir + "/python/penguin_bots/not_interested_products.csv")
 	PRODUCT_INFO_FILE = "product_info.txt"
 
 	c := colly.NewCollector(

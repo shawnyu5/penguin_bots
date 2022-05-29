@@ -4,7 +4,8 @@ import { OnStart } from "./deploy-commands";
 import { checkCoinProduct, getChannelByName, buildMessage } from "./utils";
 import config from "../config.json";
 import axios, { AxiosResponse } from "axios";
-import { CoinProduct } from "./types/coinProduct";
+import { ICoinProduct } from "./types/coinProduct";
+import { enviroment } from "./enviroments/enviroment";
 
 const client = new Client({
    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -66,7 +67,7 @@ client.on("ready", () => {
       if (channel) {
          channel.send(message);
       }
-   }, 120000);
+   }, 1000);
    // 120000 - 2 minutes in milliseconds
    // 300000 - 5 mins in milliseconds
 });
@@ -91,7 +92,7 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("guildCreate", function (guild) {
    let allCommands = onStart.readAllCommands();
-   onStart.registerCommands(config.clientID, guild.id, allCommands);
+   onStart.registerCommands(config.clientID, guild, allCommands);
 });
 
-client.login(require("../config.json").token);
+client.login(enviroment.token);
