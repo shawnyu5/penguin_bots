@@ -27,6 +27,9 @@ func main() {
 	}
 	// get from env
 	port := ":" + os.Getenv("PORT")
+	if port == ":" {
+		port = ":8080"
+	}
 	fmt.Println("LISTENING ON PORT " + port)
 	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatal(err)
