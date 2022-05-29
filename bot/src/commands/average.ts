@@ -1,6 +1,7 @@
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Api } from "../api/api";
+import DbProduct from "../types/dbProduct";
 
 interface IProduct {
    _id: string;
@@ -24,11 +25,11 @@ module.exports = {
    async execute(interaction: CommandInteraction) {
       await interaction.deferReply();
       let userMessage = interaction.options.getString("keyword");
-      let api = new Api();
+      let api = new Api(process.env.key as string);
 
-      // @ts-ignore
-      await api.init(process.env.key);
-      let response = await getProductDetail(userMessage as string);
+      // // @ts-ignore
+      // await api.init();
+      let response = await getProductDetail(userMessage as string, api);
 
       let message = new MessageEmbed()
          .setTitle(`Search term: ${userMessage}`)
@@ -44,15 +45,13 @@ module.exports = {
    },
 };
 
-let api: any;
-async function init() {
-   api = new Api();
-   await api.init(process.env.key);
-}
-init();
-
-async function getProductDetail(keyword: string) {
-   let productData: Array<IProduct> = await api.findNameByRegex(keyword);
+/**
+ * searches the data base based on a search string
+ * @param keyword - the search string
+ * @returns the search result from data base
+ */
+async function getProductDetail(keyword: string, api: Api) {
+   let productData: Array<DbProduct> = await api.findNameByRegex(keyword);
    // console.log("getProductDetail productData: %s", JSON.stringify(productData)); // __AUTO_GENERATED_PRINT_VAR__
    let response: string = "";
 
