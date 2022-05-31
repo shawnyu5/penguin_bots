@@ -10,7 +10,7 @@ import (
 var c *colly.Collector
 
 func TestIsCoinProduct(t *testing.T) {
-	// create a product that is a coin product
+	// A valid coin product
 	coinProduct := Product{Title: "Coin fjdsljf",
 		Description:   "jfldsjf coin",
 		OriginalPrice: 0.00}
