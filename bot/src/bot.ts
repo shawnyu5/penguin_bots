@@ -41,7 +41,7 @@ client.on("ready", () => {
    setInterval(async () => {
       let response: AxiosResponse<any>;
       try {
-         response = await axios.get("http://localhost:8080", {
+         response = await axios.get(enviroment.api_address, {
             timeout: 5000,
          });
       } catch (e) {
