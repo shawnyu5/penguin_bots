@@ -2,6 +2,7 @@ import { CommandInteraction, MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Api } from "../api/api";
 import DbProduct from "../types/dbProduct";
+import { ICommand } from "../types/command";
 
 interface IProduct {
    _id: string;
@@ -11,7 +12,7 @@ interface IProduct {
    appearances: number;
 }
 
-module.exports = {
+export let obj: ICommand = {
    data: new SlashCommandBuilder()
       .setName("average")
       .setDescription("Replies the average product for a price")
@@ -27,8 +28,6 @@ module.exports = {
       let userMessage = interaction.options.getString("keyword");
       let api = new Api(process.env.key as string);
 
-      // // @ts-ignore
-      // await api.init();
       let response = await getProductDetail(userMessage as string, api);
 
       let message = new MessageEmbed()
@@ -40,7 +39,7 @@ module.exports = {
 
    help: {
       name: "average",
-      Description: "Retrieves the average price based on a search keyword",
+      description: "Retrieves the average price based on a search keyword",
       usage: "/average keyword: <search word>",
    },
 };
