@@ -92,4 +92,3 @@ export function deleteUser(user: User): IConfig {
    }
    return updatedConfig;
 }
-
