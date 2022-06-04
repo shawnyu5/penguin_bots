@@ -2,12 +2,13 @@ import {
    SlashCommandBuilder,
    SlashCommandStringOption,
 } from "@discordjs/builders";
-import { CommandInteraction, Interaction, User } from "discord.js";
+import { CommandInteraction, User } from "discord.js";
 import { writeFileSync } from "fs";
 import config from "../enviroments/config.json";
+import { ICommand } from "../types/command";
 import { IConfig } from "../types/config";
 
-module.exports = {
+export let obj: ICommand = {
    data: new SlashCommandBuilder()
       .setName("alert")
       .setDescription("opt into coin product alerts")
@@ -41,11 +42,9 @@ module.exports = {
    },
    help: {
       name: "alert",
-      Description: "Chose to opt in or out of coin product alerts",
+      description: "Chose to opt in or out of coin product alerts",
       usage: "/alert notification: on | off",
    },
-   addUser: addUser,
-   deleteUser: deleteUser,
 };
 /**
  * Adds a user id to config object and return the new modified object
