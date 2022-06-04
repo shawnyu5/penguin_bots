@@ -7,10 +7,10 @@ A single product:
 
 ```json
 {
-    "title": "A jar of pickles",
-    "price": 100,
-    "discount_precentage": 50,
-    "appearences": 1
+   "title": "A jar of pickles",
+   "price": 100,
+   "discount_precentage": 50,
+   "appearences": 1
 }
 ```
 
@@ -28,4 +28,4 @@ was last ran.
 `def to_file()` - loads all products from file, and parse the array to see if
 current product exists. If it does, remove the product stored.
 
-* Calculate average price and discount percentage
+-  Calculate average price and discount percentage

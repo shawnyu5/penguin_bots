@@ -1,26 +1,26 @@
 [
-    {
-        "title": "Pyrotechnic Pasteboards with Gregory Wilson (DVD)",
-        "discount_percent": 5,
-        "price": 28.45,
-        "appearances": 1
-    },
-    {
-        "title": "Sharp Turn by Matthew Wright",
-        "discount_percent": 51,
-        "price": 12.14,
-        "appearances": 1
-    },
-    {
-        "title": "SANKEY MAGIC CLASSICS SERIES: Short & Sweet (DVD)",
-        "discount_percent": 9,
-        "price": 21.6,
-        "appearances": 1
-    },
-    {
-        "title": "new",
-        "discount_percent": 76,
-        "price": 11.77,
-        "appearances": 1
-    }
+   {
+      "title": "Pyrotechnic Pasteboards with Gregory Wilson (DVD)",
+      "discount_percent": 5,
+      "price": 28.45,
+      "appearances": 1
+   },
+   {
+      "title": "Sharp Turn by Matthew Wright",
+      "discount_percent": 51,
+      "price": 12.14,
+      "appearances": 1
+   },
+   {
+      "title": "SANKEY MAGIC CLASSICS SERIES: Short & Sweet (DVD)",
+      "discount_percent": 9,
+      "price": 21.6,
+      "appearances": 1
+   },
+   {
+      "title": "new",
+      "discount_percent": 76,
+      "price": 11.77,
+      "appearances": 1
+   }
 ]
