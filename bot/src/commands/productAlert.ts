@@ -3,10 +3,8 @@ import {
    SlashCommandStringOption,
 } from "@discordjs/builders";
 import { Interaction, User } from "discord.js";
-import { writeFileSync, readFileSync, WriteFileOptions } from "fs";
-import { Error } from "mongoose";
-import config from "../../config.json";
-const exec = require("child_process").exec;
+import { writeFileSync } from "fs";
+import config from "../enviroments/config.json";
 import { IConfig } from "../types/config";
 
 module.exports = {
@@ -92,4 +90,3 @@ export function deleteUser(user: User): IConfig {
    }
    return updatedConfig;
 }
-

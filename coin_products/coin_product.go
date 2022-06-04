@@ -89,8 +89,6 @@ func Check(url string) string {
 
 	getProductInfo(c, &product, url)
 
-	saveProductToFile(&product)
-
 	// check if we are interested in the product
 	if !utils.IfInterested(product.Title) {
 		log.Println(fmt.Sprintf("%s is not interesting", product.Title))
@@ -99,25 +97,22 @@ func Check(url string) string {
 	}
 
 	// if product is empty, then openbox is down right now
-	if product == (Product{}) {
+	if product.Title == "" {
 		fmt.Println("There are no open box products currently")
 		product.IsValid = false
 		product.Reason = "There are no open box products currently"
-		// os.Exit(1)
-	}
-	if !hasProductChanged(&product) {
+	} else if !hasProductChanged(&product) {
 		log.Println(fmt.Sprintf("Product %s has not changed", product.Title))
 		product.IsValid = false
 		product.Reason = fmt.Sprintf("Product *%s* has not changed", product.Title)
-		goto INVALIDPRODUCT // there will only be one failure message, not 2
-	}
-	if !isCoinProduct(&product) {
+	} else if !isCoinProduct(&product) {
 		log.Println(fmt.Sprintf("Product %s is not a coin product", product.Title))
 		product.IsValid = false
 		product.Reason = fmt.Sprintf("Product *%s* is not a coin product", product.Title)
 	}
 
-INVALIDPRODUCT:
+	saveProductToFile(&product)
+
 	// parse into json
 	parsedJson, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {

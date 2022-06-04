@@ -2,7 +2,7 @@ import { AnyChannel, Client } from "discord.js";
 // const exec = require("child_process").execSync;
 import { execSync } from "child_process";
 import { ICoinProduct } from "./types/coinProduct";
-import config from "../config.json";
+import config from "./enviroments/config.json";
 
 /**
  * return a channel information by name

@@ -1,4 +1,4 @@
-export interface CoinProduct {
+export interface ICoinProduct {
    Title: string;
    Description: string;
    OriginalPrice: number;
