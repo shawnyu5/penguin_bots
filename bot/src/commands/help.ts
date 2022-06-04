@@ -2,7 +2,7 @@ import {
    SlashCommandBuilder,
    SlashCommandStringOption,
 } from "@discordjs/builders";
-import { Interaction, MessageEmbed } from "discord.js";
+import { CommandInteraction, Interaction, MessageEmbed } from "discord.js";
 import { OnStart } from "../deploy-commands";
 import { IHelpDocs } from "../types/helpDocs";
 
@@ -16,7 +16,7 @@ module.exports = {
             .setDescription("name of command to get help page of")
       ),
 
-   async execute(interaction: Interaction) {
+   async execute(interaction: CommandInteraction) {
       let userInput = String(interaction).split(":")[1];
       const onStart = new OnStart();
       if (userInput) {

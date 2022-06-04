@@ -2,11 +2,9 @@ import {
    SlashCommandBuilder,
    SlashCommandStringOption,
 } from "@discordjs/builders";
-import { Interaction, User } from "discord.js";
-import { writeFileSync, readFileSync, WriteFileOptions } from "fs";
-import { Error } from "mongoose";
-import config from "../../config.json";
-const exec = require("child_process").exec;
+import { CommandInteraction, Interaction, User } from "discord.js";
+import { writeFileSync } from "fs";
+import config from "../enviroments/config.json";
 import { IConfig } from "../types/config";
 
 module.exports = {
@@ -24,7 +22,7 @@ module.exports = {
             .addChoice("off", "off")
       ),
 
-   async execute(interaction: Interaction) {
+   async execute(interaction: CommandInteraction) {
       let userChoice = String(interaction).split(":")[1];
       let user: User = interaction.user; // get the user that sent the command
       console.log("execute user: %s", JSON.stringify(user)); // __AUTO_GENERATED_PRINT_VAR__

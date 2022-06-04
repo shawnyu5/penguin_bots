@@ -87,8 +87,8 @@ def get_product_info(soup, product):
 def main():
     product = {"title": str, "description": str, "url": str}
 
-    product["url"] = "https://www.penguinmagic.com/openbox/"
-    # product["url"] = "https://www.penguinmagic.com/p/1797"
+    # product["url"] = "https://www.penguinmagic.com/openbox/"
+    product["url"] = "https://www.penguinmagic.com/p/1797"
 
     # create soup object
     soup = get_webpage(product=product)

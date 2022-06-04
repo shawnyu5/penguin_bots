@@ -1,4 +1,10 @@
 export interface ICoinProduct {
-   title: string;
-   url: string;
+   Title: string;
+   Description: string;
+   OriginalPrice: number;
+   DiscountPrice: number;
+   DiscountPercentage: number;
+   Rating: number;
+   IsValid: boolean;
+   Reason: string;
 }

@@ -3,6 +3,7 @@
       "@discordjs/builders": "^0.12.0",
       "@discordjs/rest": "^0.3.0",
       "@nestjs/schedule": "^1.0.2",
+      "axios": "^0.27.2",
       "concurrently": "^7.0.0",
       "discord-api-types": "^0.26.1",
       "discord.js": "^13.6.0",
@@ -15,9 +16,10 @@
    "scripts": {
       "compile": "tsc -w",
       "run": "nodemon",
-      "start": "node .",
+      "start": "tsc; node .",
       "dev": "concurrently \"tsc -w\" \"nodemon ./build/bot.js\"",
-      "test": "jest --watch"
+      "dev2": "nodemon src/bot.ts",
+      "test": "tsc; jest --watch"
    },
    "jest": {
       "testMatch": [
