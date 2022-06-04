@@ -18,8 +18,13 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	productInfo := check_coin_product.Check("https://www.penguinmagic.com/openbox/")
 	fmt.Fprintf(w, productInfo)
 }
+
+func doNothing(w http.ResponseWriter, r *http.Request) {}
+
 func main() {
 	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/favicon.ico", doNothing)
+
 	// load .env
 	err := godotenv.Load()
 	if err != nil {
