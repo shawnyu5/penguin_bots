@@ -18,6 +18,7 @@
       "run": "nodemon",
       "start": "tsc; node .",
       "dev": "concurrently \"tsc -w\" \"nodemon ./build/bot.js\"",
+      "dev2": "nodemon src/bot.ts",
       "test": "tsc; jest --watch"
    },
    "jest": {

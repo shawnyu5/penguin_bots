@@ -1,4 +1,4 @@
-import { AnyChannel, Client } from "discord.js";
+import { AnyChannel, Client, TextChannel } from "discord.js";
 // const exec = require("child_process").execSync;
 import { execSync } from "child_process";
 import { ICoinProduct } from "./types/coinProduct";
@@ -13,12 +13,12 @@ import config from "./enviroments/config.json";
 function getChannelByName(
    client: Client,
    channelName: string
-): AnyChannel | undefined {
+): TextChannel | undefined {
    const channel = client.channels.cache.find((ch) => {
       // @ts-ignore
       return ch.name == channelName;
    });
-   return channel;
+   return channel as TextChannel;
 }
 
 /**
@@ -54,8 +54,8 @@ function buildMessage(coinProduct: ICoinProduct): string {
    });
    message += `
 
-title: ${coinProduct.title}
-url: ${coinProduct.url}`;
+title: ${coinProduct.Title}
+url: https://www.penguinmagic.com/openbox/`;
    return message;
 }
 
