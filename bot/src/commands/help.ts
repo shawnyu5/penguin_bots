@@ -2,12 +2,11 @@ import {
    SlashCommandBuilder,
    SlashCommandStringOption,
 } from "@discordjs/builders";
-import { CommandInteraction, MessageEmbed } from "discord.js";
+import { CommandInteraction, Interaction, MessageEmbed } from "discord.js";
 import { OnStart } from "../deploy-commands";
-import { ICommand } from "../types/command";
 import { IHelpDocs } from "../types/helpDocs";
 
-export let obj: ICommand = {
+module.exports = {
    data: new SlashCommandBuilder()
       .setName("help")
       .setDescription("help command")
@@ -42,7 +41,7 @@ export let obj: ICommand = {
 
    help: {
       name: "help",
-      description: "A help page for this bot",
+      Description: "A help page for this bot",
       usage: "/help (command: <command name>)",
    },
 };
