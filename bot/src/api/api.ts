@@ -10,9 +10,19 @@ const productSchema = new Schema({
 });
 
 export class Api {
-   open_box: any = null;
+   open_box: any;
 
    constructor(connectionString: string) {
+      this.createConnection(connectionString).then(() => {
+         return;
+      });
+   }
+
+   /**
+    * Creates a connection to the database
+    * @param connectionString - the connection string to the database
+    */
+   async createConnection(connectionString: string): Promise<void> {
       const db = createConnection(connectionString, {
          // @ts-ignore
          useNewUrlParser: true,
@@ -22,9 +32,12 @@ export class Api {
       db.once("error", (err) => {
          throw new Error(err);
       });
+
       db.once("open", () => {
          this.open_box = db.model("Open_box", productSchema, "open_box");
+         console.log("Api#createConnection#(anon) this: %s", this.open_box); // __AUTO_GENERATED_PRINT_VAR__
          console.log("Connected to data base");
+         Promise.resolve();
       });
    }
 

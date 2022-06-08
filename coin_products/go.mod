@@ -2,9 +2,10 @@ module check_coin_product
 
 go 1.18
 
+replace github.com/shawnyu5/penguin-utils v0.0.0-00010101000000-000000000000 => ../utils
+
 require (
 	github.com/gocolly/colly v1.2.0
-	github.com/joho/godotenv v1.4.0
 	github.com/shawnyu5/penguin-utils v0.0.0-00010101000000-000000000000
 )
 
@@ -24,5 +25,3 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 )
-
-replace github.com/shawnyu5/penguin-utils => ../utils

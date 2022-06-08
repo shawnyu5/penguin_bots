@@ -2,6 +2,7 @@ import { CommandInteraction, MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Api } from "../api/api";
 import DbProduct from "../types/dbProduct";
+import { enviroment } from "../enviroments/enviroment";
 
 interface IProduct {
    _id: string;
@@ -25,11 +26,14 @@ module.exports = {
    async execute(interaction: CommandInteraction) {
       await interaction.deferReply();
       let userMessage = interaction.options.getString("keyword");
-      let api = new Api(process.env.key as string);
+      let api = new Api(enviroment.key);
 
-      // // @ts-ignore
-      // await api.init();
-      let response = await getProductDetail(userMessage as string, api);
+      let response;
+      try {
+         await getProductDetail(userMessage as string, api);
+      } catch (error) {
+         await getProductDetail(userMessage as string, api);
+      }
 
       let message = new MessageEmbed()
          .setTitle(`Search term: ${userMessage}`)
@@ -52,7 +56,6 @@ module.exports = {
  */
 async function getProductDetail(keyword: string, api: Api) {
    let productData: Array<DbProduct> = await api.findNameByRegex(keyword);
-   // console.log("getProductDetail productData: %s", JSON.stringify(productData)); // __AUTO_GENERATED_PRINT_VAR__
    let response: string = "";
 
    // if a single product is found

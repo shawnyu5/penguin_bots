@@ -1,10 +1,9 @@
-import { Client, Collection, Intents, MessageEmbed } from "discord.js";
+import { Client, Collection, Intents } from "discord.js";
 import fs from "fs";
 import { OnStart } from "./deploy-commands";
-import { checkCoinProduct, getChannelByName, buildMessage } from "./utils";
+import { getChannelByName, buildMessage } from "./utils";
 import config from "./enviroments/config.json";
 import axios, { AxiosResponse } from "axios";
-import { ICoinProduct } from "./types/coinProduct";
 import { enviroment } from "./enviroments/enviroment";
 
 const client = new Client({
