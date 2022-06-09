@@ -1,0 +1,7 @@
+{
+   "/": {
+      "GET": {
+         "description": "Get the list of all available endpoints"
+      }
+   }
+}

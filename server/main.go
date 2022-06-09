@@ -10,7 +10,8 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
+// coinProductHandler is the handler for the /coinProduct endpoint
+func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		http.Error(w, "Method not allowed", 404)
 		return
@@ -19,11 +20,29 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, productInfo)
 }
 
+// doNothing is a do nothing function
 func doNothing(w http.ResponseWriter, r *http.Request) {}
 
+func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		var list string
+		for k := range routes {
+			list += k + "\n"
+		}
+		fmt.Fprintln(w, list)
+	}
+
+}
+
 func main() {
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/favicon.ico", doNothing)
+	routes := make(map[string]func(http.ResponseWriter, *http.Request))
+	routes["/"] = homeHandler(routes)
+	routes["/coinProduct"] = coinProductHandler
+	routes["/favicon.ico"] = doNothing
+	for k, v := range routes {
+		http.HandleFunc(k, v)
+	}
 
 	// load .env
 	err := godotenv.Load()
