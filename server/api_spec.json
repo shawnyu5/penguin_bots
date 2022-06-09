@@ -3,5 +3,51 @@
       "GET": {
          "description": "Get the list of all available endpoints"
       }
+   },
+   "/coinProduct": {
+      "GET": {
+         "description": "Return information about current open box product, as well as if it's a coin product",
+         "content": {
+            "application/json": {
+               "schema": {
+                  "type": "object",
+                  "properties": {
+                     "Title": {
+                        "description": "Title of the product",
+                        "type": "string"
+                     },
+                     "Description": {
+                        "description": "Description of the product",
+                        "type": "string"
+                     },
+                     "OriginalPrice": {
+                        "description": "Original price of the product",
+                        "type": "number"
+                     },
+                     "DiscountPrice": {
+                        "description": "Discount price of the product",
+                        "type": "number"
+                     },
+                     "DiscountPercentage": {
+                        "description": "Discount percentage of the product",
+                        "type": "number"
+                     },
+                     "Rating": {
+                        "description": "Rating of the product",
+                        "type": "number"
+                     },
+                     "IsValid": {
+                        "description": "True if the product is valid - is a coin product and is interesting to the user, false otherwise",
+                        "type": "boolean"
+                     },
+                     "Reason": {
+                        "description": "Reason why the product is not valid",
+                        "type": "string"
+                     }
+                  }
+               }
+            }
+         }
+      }
    }
 }
