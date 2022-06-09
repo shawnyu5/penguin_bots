@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/joho/godotenv v1.4.0
+	github.com/mitchellh/mapstructure v1.5.0
 	go.mongodb.org/mongo-driver v1.9.1
 )
 

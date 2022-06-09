@@ -9,18 +9,18 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+// main result: map[_id:ObjectID("620291e8a55b7866b72f547f") appearances:41 average_discount:10.317073170731707 average_price:22.253414634146353
 type Product struct {
-	Title              string
-	Description        string
-	OriginalPrice      float64
-	DiscountPrice      float64
-	DiscountPercentage float64
-	Rating             int64
+	Title            string
+	Appearances      int32
+	Average_discount float64
+	Average_price    float64
 }
 
 // Connection URI
@@ -38,7 +38,13 @@ func getProduct() []byte {
 	return body
 }
 
-func main() {
+// constructProductObj construct a product object from the mongodb result
+func constructProductObj(b bson.M) Product {
+	product := Product{Title: b["title"].(string), Appearances: b["appearances"].(int32), Average_discount: b["average_discount"].(float64), Average_price: b["average_price"].(float64)}
+	return product
+}
+
+func connectDB() *mongo.Client {
 	godotenv.Load()
 	uri = os.Getenv("MONGODB_URI")
 	// Create a new client and connect to the server
@@ -47,29 +53,36 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
 
 	// Ping the primary
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
 		panic(err)
 	}
 	fmt.Println("Successfully connected and pinged.")
+	return client
+}
 
-	var productStruct Product
-	product := getProduct()
-	if err := json.Unmarshal(product, &productStruct); err != nil {
+func main() {
+	client := connectDB()
+	defer func() {
+		if err := client.Disconnect(context.TODO()); err != nil {
+			panic(err)
+		}
+	}()
+
+	var penguinProduct Product
+	p := getProduct()
+	if err := json.Unmarshal(p, &penguinProduct); err != nil {
 		panic(err)
 	}
 
-	fmt.Println(fmt.Sprintf("main product: %v", productStruct)) // __AUTO_GENERATED_PRINT_VAR__
-	// coll := client.Database("penguin_magic").Collection("open_box")
-	// var result bson.M
-	// err = coll.FindOne(context.TODO(), bson.D{{"title", "Self Tying Shoelace by Jay Noblezada"}}).Decode(&result)
+	coll := client.Database("penguin_magic").Collection("open_box")
+	var result bson.M
+	if err := coll.FindOne(context.TODO(), bson.D{{"title", penguinProduct.Title}}).Decode(&result); err != nil {
+		panic(err)
+	}
 
-	// fmt.Println(fmt.Sprintf("main result: %v", result)) // __AUTO_GENERATED_PRINT_VAR__
+	dbProduct := constructProductObj(result)
+	fmt.Println(fmt.Sprintf("main product2: %v", dbProduct)) // __AUTO_GENERATED_PRINT_VAR__
 
 }
