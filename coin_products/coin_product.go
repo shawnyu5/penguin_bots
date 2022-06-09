@@ -90,17 +90,16 @@ func Check(url string) string {
 	getProductInfo(c, &product, url)
 
 	// check if we are interested in the product
-	if !utils.IfInterested(product.Title) {
-		log.Println(fmt.Sprintf("%s is not interesting", product.Title))
-		product.IsValid = false
-		product.Reason = fmt.Sprintf("Product %s is not interested", product.Title)
-	}
 
 	// if product is empty, then openbox is down right now
 	if product.Title == "" {
 		fmt.Println("There are no open box products currently")
 		product.IsValid = false
 		product.Reason = "There are no open box products currently"
+	} else if !utils.IfInterested(product.Title) {
+		log.Println(fmt.Sprintf("%s is not interesting", product.Title))
+		product.IsValid = false
+		product.Reason = fmt.Sprintf("Product %s is not interested", product.Title)
 	} else if !hasProductChanged(&product) {
 		log.Println(fmt.Sprintf("Product %s has not changed", product.Title))
 		product.IsValid = false
