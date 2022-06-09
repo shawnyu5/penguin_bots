@@ -1,7 +1,17 @@
 {
    "/": {
       "GET": {
-         "description": "Get the list of all available endpoints"
+         "description": "Get the list of all available endpoints",
+         "content": {
+            "text/plain": {
+               "schema": {
+                  "endpoint": {
+                     "type": "string",
+                     "description": "Endpoint name"
+                  }
+               }
+            }
+         }
       }
    },
    "/coinProduct": {
