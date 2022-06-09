@@ -16,11 +16,22 @@ import (
 )
 
 // main result: map[_id:ObjectID("620291e8a55b7866b72f547f") appearances:41 average_discount:10.317073170731707 average_price:22.253414634146353
-type Product struct {
+type DbProduct struct {
 	Title            string
 	Appearances      int32
 	Average_discount float64
 	Average_price    float64
+}
+
+type PenguinProduct struct {
+	Title              string
+	Description        string
+	OriginalPrice      float64
+	DiscountPrice      float64
+	DiscountPercentage float64
+	Rating             int64
+	IsValid            bool
+	Reason             string
 }
 
 // Connection URI
@@ -39,8 +50,8 @@ func getProduct() []byte {
 }
 
 // constructProductObj construct a product object from the mongodb result
-func constructProductObj(b bson.M) Product {
-	product := Product{Title: b["title"].(string), Appearances: b["appearances"].(int32), Average_discount: b["average_discount"].(float64), Average_price: b["average_price"].(float64)}
+func constructProductObj(b bson.M) DbProduct {
+	product := DbProduct{Title: b["title"].(string), Appearances: b["appearances"].(int32), Average_discount: b["average_discount"].(float64), Average_price: b["average_price"].(float64)}
 	return product
 }
 
@@ -70,11 +81,13 @@ func main() {
 		}
 	}()
 
-	var penguinProduct Product
+	// var p Product
+	var penguinProduct PenguinProduct
 	p := getProduct()
 	if err := json.Unmarshal(p, &penguinProduct); err != nil {
 		panic(err)
 	}
+	fmt.Println(fmt.Sprintf("main penguinProduct: %v", penguinProduct)) // __AUTO_GENERATED_PRINT_VAR__
 
 	coll := client.Database("penguin_magic").Collection("open_box")
 	var result bson.M
@@ -83,6 +96,22 @@ func main() {
 	}
 
 	dbProduct := constructProductObj(result)
-	fmt.Println(fmt.Sprintf("main product2: %v", dbProduct)) // __AUTO_GENERATED_PRINT_VAR__
+	fmt.Println(fmt.Sprintf("main dbProduct: %+v", dbProduct)) // __AUTO_GENERATED_PRINT_VAR__
+	updateProduct(&dbProduct, penguinProduct)
+	fmt.Println(fmt.Sprintf("main dbProduct: %v", dbProduct.Appearances)) // __AUTO_GENERATED_PRINT_VAR__
 
+}
+
+// updateProduct update the dbproduct with the new product passed in, and return an up to date product
+func updateProduct(dbProduct *DbProduct, penguinProduct PenguinProduct) error {
+	if dbProduct.Title != penguinProduct.Title {
+		// return an error
+		return fmt.Errorf("Product titles do not match")
+	}
+	// update the dbproduct with the new product
+	dbProduct.Appearances = dbProduct.Appearances + 1
+	dbProduct.Average_discount = (dbProduct.Average_discount*float64(dbProduct.Appearances-1) + penguinProduct.DiscountPrice) / float64(dbProduct.Appearances)
+	dbProduct.Average_price = (dbProduct.Average_price*float64(dbProduct.Appearances-1) + penguinProduct.DiscountPrice) / float64(dbProduct.Appearances)
+
+	return nil
 }
