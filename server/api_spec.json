@@ -59,5 +59,38 @@
             }
          }
       }
+   },
+   "/logger": {
+      "GET": {
+         "description": "Get the current product on penguin open box",
+         "content": {
+            "application/json": {
+               "schema": {
+                  "type": "object",
+                  "properties": {
+                     "title": {
+                        "description": "Title of the product",
+                        "type": "string"
+                     },
+                     "description": {
+                        "description": "Description of the product",
+                        "type": "string"
+                     },
+                     "original_price": {
+                        "description": "Original price of the product",
+                        "type": "number"
+                     },
+                     "discount_price": {
+                        "description": "Discount price of the product",
+                        "type": "number"
+                     },
+                     "discount_percentage": {
+                        "description": "Discount percentage of the product",
+                        "type": "number"
+                     }
+                  }
+               }
+            }
+         }
+      }
    }
-}
