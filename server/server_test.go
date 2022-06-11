@@ -16,7 +16,7 @@ func TestLoggerHandler(t *testing.T) {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
 	)
-	product := Product{}
+	product := LoggerProduct{}
 
 	utils.GetTitle(c, &product.Title)
 	utils.GetPrice(c, &product.Original_price)

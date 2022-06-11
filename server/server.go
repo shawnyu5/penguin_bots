@@ -7,13 +7,25 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
+	"github.com/patrickmn/go-cache"
 	utils "github.com/shawnyu5/penguin-utils"
 )
 
+var storage *cache.Cache
+
+type LoggerProduct struct {
+	Title               string  `json:"title"`
+	Original_price      float64 `json:"original_price"`
+	Discount_price      float64 `json:"discount_price"`
+	Discount_percentage float64 `json:"discount_percentage"`
+}
+
 func main() {
+	storage = cache.New(cache.NoExpiration, 10*time.Minute)
 	routes := make(map[string]func(http.ResponseWriter, *http.Request))
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
@@ -67,13 +79,6 @@ func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) htt
 
 func loggerHandler(w http.ResponseWriter, r *http.Request) {
 
-	type LoggerProduct struct {
-		Title               string  `json:"title"`
-		Original_price      float64 `json:"original_price"`
-		Discount_price      float64 `json:"discount_price"`
-		Discount_percentage float64 `json:"discount_percentage"`
-	}
-
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
 	)
@@ -85,6 +90,8 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	utils.GetDiscountPercentage(c, &product.Discount_percentage)
 
 	c.Visit("https://www.penguinmagic.com/openbox/")
+
+	storage.Set("product_title", product.Title, cache.DefaultExpiration)
 	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
 		panic(err)
