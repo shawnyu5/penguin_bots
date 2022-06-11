@@ -59,6 +59,7 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	productInfo := check_coin_product.Check("https://www.penguinmagic.com/openbox/")
+	log.Println("/coinProduct:", productInfo)
 	fmt.Fprintf(w, productInfo)
 }
 
@@ -72,6 +73,7 @@ func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) htt
 		for k := range routes {
 			list += k + "\n"
 		}
+		log.Println("/:", list)
 		fmt.Fprintln(w, list)
 	}
 
@@ -96,5 +98,6 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+	log.Println(string(j))
 	fmt.Fprintln(w, string(j))
 }
