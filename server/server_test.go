@@ -19,7 +19,6 @@ func TestLoggerHandler(t *testing.T) {
 	product := Product{}
 
 	utils.GetTitle(c, &product.Title)
-	utils.GetDescription(c, &product.Description)
 	utils.GetPrice(c, &product.Original_price)
 	utils.GetDiscountedPrice(c, &product.Discount_price)
 	utils.GetDiscountPercentage(c, &product.Discount_percentage)

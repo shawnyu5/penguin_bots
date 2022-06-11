@@ -13,14 +13,6 @@ import (
 	utils "github.com/shawnyu5/penguin-utils"
 )
 
-type Product struct {
-	Title               string  `json:"title"`
-	Description         string  `json:"description"`
-	Original_price      float64 `json:"original_price"`
-	Discount_price      float64 `json:"discount_price"`
-	Discount_percentage float64 `json:"discount_percentage"`
-}
-
 func main() {
 	routes := make(map[string]func(http.ResponseWriter, *http.Request))
 	routes["/"] = homeHandler(routes)
@@ -38,6 +30,7 @@ func main() {
 	}
 	// get from env
 	port := ":" + os.Getenv("PORT")
+	// set default port to 8080
 	if port == ":" {
 		port = ":8080"
 	}
@@ -73,20 +66,26 @@ func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) htt
 }
 
 func loggerHandler(w http.ResponseWriter, r *http.Request) {
+
+	type LoggerProduct struct {
+		Title               string  `json:"title"`
+		Original_price      float64 `json:"original_price"`
+		Discount_price      float64 `json:"discount_price"`
+		Discount_percentage float64 `json:"discount_percentage"`
+	}
+
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
 	)
-	product := Product{}
+	product := LoggerProduct{}
 
 	utils.GetTitle(c, &product.Title)
-	utils.GetDescription(c, &product.Description)
 	utils.GetPrice(c, &product.Original_price)
 	utils.GetDiscountedPrice(c, &product.Discount_price)
 	utils.GetDiscountPercentage(c, &product.Discount_percentage)
 
 	c.Visit("https://www.penguinmagic.com/openbox/")
-	fmt.Println(fmt.Sprintf("loggerHandler product.Title: %+v", product)) // __AUTO_GENERATED_PRINT_VAR__
-	j, err := json.Marshal(product)
+	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
 		panic(err)
 	}
