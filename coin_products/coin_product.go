@@ -30,7 +30,7 @@ var storage *cache.Cache
 // Check gets the product from the url passed in, and checks if it's a coin product.
 // Returns a json object with the product info
 func Check(url string) string {
-	homeDir, err := os.UserHomeDir()
+	homeDir, _ := os.UserHomeDir()
 	storage = cache.New(cache.NoExpiration, 30*time.Minute)
 	utils.SetFilePath(homeDir + "/python/penguin_bots/not_interested_products.csv")
 	// PRODUCT_INFO_FILE = "product_info.txt"
@@ -54,17 +54,21 @@ func Check(url string) string {
 		product.IsValid = false
 		product.Reason = fmt.Sprintf("Product %s is not interested", product.Title)
 		log.Println(product.Reason)
-	} else if !hasProductChanged(&product) {
-		product.IsValid = false
-		product.Reason = fmt.Sprintf("Product *%s* has not changed", product.Title)
-		log.Println(product.Reason)
+		// TODO: Is this nessary?
+		// } else if !hasProductChanged(&product) {
+		// product.IsValid = false
+		// product.Reason = fmt.Sprintf("Product *%s* has not changed", product.Title)
+		// log.Println(product.Reason)
 	} else if !isCoinProduct(&product) {
 		product.IsValid = false
 		product.Reason = fmt.Sprintf("Product *%s* is not a coin product", product.Title)
 		log.Println(product.Reason)
+	} else {
+		product.IsValid = true
+		product.Reason = "Product is a coin product"
 	}
 
-	cacheProduct(product)
+	// cacheProduct(product)
 
 	// parse into json
 	parsedJson, err := json.MarshalIndent(product, "", "  ")
@@ -105,7 +109,9 @@ func hasProductChanged(product *Product) bool {
 func isCoinProduct(product *Product) bool {
 	// check if product description contains "coin"
 	if strings.Contains(strings.ToLower(product.Description), "coin ") ||
-		strings.Contains(strings.ToLower(product.Title), "coin ") {
+		strings.Contains(strings.ToLower(product.Title), "coin ") ||
+		strings.Contains(strings.ToLower(product.Description), "coins ") {
+		log.Println("Coin product found")
 		return true
 	}
 	return false
@@ -115,9 +121,4 @@ func isCoinProduct(product *Product) bool {
 func cacheProduct(product Product) {
 	// cache the product
 	storage.Set("product_title", product.Title, cache.DefaultExpiration)
-	// write to file
-	// err := os.WriteFile(PRODUCT_INFO_FILE, []byte(product.Title), 0644)
-	// if err != nil {
-	// panic(err)
-	// }
 }

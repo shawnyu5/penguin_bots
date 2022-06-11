@@ -1,6 +1,7 @@
 package check_coin_product
 
 import (
+	"encoding/json"
 	"testing"
 	"time"
 
@@ -28,7 +29,7 @@ func TestIsCoinProduct(t *testing.T) {
 
 	invalidCoinProduct := isCoinProduct(&notCoinProduct)
 
-	if invalidCoinProduct {
+	if invalidCoinProduct == true {
 		t.Errorf("false Coin product detected")
 	}
 }
@@ -50,5 +51,16 @@ func TestHasProductChanged(t *testing.T) {
 	changed = hasProductChanged(&Product{Title: "another product"})
 	if !changed {
 		t.Errorf("Product should have changed")
+	}
+}
+
+// TestCheck tests if it is able to check if the product is a coin product
+func TestCheck(t *testing.T) {
+	product := Check("https://www.penguinmagic.com/p/1806")
+	var productStruct Product
+	json.Unmarshal([]byte(product), &productStruct)
+	// fmt.Println(fmt.Sprintf("TestCheck product: %+v", productStruct)) // __AUTO_GENERATED_PRINT_VAR__
+	if !productStruct.IsValid {
+		t.Errorf("Product should be valid")
 	}
 }
