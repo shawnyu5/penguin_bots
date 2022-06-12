@@ -37,6 +37,10 @@ jobs:
           host: ${{ secrets.HOST }}
           # The SSH username
           username: ${{ secrets.USER }}
-          # The SSH port
-          # SSH_PORT: # optional, default is 22
           password: ${{ secrets.PASSWORD }}
+          script: |
+            cd penguin_bots
+            git pull -f
+            pm2 reload penguin_server
+            pm2 reload penguin\ bot
+            pm2 reload penguin_logger
