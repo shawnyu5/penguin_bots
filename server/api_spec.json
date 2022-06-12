@@ -1,0 +1,101 @@
+{
+   "/": {
+      "GET": {
+         "description": "Get the list of all available endpoints",
+         "content": {
+            "text/plain": {
+               "schema": {
+                  "endpoint": {
+                     "type": "string",
+                     "description": "Endpoint name"
+                  }
+               }
+            }
+         }
+      }
+   },
+   "/coinProduct": {
+      "GET": {
+         "description": "Return information about current open box product, as well as if it's a coin product",
+         "content": {
+            "application/json": {
+               "schema": {
+                  "type": "object",
+                  "properties": {
+                     "Title": {
+                        "description": "Title of the product",
+                        "type": "string"
+                     },
+                     "Description": {
+                        "description": "Description of the product",
+                        "type": "string"
+                     },
+                     "OriginalPrice": {
+                        "description": "Original price of the product",
+                        "type": "number"
+                     },
+                     "DiscountPrice": {
+                        "description": "Discount price of the product",
+                        "type": "number"
+                     },
+                     "DiscountPercentage": {
+                        "description": "Discount percentage of the product",
+                        "type": "number"
+                     },
+                     "Rating": {
+                        "description": "Rating of the product",
+                        "type": "number"
+                     },
+                     "IsValid": {
+                        "description": "True if the product is valid - is a coin product and is interesting to the user, false otherwise",
+                        "type": "boolean"
+                     },
+                     "Reason": {
+                        "description": "Reason why the product is not valid",
+                        "type": "string"
+                     }
+                  }
+               }
+            }
+         }
+      }
+   },
+   "/logger": {
+      "GET": {
+         "description": "Get the current product on penguin open box",
+         "content": {
+            "application/json": {
+               "schema": {
+                  "type": "object",
+                  "properties": {
+                     "title": {
+                        "description": "Title of the product",
+                        "type": "string"
+                     },
+                     "description": {
+                        "description": "Description of the product",
+                        "type": "string"
+                     },
+                     "original_price": {
+                        "description": "Original price of the product",
+                        "type": "number"
+                     },
+                     "discount_price": {
+                        "description": "Discount price of the product",
+                        "type": "number"
+                     },
+                     "discount_percentage": {
+                        "description": "Discount percentage of the product",
+                        "type": "number"
+                     },
+                     "has_changed": {
+                        "description": "True if the product has changed since last call",
+                        "type": "boolean"
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

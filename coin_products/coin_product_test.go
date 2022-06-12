@@ -1,14 +1,17 @@
 package check_coin_product
 
 import (
-	"io/ioutil"
+	"encoding/json"
 	"testing"
+	"time"
 
 	"github.com/gocolly/colly"
+	"github.com/patrickmn/go-cache"
 )
 
 var c *colly.Collector
 
+// TestIsCoinProduct tests if it is able to detect if the product is a coin product
 func TestIsCoinProduct(t *testing.T) {
 	// A valid coin product
 	coinProduct := Product{Title: "Coin fjdsljf",
@@ -26,33 +29,37 @@ func TestIsCoinProduct(t *testing.T) {
 
 	invalidCoinProduct := isCoinProduct(&notCoinProduct)
 
-	if invalidCoinProduct {
+	if invalidCoinProduct == true {
 		t.Errorf("false Coin product detected")
 	}
 }
 
-func TestSaveProductToFile(t *testing.T) {
-	handleError := func(err error) {
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	// original contents of file
-	oldfileProduct, err := ioutil.ReadFile("product_info.txt")
-	handleError(err)
-
-	// create new product and call saveProductToFile
+// TestHasProductChanged tests if it is able to detect if the product has changed
+func TestHasProductChanged(t *testing.T) {
+	// create a new product
 	newProduct := Product{Title: "new product"}
-	saveProductToFile(&newProduct)
-	newfileProduct, err := ioutil.ReadFile("product_info.txt")
-	handleError(err)
-
-	if "new product" != string(newfileProduct) {
-		t.Errorf("Product not saved to file")
+	storage = cache.New(cache.NoExpiration, 30*time.Minute)
+	// store product in cache
+	cacheProduct(newProduct)
+	// product should not have changed
+	changed := hasProductChanged(&newProduct)
+	if changed {
+		t.Errorf("Product should not have changed")
 	}
 
-	// replace file contents with orginal contents
-	err = ioutil.WriteFile("product_info.txt", oldfileProduct, 0644)
-	handleError(err)
+	// passing in a different product than product stored in cache
+	changed = hasProductChanged(&Product{Title: "another product"})
+	if !changed {
+		t.Errorf("Product should have changed")
+	}
+}
+
+// TestCheck tests if it is able to check if the product is a coin product
+func TestCheck(t *testing.T) {
+	product := Check("https://www.penguinmagic.com/p/1806")
+	var productStruct Product
+	json.Unmarshal([]byte(product), &productStruct)
+	if !productStruct.IsValid {
+		t.Errorf("Product should be valid")
+	}
 }
