@@ -22,4 +22,3 @@ jobs:
 
          - name: product logger test
            run: cd product_logger && go test -v
-
