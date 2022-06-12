@@ -4,3 +4,4 @@ __pycache__
 config.json
 node_modules
 .air.toml
+server/server
