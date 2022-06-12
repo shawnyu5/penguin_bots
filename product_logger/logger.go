@@ -48,7 +48,7 @@ func main() {
 	}()
 	for {
 		Log(client)
-		time.Sleep(2 * time.Second)
+		time.Sleep(2 * time.Minute)
 	}
 }
 
