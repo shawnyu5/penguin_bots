@@ -5,11 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"time"
 
 	"github.com/joho/godotenv"
+	"github.com/patrickmn/go-cache"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -26,38 +28,51 @@ type DbProduct struct {
 }
 
 type PenguinProduct struct {
-	Title              string
-	Description        string
-	OriginalPrice      float64
-	DiscountPrice      float64
-	DiscountPercentage float64
-	Rating             int64
-	IsValid            bool
-	Reason             string
+	Title               string  `json:"title"`
+	Original_price      float64 `json:"original_price"`
+	Discount_price      float64 `json:"discount_price"`
+	Discount_percentage float64 `json:"discount_percentage"`
 }
 
 // Connection URI
 var uri string
+var c *cache.Cache
 
 func main() {
+	c = cache.New(cache.NoExpiration, 10*time.Minute)
 	client := connectDB()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
 			panic(err)
 		}
 	}()
-
-	// var p Product
-	var penguinProduct PenguinProduct
-	p := getProduct()
-	if err := json.Unmarshal(p, &penguinProduct); err != nil {
-		panic(err)
+	for {
+		Log(client)
+		time.Sleep(2 * time.Second)
 	}
-	// fmt.Println(fmt.Sprintf("main penguinProduct: %v", penguinProduct)) // __AUTO_GENERATED_PRINT_VAR__
+}
+
+// Log initiate the logger
+func Log(client *mongo.Client) {
+
+	penguinProduct := getProductInfo()
+	hasChanged := hasProductChanged(penguinProduct)
+	// if product has not changed, do nothing
+	// We want to log when the product has changed. the last time it was seen
+	if !hasChanged {
+		log.Printf("Product %s has not changed", penguinProduct.Title)
+		return
+	}
+
+	cacheProduct(penguinProduct)
 
 	coll := client.Database("penguin_magic").Collection("open_box")
+
 	var dbResult bson.M
-	if err := coll.FindOne(context.TODO(), bson.D{{"title", penguinProduct.Title}}).Decode(&dbResult); err != nil {
+	// find the product with current product title in db
+	err := coll.FindOne(context.TODO(), bson.D{{"title", penguinProduct.Title}}).Decode(&dbResult)
+	// create default product if product is not found
+	if err == mongo.ErrNoDocuments {
 		const appearances int32 = 0
 		const average_discount float64 = 0
 		const average_price float64 = 0
@@ -65,11 +80,11 @@ func main() {
 		var updated_at string = time.Now().Format("2006-01-02 15:04:05")
 
 		dbResult = bson.M{"title": penguinProduct.Title, "appearances": appearances, "average_discount": average_discount, "average_price": average_price, "created_at": created_at, "updated_at": updated_at}
-
 	}
 	dbProduct := constructProductObj(dbResult)
 	fmt.Println(fmt.Sprintf("main dbProduct: %+v", dbProduct)) // __AUTO_GENERATED_PRINT_VAR__
-	err := updateProduct(&dbProduct, penguinProduct)
+
+	err = updateProduct(&dbProduct, penguinProduct)
 	if err != nil {
 		panic(err)
 	}
@@ -78,17 +93,42 @@ func main() {
 
 }
 
-// getProduct will get the current product from penguin magic
-func getProduct() []byte {
+// hasProductChanged will check if the current product title is different from the cached product title.
+// Returns true if the product has changed.
+func hasProductChanged(product PenguinProduct) bool {
+	cacheProduct, found := c.Get("product_title")
+	if !found {
+		// if not found, assume product has not changed to avoid counting too many times
+		return false
+	}
+
+	// if product is same, product has not changed
+	if cacheProduct.(string) == product.Title {
+		return false
+	}
+	return true
+}
+
+// cacheProduct cache product title under "product_title" key
+func cacheProduct(product PenguinProduct) {
+	c.Set("product_title", product.Title, cache.NoExpiration)
+}
+
+// getProductInfo will get the current product from penguin magic. Returns a penguin product object
+func getProductInfo() PenguinProduct {
 	// make http request to get product
-	// TODO: consider making custom end point for logger
-	res, err := http.Get(os.Getenv("API_URL") + "/coinProduct")
+	res, err := http.Get(os.Getenv("API_URL") + "/logger")
 	if err != nil {
 		panic(err)
 	}
 	body, err := ioutil.ReadAll(res.Body)
 
-	return body
+	penguinProduct := PenguinProduct{}
+	if err := json.Unmarshal(body, &penguinProduct); err != nil {
+		panic(err)
+	}
+
+	return penguinProduct
 }
 
 // constructProductObj construct a product object from the mongodb result
@@ -141,7 +181,7 @@ func saveProduct(dbProduct *DbProduct, coll *mongo.Collection) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(fmt.Sprintf("saveProduct result: %v", result.UpsertedID)) // __AUTO_GENERATED_PRINT_VAR__
+	log.Println(fmt.Sprintf("saveProduct result: %v", result.UpsertedID)) // __AUTO_GENERATED_PRINT_VAR__
 
 }
 
@@ -150,13 +190,14 @@ func updateProduct(dbProduct *DbProduct, penguinProduct PenguinProduct) error {
 	if dbProduct.Title != penguinProduct.Title {
 		// return an error
 		return fmt.Errorf("Product titles do not match")
-	} else if !penguinProduct.IsValid {
-		return fmt.Errorf("Product is not valid: %v", penguinProduct.Reason)
 	}
+
 	// update the dbproduct with the new product
 	dbProduct.Appearances = dbProduct.Appearances + 1
-	dbProduct.Average_discount = (dbProduct.Average_discount*float64(dbProduct.Appearances-1) + penguinProduct.DiscountPrice) / float64(dbProduct.Appearances)
-	dbProduct.Average_price = (dbProduct.Average_price*float64(dbProduct.Appearances-1) + penguinProduct.DiscountPrice) / float64(dbProduct.Appearances)
+
+	dbProduct.Average_discount = (dbProduct.Average_discount*float64(dbProduct.Appearances-1) + penguinProduct.Discount_percentage) / float64(dbProduct.Appearances)
+
+	dbProduct.Average_price = (dbProduct.Average_price*float64(dbProduct.Appearances-1) + penguinProduct.Discount_price) / float64(dbProduct.Appearances)
 	// get current date and time
 	dbProduct.Updated_at = time.Now().Format("2006-01-02 15:04:05")
 
