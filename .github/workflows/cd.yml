@@ -41,6 +41,8 @@ jobs:
           script: |
             cd penguin_bots
             git pull -f
+            cd server && go build
+            cd ../product_logger && go build
             pm2 reload penguin_server
             pm2 reload penguin\ bot
             pm2 reload penguin_logger
