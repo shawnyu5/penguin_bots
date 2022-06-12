@@ -33,12 +33,10 @@ jobs:
       # You may pin to the exact commit or the version.
         uses: appleboy/ssh-action@master
         with:
-          # A unique name for the server
-          NAME: digital ocean server
-          # The SSH username
-          SSH_USER: ${{ secrets.USER }}
           # The hostname or the IP address
-          SSH_HOST: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST }}
+          # The SSH username
+          username: ${{ secrets.USER }}
           # The SSH port
           # SSH_PORT: # optional, default is 22
           password: ${{ secrets.PASSWORD }}
