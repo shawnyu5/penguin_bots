@@ -88,7 +88,6 @@ func Log(client *mongo.Client) {
 	if err != nil {
 		panic(err)
 	}
-	return
 	saveProduct(&dbProduct, coll)
 
 }

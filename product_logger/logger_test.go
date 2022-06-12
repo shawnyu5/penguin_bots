@@ -7,6 +7,7 @@ import (
 	"github.com/patrickmn/go-cache"
 )
 
+// TestUpdateProduct tests if it is able to update a product from the database with a new product information
 func TestUpdateProduct(t *testing.T) {
 	// create a db product
 	dbProduct := DbProduct{Title: "test", Appearances: 1, Average_discount: 1.0, Average_price: 1.0}
@@ -35,6 +36,7 @@ func TestUpdateProduct(t *testing.T) {
 	}
 }
 
+// TestHasProductChanged tests if it is able to determine if a product has changed
 func TestHasProductChanged(t *testing.T) {
 	c = cache.New(cache.NoExpiration, 10*time.Minute)
 	product := PenguinProduct{Title: "test", Discount_price: 1.0, Discount_percentage: 1.0}

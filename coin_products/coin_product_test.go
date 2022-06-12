@@ -59,7 +59,6 @@ func TestCheck(t *testing.T) {
 	product := Check("https://www.penguinmagic.com/p/1806")
 	var productStruct Product
 	json.Unmarshal([]byte(product), &productStruct)
-	// fmt.Println(fmt.Sprintf("TestCheck product: %+v", productStruct)) // __AUTO_GENERATED_PRINT_VAR__
 	if !productStruct.IsValid {
 		t.Errorf("Product should be valid")
 	}
