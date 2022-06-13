@@ -2,7 +2,6 @@
 
 A collection of web scrappers to scrape <https://www.penguinmagic.com/openbox/>
 
-## Utils
+## Bot
 
-A collection of utility APIs to retrieve information from
-<https://www.penguinmagic.com/openbox/>
+A discord bot that acts as a front end to provide access to all logged products
