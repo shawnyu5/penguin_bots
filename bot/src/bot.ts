@@ -94,4 +94,4 @@ client.on("guildCreate", function (guild) {
    onStart.registerCommands(config.clientID, guild, allCommands);
 });
 
-client.login(enviroment.token);
+client.login(enviroment.TOKEN);
