@@ -23,13 +23,18 @@ module.exports = {
       ),
 
    async execute(interaction: CommandInteraction) {
+      // let user = interaction.member?.user as User;
+      // console.log("execute user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
       let userChoice = String(interaction).split(":")[1];
-      let user: User = interaction.user; // get the user that sent the command
-      console.log("execute user: %s", JSON.stringify(user)); // __AUTO_GENERATED_PRINT_VAR__
+      let user = interaction.user; // get the user that sent the command
+      // let role = interaction.guild?.roles.cache.find(
+      // (role: any) => role.name === "coin product alert gang"
+      // );
 
       if (userChoice == "on") {
-         let newConfig: IConfig = addUser(user);
-         writeFileSync("./config.json", JSON.stringify(newConfig));
+         let newconfig: IConfig = addUser(user);
+         writeFileSync("./config.json", JSON.stringify(newconfig));
+         // interaction.guild?.members.cache.get(user.id)?.roles.add(role);
 
          await interaction.reply(`${user} recorded`);
       } else {

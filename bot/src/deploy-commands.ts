@@ -1,6 +1,5 @@
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-import { clientID, guildID, token } from "./enviroments/config.json";
 import fs from "fs";
 import { IHelpDocs } from "./types/helpDocs";
 import { Guild } from "discord.js";
@@ -46,7 +45,7 @@ class OnStart {
     * @param commands - array of commands
     */
    registerCommands(clientID: string, guild: Guild, commands: any): void {
-      const rest = new REST({ version: "9" }).setToken(token);
+      const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
       (async () => {
          try {
             console.log(
