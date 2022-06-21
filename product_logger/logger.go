@@ -82,14 +82,12 @@ func Log(client *mongo.Client) {
 		dbResult = bson.M{"title": penguinProduct.Title, "appearances": appearances, "average_discount": average_discount, "average_price": average_price, "created_at": created_at, "updated_at": updated_at}
 	}
 	dbProduct := constructProductObj(dbResult)
-	fmt.Println(fmt.Sprintf("main dbProduct: %+v", dbProduct)) // __AUTO_GENERATED_PRINT_VAR__
 
 	err = updateProduct(&dbProduct, penguinProduct)
 	if err != nil {
 		panic(err)
 	}
 	saveProduct(&dbProduct, coll)
-
 }
 
 // hasProductChanged will check if the current product title is different from the cached product title.
