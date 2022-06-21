@@ -41,7 +41,7 @@ client.on("ready", () => {
    setInterval(async () => {
       let response: AxiosResponse<any>;
       try {
-         response = await axios.get(process.env.API_ADDRESS, {
+         response = await axios.get(`${process.env.API_ADDRESS}/coinProduct`, {
             timeout: 5000,
          });
       } catch (e) {
