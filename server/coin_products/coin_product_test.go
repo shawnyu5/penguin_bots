@@ -60,6 +60,6 @@ func TestCheck(t *testing.T) {
 	var productStruct Product
 	json.Unmarshal([]byte(product), &productStruct)
 	if !productStruct.IsValid {
-		t.Errorf("Product should be valid")
+		t.Errorf("Product should be valid, instead got %s", productStruct.Reason)
 	}
 }
