@@ -1,4 +1,4 @@
-module check_coin_product
+module github.com/shawnyu5/check_coin_product
 
 go 1.18
 

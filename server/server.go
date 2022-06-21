@@ -1,7 +1,6 @@
 package main
 
 import (
-	"check_coin_product"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -12,6 +11,7 @@ import (
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
 	"github.com/patrickmn/go-cache"
+	"github.com/shawnyu5/check_coin_product"
 	utils "github.com/shawnyu5/penguin-utils"
 )
 

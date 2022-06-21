@@ -3,7 +3,7 @@ module server
 go 1.18
 
 require (
-	check_coin_product v0.0.0-00010101000000-000000000000
+	github.com/shawnyu5/check_coin_product v1.0.0
 	github.com/gocolly/colly v1.2.0
 	github.com/joho/godotenv v1.4.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
@@ -27,6 +27,6 @@ require (
 	google.golang.org/appengine v1.6.7 // indirect
 )
 
-replace check_coin_product => ../coin_products
+replace github.com/shawnyu5/penguin-utils v0.0.0-00010101000000-000000000000 => ./utils/
 
-replace github.com/shawnyu5/penguin-utils v0.0.0-00010101000000-000000000000 => ../utils
+replace github.com/shawnyu5/check_coin_product v1.0.0 => ./coin_products
