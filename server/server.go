@@ -93,11 +93,13 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 
 	c.Visit("https://www.penguinmagic.com/openbox/")
 
-	storage.Set("product_title", product.Title, cache.DefaultExpiration)
-	j, err := json.MarshalIndent(product, "", "  ")
+	if storage != nil {
+		storage.Set("product_title", product.Title, cache.DefaultExpiration)
+	}
+	_, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
 		panic(err)
 	}
-	log.Println(string(j))
-	fmt.Fprintln(w, string(j))
+	// log.Println(string(j))
+	// fmt.Fprintln(w, string(j))
 }
