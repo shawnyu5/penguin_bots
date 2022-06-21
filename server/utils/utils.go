@@ -144,8 +144,9 @@ func IfInterested(title string) bool {
 	// open a csv file
 	file, err := os.OpenFile(NOT_INTERESTED_FILE, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
+		// if not file provided, assume all products are interesting
 		fmt.Printf("(IfInterested) Unable to open file: %v. Please set file paths using SetFilePath()", err)
-		return false
+		return true
 	}
 	defer file.Close()
 
