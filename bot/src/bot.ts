@@ -41,7 +41,7 @@ client.on("ready", () => {
    setInterval(async () => {
       let response: AxiosResponse<any>;
       try {
-         response = await axios.get(enviroment.api_address, {
+         response = await axios.get(`${process.env.API_ADDRESS}/coinProduct`, {
             timeout: 5000,
          });
       } catch (e) {
@@ -94,4 +94,4 @@ client.on("guildCreate", function (guild) {
    onStart.registerCommands(config.clientID, guild, allCommands);
 });
 
-client.login(enviroment.token);
+client.login(process.env.TOKEN);
