@@ -38,7 +38,7 @@ func main() {
 	// load .env
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("(server) Error loading .env file")
 	}
 	// get from env
 	port := ":" + os.Getenv("PORT")
@@ -96,10 +96,10 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	if storage != nil {
 		storage.Set("product_title", product.Title, cache.DefaultExpiration)
 	}
-	_, err := json.MarshalIndent(product, "", "  ")
+	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
 		panic(err)
 	}
-	// log.Println(string(j))
-	// fmt.Fprintln(w, string(j))
+	log.Println(string(j))
+	fmt.Fprintln(w, string(j))
 }

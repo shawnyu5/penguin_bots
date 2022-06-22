@@ -1,6 +1,9 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,30 +16,35 @@ func TestLoggerHandler(t *testing.T) {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
 	)
-	product := LoggerProduct{}
 
-	utils.GetTitle(c, &product.Title)
-	utils.GetPrice(c, &product.Original_price)
-	utils.GetDiscountedPrice(c, &product.Discount_price)
-	utils.GetDiscountPercentage(c, &product.Discount_percentage)
+	penguinProduct := LoggerProduct{} // product on penguinmagic
+
+	utils.GetTitle(c, &penguinProduct.Title)
+	utils.GetPrice(c, &penguinProduct.Original_price)
+	utils.GetDiscountedPrice(c, &penguinProduct.Discount_price)
+	utils.GetDiscountPercentage(c, &penguinProduct.Discount_percentage)
 
 	c.Visit("https://www.penguinmagic.com/openbox/")
 
 	req := httptest.NewRequest(http.MethodGet, "/logger", nil)
 	w := httptest.NewRecorder()
 	loggerHandler(w, req)
-	// res := w.Result()
-	// defer res.Body.Close()
-	// data, err := ioutil.ReadAll(res.Body)
-	// if err != nil {
-	// t.Errorf("Error reading body: %v", err)
-	// }
-	// fmt.Println(fmt.Sprintf("TestLoggerHandler data: %v", string(data))) // __AUTO_GENERATED_PRINT_VAR__
-	// j, err := json.Marshal(data)
-	// if err != nil {
-	// panic(err)
-	// }
-	// if string(data) != string(j) {
-	// t.Errorf("Expected %v, got %v", string(j), string(data))
-	// }
+	res := w.Result()
+	defer res.Body.Close()
+
+	data, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Errorf("Error reading body: %v", err)
+	}
+	fmt.Println(fmt.Sprintf("TestLoggerHandler data: %v", string(data))) // __AUTO_GENERATED_PRINT_VAR__
+
+	var loggerProduct LoggerProduct
+	err = json.Unmarshal(data, &loggerProduct) // parse json data into struct
+	if err != nil {
+		t.Errorf("Error unmarshalling json: %v", err)
+	}
+
+	if loggerProduct != penguinProduct {
+		t.Errorf("Expected %v, got %v", loggerProduct, data)
+	}
 }
