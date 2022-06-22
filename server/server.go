@@ -68,6 +68,10 @@ func doNothing(w http.ResponseWriter, r *http.Request) {}
 
 func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.NotFound(w, r)
+			return
+		}
 
 		var list string
 		for k := range routes {
