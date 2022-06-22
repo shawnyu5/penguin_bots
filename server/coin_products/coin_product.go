@@ -33,7 +33,6 @@ func Check(url string) string {
 	homeDir, _ := os.UserHomeDir()
 	storage = cache.New(cache.NoExpiration, 30*time.Minute)
 	utils.SetFilePath(homeDir + "/python/penguin_bots/not_interested_products.csv")
-	// PRODUCT_INFO_FILE = "product_info.txt"
 
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com",
@@ -48,17 +47,16 @@ func Check(url string) string {
 	// if product is empty, then openbox is down right now
 	if product.Title == "" {
 		product.IsValid = false
-		product.Reason = "There are no open box products currently"
+		product.Reason = "Openbox is down currently..."
 		log.Println(product.Reason)
 	} else if !utils.IfInterested(product.Title) {
 		product.IsValid = false
 		product.Reason = fmt.Sprintf("Product %s is not interested", product.Title)
 		log.Println(product.Reason)
-		// TODO: Is this nessary?
-		// } else if !hasProductChanged(&product) {
-		// product.IsValid = false
-		// product.Reason = fmt.Sprintf("Product *%s* has not changed", product.Title)
-		// log.Println(product.Reason)
+	} else if !hasProductChanged(&product) {
+		product.IsValid = false
+		product.Reason = fmt.Sprintf("Product *%s* has not changed", product.Title)
+		log.Println(product.Reason)
 	} else if !isCoinProduct(&product) {
 		product.IsValid = false
 		product.Reason = fmt.Sprintf("Product *%s* is not a coin product", product.Title)
@@ -68,7 +66,7 @@ func Check(url string) string {
 		product.Reason = "Product is a coin product"
 	}
 
-	// cacheProduct(product)
+	cacheProduct(product)
 
 	// parse into json
 	parsedJson, err := json.MarshalIndent(product, "", "  ")
@@ -89,12 +87,14 @@ func getProductInfo(c *colly.Collector, product *Product, url string) {
 	c.Visit(url)
 }
 
-// hasProductChanged checks if the product has changed compared to product in cache
+// hasProductChanged checks if the product has changed compared to product in cache.
+// Return true if it has changed. False otherwise
 func hasProductChanged(product *Product) bool {
 	// read from file
 	fileProduct, found := storage.Get("product_title")
+	// if no product in cache, product has changed
 	if !found {
-		panic("product_title not found in cache")
+		return true
 	}
 
 	// if current product is the same as product in file, then exit
@@ -105,7 +105,8 @@ func hasProductChanged(product *Product) bool {
 	return true
 }
 
-// isCoinProduct check if the product is a coin product. Return true if it is a coin product. False other wise
+// isCoinProduct check if the product is a coin product.
+// Return true if it is a coin product. False other wise
 func isCoinProduct(product *Product) bool {
 	// check if product description contains "coin"
 	if strings.Contains(strings.ToLower(product.Description), "coin ") ||
