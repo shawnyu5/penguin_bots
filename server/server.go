@@ -1,7 +1,6 @@
 package main
 
 import (
-	"check_coin_product"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -12,6 +11,7 @@ import (
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
 	"github.com/patrickmn/go-cache"
+	"github.com/shawnyu5/check_coin_product"
 	utils "github.com/shawnyu5/penguin-utils"
 )
 
@@ -25,12 +25,13 @@ type LoggerProduct struct {
 }
 
 func main() {
+	// initialize the cache
 	storage = cache.New(cache.NoExpiration, 10*time.Minute)
 	routes := make(map[string]func(http.ResponseWriter, *http.Request))
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
-	routes["/favicon.ico"] = doNothing
 	routes["/logger"] = loggerHandler
+	routes["/favicon.ico"] = doNothing
 	for k, v := range routes {
 		http.HandleFunc(k, v)
 	}
@@ -38,7 +39,7 @@ func main() {
 	// load .env
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("(server) Error loading .env file")
 	}
 	// get from env
 	port := ":" + os.Getenv("PORT")
@@ -59,8 +60,26 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	productInfo := check_coin_product.Check("https://www.penguinmagic.com/openbox/")
+	// check if product has changed
+	var title interface{}
+	found := false
+
+	if storage != nil {
+		title, found = storage.Get("coin_product_title")
+	}
+	if found && title.(string) == productInfo.Title {
+		productInfo.IsValid = false
+		productInfo.Reason = "Product has not changed"
+	}
+	if storage != nil {
+		storage.Set("coin_product_title", productInfo.Title, cache.DefaultExpiration)
+	}
 	log.Println("/coinProduct:", productInfo)
-	fmt.Fprintf(w, productInfo)
+	j, err := json.MarshalIndent(productInfo, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Fprintf(w, string(j))
 }
 
 // doNothing is a do nothing function
@@ -68,6 +87,10 @@ func doNothing(w http.ResponseWriter, r *http.Request) {}
 
 func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.NotFound(w, r)
+			return
+		}
 
 		var list string
 		for k := range routes {
@@ -93,7 +116,9 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 
 	c.Visit("https://www.penguinmagic.com/openbox/")
 
-	storage.Set("product_title", product.Title, cache.DefaultExpiration)
+	if storage != nil {
+		storage.Set("product_title", product.Title, cache.DefaultExpiration)
+	}
 	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
 		panic(err)

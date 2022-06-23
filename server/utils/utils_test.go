@@ -122,7 +122,7 @@ func TestAddNotInterestedProduct(t *testing.T) {
 	utils.AddNotInterestedProduct("jfdslfj")
 
 	// delete test string from file again
-	_, err := exec.Command("sed", "-i", "/jfdslfj/d", "../not_interested_products.csv").Output()
+	_, err := exec.Command("sed", "-i", "/jfdslfj/d", "../..//not_interested_products.csv").Output()
 	if err != nil {
 		panic(err)
 	}

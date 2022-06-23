@@ -26,7 +26,7 @@ module.exports = {
    async execute(interaction: CommandInteraction) {
       await interaction.deferReply();
       let userMessage = interaction.options.getString("keyword");
-      let api = new Api(enviroment.key);
+      let api = new Api(process.env.MONGOOSE_KEY);
 
       let response;
       try {
