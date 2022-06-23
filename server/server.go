@@ -39,7 +39,7 @@ func main() {
 	// load .env
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("(server) Error loading .env file")
+		log.Println("(server) Error loading .env file")
 	}
 	// get from env
 	port := ":" + os.Getenv("PORT")
