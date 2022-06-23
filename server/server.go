@@ -25,12 +25,13 @@ type LoggerProduct struct {
 }
 
 func main() {
+	// initialize the cache
 	storage = cache.New(cache.NoExpiration, 10*time.Minute)
 	routes := make(map[string]func(http.ResponseWriter, *http.Request))
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
-	routes["/favicon.ico"] = doNothing
 	routes["/logger"] = loggerHandler
+	routes["/favicon.ico"] = doNothing
 	for k, v := range routes {
 		http.HandleFunc(k, v)
 	}
@@ -59,8 +60,26 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	productInfo := check_coin_product.Check("https://www.penguinmagic.com/openbox/")
+	// check if product has changed
+	var title interface{}
+	found := false
+
+	if storage != nil {
+		title, found = storage.Get("coin_product_title")
+	}
+	if found && title.(string) == productInfo.Title {
+		productInfo.IsValid = false
+		productInfo.Reason = "Product has not changed"
+	}
+	if storage != nil {
+		storage.Set("coin_product_title", productInfo.Title, cache.DefaultExpiration)
+	}
 	log.Println("/coinProduct:", productInfo)
-	fmt.Fprintf(w, productInfo)
+	j, err := json.MarshalIndent(productInfo, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Fprintf(w, string(j))
 }
 
 // doNothing is a do nothing function

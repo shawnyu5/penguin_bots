@@ -5,22 +5,21 @@ LABEL description="A golang web server for penguin bot"
 
 ENV PORT=8080
 
-RUN mkdir sever
-RUN mkdir utils
-RUN mkdir coin_products
+WORKDIR /server
 
-WORKDIR /coin_products
-COPY ../coin_products/go.mod ./
+# copy server files
+COPY ./go.* ./
+COPY ./server.go ./
+
+COPY ./utils/ ./utils/
+COPY ./coin_products/ ./coin_products/
+
 RUN ls
 
-# WORKDIR /server
-# # copy over server files
-# COPY server.go server.go
-# COPY go.mod go.mod
-# COPY go.sum go.sum
+RUN go get github.com/joho/godotenv
+RUN go get github.com/patrickmn/go-cache
+RUN go build -o server
 
-# RUN go build .
-
-# RUN ls
+CMD ./server
 
 EXPOSE 8080

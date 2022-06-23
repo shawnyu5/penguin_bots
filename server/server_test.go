@@ -48,3 +48,20 @@ func TestLoggerHandler(t *testing.T) {
 		t.Errorf("Expected %v, got %v", loggerProduct, data)
 	}
 }
+
+// func TestCoinProductHandler(t *testing.T) {
+// req := httptest.NewRequest(http.MethodGet, "/coinProduct", nil)
+// w := httptest.NewRecorder()
+// coinProductHandler(w, req)
+// res := w.Result()
+// defer res.Body.Close()
+
+// data, err := ioutil.ReadAll(res.Body)
+// if err != nil {
+// t.Errorf("Error reading body: %v", err)
+// }
+
+// if data == nil {
+// t.Errorf("Expected data, got nil")
+// }
+// }
