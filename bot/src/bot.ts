@@ -1,4 +1,4 @@
-import { Client, Collection, Intents } from "discord.js";
+import { Client, Collection, Intents, TextChannel } from "discord.js";
 import fs from "fs";
 import { OnStart } from "./deploy-commands";
 import { getChannelByName, buildMessage } from "./utils";
@@ -61,8 +61,12 @@ client.on("ready", () => {
       interval++;
 
       let message: string = buildMessage(coinProduct);
-      // let channel = getChannelByName(client, "notifications");
-      let channel = getChannelByName(client, "development");
+      let channel: TextChannel | undefined;
+      if (process.env.DEVELOPMENT == "true") {
+         channel = getChannelByName(client, "development");
+      } else {
+         channel = getChannelByName(client, "notifications");
+      }
       if (channel) {
          channel.send(message);
       }
