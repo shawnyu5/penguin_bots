@@ -14,7 +14,7 @@ COPY ./server.go ./
 COPY ./utils/ ./utils/
 COPY ./coin_products/ ./coin_products/
 
-RUN ls
+# RUN ls
 
 RUN go get github.com/joho/godotenv
 RUN go get github.com/patrickmn/go-cache
