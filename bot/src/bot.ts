@@ -4,7 +4,7 @@ import { OnStart } from "./deploy-commands";
 import { getChannelByName, buildMessage } from "./utils";
 import config from "./enviroments/config.json";
 import axios, { AxiosResponse } from "axios";
-import { enviroment } from "./enviroments/enviroment";
+import logger from "./logger";
 
 const client = new Client({
    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -29,8 +29,7 @@ for (const file of commandFiles) {
 }
 
 client.on("ready", () => {
-   // @ts-ignore
-   console.log(`${client.user.tag} logged in`);
+   logger.info(`${client.user?.tag} logged in`);
 
    let allCommands = onStart.readAllCommands();
    client.guilds.cache.forEach((guild) => {
@@ -45,19 +44,19 @@ client.on("ready", () => {
             timeout: 5000,
          });
       } catch (e) {
-         console.log("Axios error: " + e);
+         logger.error("Axios error: " + e);
          return;
       }
 
       // @ts-ignore
       let coinProduct: CoinProduct = response.data;
       if (!coinProduct.IsValid) {
-         console.error(`Product *${coinProduct.Title}* is not valid`);
+         logger.warn(`Product *${coinProduct.Title}* is not valid`);
          return;
       }
 
       // keep tack of execution count
-      console.log(`Execution count: ${interval}`);
+      logger.info(`Execution count: ${interval}`);
       interval++;
 
       let message: string = buildMessage(coinProduct);
@@ -85,7 +84,7 @@ client.on("interactionCreate", async (interaction) => {
    try {
       await command.execute(interaction);
    } catch (error) {
-      console.error(error);
+      logger.error(error);
       await interaction.reply({
          content: "There was an error while executing this command!",
          ephemeral: true,
