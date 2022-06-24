@@ -3,6 +3,7 @@ import { Routes } from "discord-api-types/v9";
 import fs from "fs";
 import { IHelpDocs } from "./types/helpDocs";
 import { Guild } from "discord.js";
+import logger from "./logger";
 
 class OnStart {
    /**
@@ -48,7 +49,7 @@ class OnStart {
       const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
       (async () => {
          try {
-            console.log(
+            logger.info(
                `Started refreshing application (/) commands for ${guild.name}`
             );
 
@@ -65,11 +66,11 @@ class OnStart {
                });
             }
 
-            console.log(
+            logger.info(
                `Successfully reloaded application (/) commands for ${guild.name}`
             );
          } catch (error) {
-            console.error(error);
+            logger.error(error);
          }
       })();
    }

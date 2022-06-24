@@ -5,6 +5,7 @@ declare namespace NodeJS {
       CLIENTID: string;
       MONGOOSE_KEY: string;
       API_ADDRESS: string;
-      DEVELOPMENT: string;
+      DEVELOPMENT: "true" | "false";
+      LOG_LEVEL: "debug" | "info" | "warn" | "error";
    }
 }

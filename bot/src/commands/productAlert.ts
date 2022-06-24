@@ -6,6 +6,7 @@ import { CommandInteraction, Interaction, User } from "discord.js";
 import { writeFileSync } from "fs";
 import config from "../enviroments/config.json";
 import { IConfig } from "../types/config";
+import logger from "../logger";
 
 module.exports = {
    data: new SlashCommandBuilder()
@@ -23,24 +24,19 @@ module.exports = {
       ),
 
    async execute(interaction: CommandInteraction) {
-      // let user = interaction.member?.user as User;
-      // console.log("execute user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
       let userChoice = String(interaction).split(":")[1];
       let user = interaction.user; // get the user that sent the command
-      // let role = interaction.guild?.roles.cache.find(
-      // (role: any) => role.name === "coin product alert gang"
-      // );
 
       if (userChoice == "on") {
          let newconfig: IConfig = addUser(user);
          writeFileSync("./config.json", JSON.stringify(newconfig));
-         // interaction.guild?.members.cache.get(user.id)?.roles.add(role);
 
+         logger.info(`${user.username} has opted into product alerts`);
          await interaction.reply(`${user} recorded`);
       } else {
-         console.log("execute#if user: %s", user); // __AUTO_GENERATED_PRINT_VAR__
          let newConfig = deleteUser(user);
          writeFileSync("./config.json", JSON.stringify(newConfig));
+         logger.info(`${user.username} has opted out of product alerts`);
          await interaction.reply(`${user} removed from notifications list`);
       }
    },
