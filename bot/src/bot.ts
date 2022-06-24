@@ -5,6 +5,7 @@ import { getChannelByName, buildMessage } from "./utils";
 import config from "./enviroments/config.json";
 import axios, { AxiosResponse } from "axios";
 import logger from "./logger";
+import { ICoinProduct } from "./types/coinProduct";
 
 const client = new Client({
    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -38,6 +39,9 @@ client.on("ready", () => {
 
    let interval = 0;
    setInterval(async () => {
+      // keep tack of execution count
+      logger.debug(`Execution count: ${interval}`);
+      interval++;
       let response: AxiosResponse<any>;
       try {
          response = await axios.get(`${process.env.API_ADDRESS}/coinProduct`, {
@@ -48,16 +52,13 @@ client.on("ready", () => {
          return;
       }
 
-      // @ts-ignore
-      let coinProduct: CoinProduct = response.data;
+      let coinProduct: ICoinProduct = response.data;
       if (!coinProduct.IsValid) {
-         logger.warn(`Product *${coinProduct.Title}* is not valid`);
+         logger.warn(
+            `Product *${coinProduct.Title}* is not valid: ${coinProduct.Reason}`
+         );
          return;
       }
-
-      // keep tack of execution count
-      logger.info(`Execution count: ${interval}`);
-      interval++;
 
       let message: string = buildMessage(coinProduct);
       let channel: TextChannel | undefined;

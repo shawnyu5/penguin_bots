@@ -47,7 +47,7 @@
                         "type": "number"
                      },
                      "IsValid": {
-                        "description": "True if the product is valid - is a coin product and is interesting to the user, false otherwise",
+                        "description": "True if the product is valid - is a coin product and is interesting to the user. Also checks if the product has changed from the last time this api is called",
                         "type": "boolean"
                      },
                      "Reason": {

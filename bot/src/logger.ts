@@ -8,4 +8,8 @@ const logger = pino({
    level: process.env.LOG_LEVEL || "info",
 });
 
+if (process.env.DEVELOPMENT == "true") {
+   logger.level = "debug";
+}
+
 export default logger;

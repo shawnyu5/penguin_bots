@@ -74,7 +74,7 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 	if storage != nil {
 		storage.Set("coin_product_title", productInfo.Title, cache.DefaultExpiration)
 	}
-	log.Println("/coinProduct:", productInfo)
+	log.Println("/coinProduct:", productInfo.Title)
 	j, err := json.MarshalIndent(productInfo, "", "  ")
 	if err != nil {
 		panic(err)
