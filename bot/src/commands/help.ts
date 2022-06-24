@@ -4,6 +4,7 @@ import {
 } from "@discordjs/builders";
 import { CommandInteraction, Interaction, MessageEmbed } from "discord.js";
 import { OnStart } from "../deploy-commands";
+import logger from "../logger";
 import { IHelpDocs } from "../types/helpDocs";
 
 module.exports = {
@@ -34,7 +35,9 @@ module.exports = {
                interaction.reply({ embeds: [reply] });
             }
          });
+         logger.info(`${userInput} help requested`);
       } else {
+         logger.info("help command called without a command. Response sent");
          interaction.reply("Fuck you, google it");
       }
    },
