@@ -1,0 +1,21 @@
+version: "3"
+services:
+   server:
+      build: ./server
+      ports:
+         - "8080:8080"
+      env_file:
+         - ./server/.env
+      network_mode: "host"
+      restart: always
+
+   bot:
+      build: ./bot
+      env_file:
+         - ./bot/.env
+      depends_on:
+         - server
+      links:
+         - server
+      network_mode: "host"
+      restart: always

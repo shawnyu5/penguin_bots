@@ -70,7 +70,7 @@ client.on("ready", () => {
       if (channel) {
          channel.send(message);
       }
-   }, 120000);
+   }, 12000);
    // 120000 - 2 minutes in milliseconds
    // 300000 - 5 mins in milliseconds
 });

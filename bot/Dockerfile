@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY ./package*.json ./
 
-RUN npm install
+RUN npm install --verbose
 
 # copy source files
 COPY ./src ./src
@@ -12,13 +12,16 @@ COPY ./src ./src
 COPY ./tsconfig.json ./
 
 RUN npm run build
+RUN ls
 
 FROM node:16.15.1-alpine AS production
 
 WORKDIR /app
+
 COPY ./package*.json ./
-RUN npm install --omit=dev
+RUN npm install --omit=dev --verbose
 
-COPY --from=build /app/build /build
+COPY --from=build /app/build ./build
+RUN ls
 
-CMD npm start
+CMD npm run run
