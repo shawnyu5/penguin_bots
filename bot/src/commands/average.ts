@@ -26,20 +26,21 @@ module.exports = {
    async execute(interaction: CommandInteraction) {
       await interaction.deferReply();
       let userMessage = interaction.options.getString("keyword");
-      let api = new Api(process.env.MONGOOSE_KEY);
+      // let api = new Api(process.env.MONGOOSE_KEY);
 
-      let response;
-      try {
-         await getProductDetail(userMessage as string, api);
-      } catch (error) {
-         await getProductDetail(userMessage as string, api);
-      }
+      // let response;
+      // try {
+      // await getProductDetail(userMessage as string, api);
+      // } catch (error) {
+      // await getProductDetail(userMessage as string, api);
+      // }
 
-      let message = new MessageEmbed()
-         .setTitle(`Search term: ${userMessage}`)
-         .setDescription(response)
-         .setColor("RANDOM");
-      await interaction.editReply({ embeds: [message] });
+      // let message = new MessageEmbed()
+      // .setTitle(`Search term: ${userMessage}`)
+      // .setDescription(response)
+      // .setColor("RANDOM");
+      // await interaction.editReply({ embeds: [message] });
+      await interaction.editReply("NOT IMPLEMENTED");
    },
 
    help: {

@@ -16,9 +16,9 @@
    "version": "1.0.0",
    "main": "./build/bot.js",
    "scripts": {
-      "compile": "tsc -w",
-      "run": "nodemon",
-      "start": "tsc; node .",
+      "build": "tsc -p tsconfig.json",
+      "start": "tsc .; node .",
+      "run": "node .",
       "dev": "concurrently \"tsc -w\" \"nodemon ./build/bot.js\"",
       "dev2": "nodemon src/bot.ts",
       "test": "tsc; jest --watch"
