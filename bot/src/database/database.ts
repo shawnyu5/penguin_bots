@@ -1,6 +1,5 @@
-import { createConnection, Schema, Types } from "mongoose";
+import { connect, Schema, Types } from "mongoose";
 import DbProduct from "../types/dbProduct";
-require("dotenv").config();
 
 const productSchema = new Schema({
    title: String,
@@ -13,8 +12,11 @@ export class Api {
    open_box: any;
 
    constructor(connectionString: string) {
-      this.createConnection(connectionString).then(() => {
-         return;
+      connect(connectionString, {
+         // @ts-ignore
+         useNewUrlParser: true,
+         useFindAndModify: false,
+         useUnifiedTopology: true,
       });
    }
 
