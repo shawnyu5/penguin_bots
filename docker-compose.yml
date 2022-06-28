@@ -15,7 +15,14 @@ services:
          - ./bot/.env
       depends_on:
          - server
-      links:
+      network_mode: "host"
+      restart: always
+
+   logger:
+      build: ./product_logger
+      env_file:
+         - ./product_logger/.env
+      depends_on:
          - server
       network_mode: "host"
       restart: always

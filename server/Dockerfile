@@ -24,7 +24,7 @@ ENV PORT=8080
 
 WORKDIR /server
 COPY --from=build /server/server ./server
-RUN ls server
+COPY ./.env ./
 
 CMD ./server
 

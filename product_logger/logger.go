@@ -150,7 +150,11 @@ func constructProductObj(b bson.M) DbProduct {
 
 // connectDB will connect to the mongodb
 func connectDB() *mongo.Client {
-	godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	uri = os.Getenv("MONGODB_URI")
 	// Create a new client and connect to the server
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
