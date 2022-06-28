@@ -148,6 +148,7 @@ func constructProductObj(b bson.M) DbProduct {
 	return product
 }
 
+// connectDB will connect to the mongodb
 func connectDB() *mongo.Client {
 	godotenv.Load()
 	uri = os.Getenv("MONGODB_URI")
@@ -162,7 +163,7 @@ func connectDB() *mongo.Client {
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
 		panic(err)
 	}
-	fmt.Println("Successfully connected and pinged.")
+	log.Println("Database successfully connected and pinged.")
 	return client
 }
 
