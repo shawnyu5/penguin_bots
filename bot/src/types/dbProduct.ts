@@ -1,7 +1,8 @@
-export default interface DbProduct {
-   _id: string;
+export default interface IDbProduct {
    title: string;
-   average_price: number;
+   appearance: string;
    average_discount: number;
-   appearances: number;
+   average_price: number;
+   created_date?: Date;
+   updated_date?: Date;
 }
