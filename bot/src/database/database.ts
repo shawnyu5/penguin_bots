@@ -1,31 +1,45 @@
-import { connect, Schema, Types } from "mongoose";
+import { connect, connection, model, Schema, Types } from "mongoose";
 import logger from "../logger";
 import DbProduct from "../types/dbProduct";
 
 const productSchema = new Schema({
    title: String,
+   appeartitle: String,
    average_discount: Number,
    average_price: Number,
-   appearances: Number,
+   created_date: Date,
+   updated_date: Date,
 });
 
-export class Api {
+const openBox = model("open_box", productSchema, "open_box");
+
+export class DataBase {
    db: any;
 
    constructor(connectionString: string) {
-      this.db = connect(connectionString, {
+      connect(connectionString, {
          // @ts-ignore
          useNewUrlParser: true,
-         useFindAndModify: false,
          useUnifiedTopology: true,
       });
 
-      this.db.on("error", logger.error("Error connecting to database"));
-
-      this.db.once("open", function () {
-         logger.info("Connected to data base");
+      connection.on("error", function() {
+         logger.error("Error connecting to database");
       });
-   }
+
+      connection.once("open", function() {
+         logger.info("Connected to data base");
+         // openBox.find(
+         // { title: "Darwin's Encyclopedia of Thumb Tip Magic (3 DVDs)" },
+         // (err: any, data: any) => {
+         // if (err) {
+         // logger.error(err);
+         // }
+         // logger.info(data);
+         // }
+         // );
+         // });
+      }
 
    /**
     * Creates a connection to the database
@@ -52,39 +66,39 @@ export class Api {
 
    // return a product object by name exact name
    async findByName(searchTerm: string) {
-      // return this.open_box.findOne(name).exec();
-      return new Promise((resolve, reject) => {
-         this.db.find(searchTerm, (err: any, data: any) => {
-            if (err) {
-               reject(err);
-            }
-            resolve(data);
+         // return this.open_box.findOne(name).exec();
+         return new Promise((resolve, reject) => {
+            this.db.find(searchTerm, (err: any, data: any) => {
+               if (err) {
+                  reject(err);
+               }
+               resolve(data);
+            });
          });
-      });
-   }
+      }
 
    /**
     * search through the database by regex search string
     * @param title - the search string
     * @returns an array of products from data base
     */
-   async findNameByRegex(title: string | RegExp): Promise<Array<DbProduct>> {
-      return new Promise((resolve, reject) => {
-         // convert title to case insenitive regular expression
-         title = new RegExp(title, "i");
-         this.db.find(
-            {
-               title: title,
-            },
-            (error: any, data: any) => {
-               if (error) {
-                  reject(error);
+   async findNameByRegex(title: string | RegExp): Promise < Array < DbProduct >> {
+         return new Promise((resolve, reject) => {
+            // convert title to case insenitive regular expression
+            title = new RegExp(title, "i");
+            this.db.find(
+               {
+                  title: title,
+               },
+               (error: any, data: any) => {
+                  if (error) {
+                     reject(error);
+                  }
+                  resolve(data);
                }
-               resolve(data);
-            }
-         );
-      });
-   }
+            );
+         });
+      }
 }
 
 // async function main() {
