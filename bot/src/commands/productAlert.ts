@@ -55,9 +55,9 @@ module.exports = {
  * @returns new json config object with the user added
  */
 export function addUser(user: User): IConfig {
-   let updatedConfig: IConfig = config;
+   let updatedConfig = config;
 
-   let users: Array<string> = updatedConfig.coin_product_alert_users;
+   let users: Array<string> = updatedConfig.COIN_PRODUCT_ALERT_USERS;
 
    // look for the user id passes in in config.json array
    let found = users.findIndex((element) => {
@@ -69,7 +69,8 @@ export function addUser(user: User): IConfig {
       users.push(user.id);
       console.log(`User ${user.username} successfully added`);
    }
-   updatedConfig = { ...updatedConfig, coin_product_alert_users: users };
+   updatedConfig = { ...updatedConfig, COIN_PRODUCT_ALERT_USERS: users };
+   // @ts-ignore
    return updatedConfig;
 }
 
@@ -79,15 +80,16 @@ export function addUser(user: User): IConfig {
  * @returns the updated config object with the user removed
  */
 export function deleteUser(user: User): IConfig {
-   let updatedConfig: IConfig = config;
+   let updatedConfig = config;
 
-   let index = updatedConfig.coin_product_alert_users.findIndex((element) => {
+   let index = updatedConfig.COIN_PRODUCT_ALERT_USERS.findIndex((element) => {
       return element == user.id;
    });
 
    if (index >= 0) {
-      updatedConfig.coin_product_alert_users.splice(index, 1);
+      updatedConfig.COIN_PRODUCT_ALERT_USERS.splice(index, 1);
       console.log(`User ${user.username} successfully removed`);
    }
+   // @ts-ignore
    return updatedConfig;
 }

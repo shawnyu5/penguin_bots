@@ -29,15 +29,6 @@ export class DataBase {
 
       connection.once("open", function () {
          logger.info("Connected to data base");
-         // openBoxModel.find(
-         // { title: "Darwin's Encyclopedia of Thumb Tip Magic (3 DVDs)" },
-         // (err: any, data: any) => {
-         // if (err) {
-         // logger.error(err);
-         // }
-         // logger.info(data);
-         // }
-         // );
       });
    }
 

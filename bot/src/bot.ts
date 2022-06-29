@@ -34,11 +34,11 @@ for (const file of commandFiles) {
 
 client.on("ready", () => {
    logger.info(`${client.user?.tag} logged in`);
-   let db = new DataBase(process.env.MONGOOSE_KEY as string);
+   let db = new DataBase(config.MONGOOSE_KEY);
 
    let allCommands = onStart.readAllCommands();
    client.guilds.cache.forEach((guild) => {
-      onStart.registerCommands(config.clientID, guild, allCommands);
+      onStart.registerCommands(config.CLIENTID, guild, allCommands);
    });
 
    let interval = 0;
@@ -48,7 +48,7 @@ client.on("ready", () => {
       interval++;
       let response: AxiosResponse<any>;
       try {
-         response = await axios.get(`${process.env.API_ADDRESS}/coinProduct`, {
+         response = await axios.get(`${config.API_ADDRESS}/coinProduct`, {
             timeout: 5000,
          });
       } catch (e) {
@@ -66,7 +66,7 @@ client.on("ready", () => {
 
       let message: string = buildMessage(coinProduct);
       let channel: TextChannel | undefined;
-      if (process.env.DEVELOPMENT == "true") {
+      if (config.DEVELOPMENT == "true") {
          channel = getChannelByName(client, "development");
       } else {
          channel = getChannelByName(client, "notifications");
@@ -99,7 +99,7 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("guildCreate", function (guild) {
    let allCommands = onStart.readAllCommands();
-   onStart.registerCommands(config.clientID, guild, allCommands);
+   onStart.registerCommands(config.CLIENTID, guild, allCommands);
 });
 
-client.login(process.env.TOKEN);
+client.login(config.TOKEN);
