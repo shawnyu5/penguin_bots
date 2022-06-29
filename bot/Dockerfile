@@ -10,10 +10,8 @@ RUN npm install --verbose
 COPY ./src ./src
 
 COPY ./tsconfig.json ./
-COPY ./.env ./
 
 RUN npm run build
-RUN ls
 
 FROM node:16.15.1-alpine AS production
 
@@ -23,7 +21,5 @@ COPY ./package*.json ./
 RUN npm install --omit=dev --verbose
 
 COPY --from=build /app/build ./build
-COPY ./.env ./
-RUN ls
 
 CMD npm run run

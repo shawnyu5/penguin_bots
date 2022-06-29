@@ -7,6 +7,8 @@ import axios, { AxiosResponse } from "axios";
 import logger from "./logger";
 import { ICoinProduct } from "./types/coinProduct";
 import { DataBase } from "./database/database";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const client = new Client({
    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -32,7 +34,7 @@ for (const file of commandFiles) {
 
 client.on("ready", () => {
    logger.info(`${client.user?.tag} logged in`);
-   let db = new DataBase(process.env.MONGOOSE_KEY);
+   let db = new DataBase(process.env.MONGOOSE_KEY as string);
 
    let allCommands = onStart.readAllCommands();
    client.guilds.cache.forEach((guild) => {
