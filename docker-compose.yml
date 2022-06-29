@@ -11,8 +11,6 @@ services:
 
    bot:
       build: ./bot
-      env_file:
-         - ./bot/.env
       depends_on:
          - server
       network_mode: "host"

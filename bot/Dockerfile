@@ -8,7 +8,6 @@ RUN npm install --verbose
 
 # copy source files
 COPY ./src ./src
-
 COPY ./tsconfig.json ./
 
 RUN npm run build
