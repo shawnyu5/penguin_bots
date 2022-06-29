@@ -1,4 +1,5 @@
 import { connect, Schema, Types } from "mongoose";
+import logger from "../logger";
 import DbProduct from "../types/dbProduct";
 
 const productSchema = new Schema({
@@ -9,14 +10,20 @@ const productSchema = new Schema({
 });
 
 export class Api {
-   open_box: any;
+   db: any;
 
    constructor(connectionString: string) {
-      connect(connectionString, {
+      this.db = connect(connectionString, {
          // @ts-ignore
          useNewUrlParser: true,
          useFindAndModify: false,
          useUnifiedTopology: true,
+      });
+
+      this.db.on("error", logger.error("Error connecting to database"));
+
+      this.db.once("open", function () {
+         logger.info("Connected to data base");
       });
    }
 
@@ -24,30 +31,30 @@ export class Api {
     * Creates a connection to the database
     * @param connectionString - the connection string to the database
     */
-   async createConnection(connectionString: string): Promise<void> {
-      const db = createConnection(connectionString, {
-         // @ts-ignore
-         useNewUrlParser: true,
-         useUnifiedTopology: true,
-      });
+   // async createConnection(connectionString: string): Promise<void> {
+   // const db = createConnection(connectionString, {
+   // // @ts-ignore
+   // useNewUrlParser: true,
+   // useUnifiedTopology: true,
+   // });
 
-      db.once("error", (err) => {
-         throw new Error(err);
-      });
+   // db.once("error", (err) => {
+   // throw new Error(err);
+   // });
 
-      db.once("open", () => {
-         this.open_box = db.model("Open_box", productSchema, "open_box");
-         console.log("Api#createConnection#(anon) this: %s", this.open_box); // __AUTO_GENERATED_PRINT_VAR__
-         console.log("Connected to data base");
-         Promise.resolve();
-      });
-   }
+   // db.once("open", () => {
+   // this.db = db.model("Open_box", productSchema, "open_box");
+   // console.log("Api#createConnection#(anon) this: %s", this.db); // __AUTO_GENERATED_PRINT_VAR__
+   // console.log("Connected to data base");
+   // Promise.resolve();
+   // });
+   // }
 
    // return a product object by name exact name
    async findByName(searchTerm: string) {
       // return this.open_box.findOne(name).exec();
       return new Promise((resolve, reject) => {
-         this.open_box.find(searchTerm, (err: any, data: any) => {
+         this.db.find(searchTerm, (err: any, data: any) => {
             if (err) {
                reject(err);
             }
@@ -65,7 +72,7 @@ export class Api {
       return new Promise((resolve, reject) => {
          // convert title to case insenitive regular expression
          title = new RegExp(title, "i");
-         this.open_box.find(
+         this.db.find(
             {
                title: title,
             },
