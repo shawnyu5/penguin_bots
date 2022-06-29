@@ -17,7 +17,7 @@
    "main": "./build/bot.js",
    "scripts": {
       "build": "tsc -p tsconfig.json",
-      "start": "node .",
+      "start": "tsc; node .",
       "run": "node .",
       "dev": "concurrently \"tsc -w\" \"nodemon ./build/bot.js\"",
       "dev2": "nodemon src/bot.ts",
