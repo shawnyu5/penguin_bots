@@ -35,8 +35,10 @@ jobs:
               script: |
                  cd penguin_bots
                  git pull -f
-                 docker-compose up --force-recreate --build -d
+                 docker compose build
+                 docker compose up -d
                  docker image prune -f
+
                  # cd server && go build
                  # cd ../product_logger && go build
                  # pm2 reload penguin_server
