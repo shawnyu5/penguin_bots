@@ -3,6 +3,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import { DataBase } from "../database/database";
 import IDbProduct from "../types/dbProduct";
 import logger from "../logger";
+import config from "../enviroments/config.json";
 
 // interface IProduct {
 // title: string;
@@ -28,7 +29,7 @@ module.exports = {
       await interaction.deferReply();
       let userMessage = interaction.options.getString("keyword");
 
-      let db = new DataBase(process.env.MONGOOSE_KEY as string);
+      let db = new DataBase(config.MONGOOSE_KEY);
 
       let response = "";
 

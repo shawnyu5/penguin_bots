@@ -49,7 +49,7 @@ function checkCoinProduct(): ICoinProduct | null {
  */
 function buildMessage(coinProduct: ICoinProduct): string {
    let message: string = "COIN PRODUCT ALERT! ";
-   config.coin_product_alert_users.forEach((user) => {
+   config.COIN_PRODUCT_ALERT_USERS.forEach((user) => {
       message += `<@${user}> `;
    });
    message += `
