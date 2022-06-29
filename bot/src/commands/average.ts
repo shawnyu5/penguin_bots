@@ -1,16 +1,17 @@
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Api } from "../api/api";
-import DbProduct from "../types/dbProduct";
-import { enviroment } from "../enviroments/enviroment";
+import { DataBase } from "../database/database";
+import IDbProduct from "../types/dbProduct";
+import logger from "../logger";
 
-interface IProduct {
-   _id: string;
-   title: string;
-   average_price: number;
-   average_discount: number;
-   appearances: number;
-}
+// interface IProduct {
+// title: string;
+// appeartitle: string;
+// average_discount: number;
+// average_price: number;
+// created_date: Date;
+// updated_date: Date;
+// }
 
 module.exports = {
    data: new SlashCommandBuilder()
@@ -26,21 +27,24 @@ module.exports = {
    async execute(interaction: CommandInteraction) {
       await interaction.deferReply();
       let userMessage = interaction.options.getString("keyword");
-      // let api = new Api(process.env.MONGOOSE_KEY);
 
-      // let response;
-      // try {
-      // await getProductDetail(userMessage as string, api);
-      // } catch (error) {
-      // await getProductDetail(userMessage as string, api);
-      // }
+      let db = new DataBase(process.env.MONGOOSE_KEY);
 
-      // let message = new MessageEmbed()
-      // .setTitle(`Search term: ${userMessage}`)
-      // .setDescription(response)
-      // .setColor("RANDOM");
-      // await interaction.editReply({ embeds: [message] });
-      await interaction.editReply("NOT IMPLEMENTED");
+      let response = "";
+
+      try {
+         response = await getProductDetail(userMessage as string, db);
+      } catch (error) {
+         response = "Error: " + error;
+      }
+
+      let message = new MessageEmbed()
+         .setTitle(`Search term: ${userMessage}`)
+         .setDescription(response)
+         .setColor("RANDOM");
+      await interaction.editReply({ embeds: [message] });
+      logger.info(`Replied to search term: ${userMessage}`);
+      // await interaction.editReply("hello????");
    },
 
    help: {
@@ -51,37 +55,28 @@ module.exports = {
 };
 
 /**
- * searches the data base based on a search string
+ * searches the database based on a search string
  * @param keyword - the search string
- * @returns the search result from data base
+ * @returns a string response of the search result from database
  */
-async function getProductDetail(keyword: string, api: Api) {
-   let productData: Array<DbProduct> = await api.findNameByRegex(keyword);
+async function getProductDetail(
+   keyword: string,
+   db: DataBase
+): Promise<string> {
+   let productData: Array<IDbProduct> = await db.findNameByRegex(keyword);
    let response: string = "";
 
-   // if a single product is found
-   if (productData.length == 1) {
+   // if products are found
+   if (productData) {
       // get the first index of array
-      let product: IProduct = productData[0];
-      response = `title: ${product.title}
-      average price: ${product.average_price}
-      average discount: ${product.average_discount}
-      appearances: ${product.appearances}`;
-   }
-   // no product is found
-   else if (productData.length == 0) {
-      response = "No product found";
-   }
-   // if an array of product is found
-   else {
-      productData.forEach((element) => {
-         let currentResponse = `title: ${element.title}
-         average discount: ${element.average_discount}
-         average price: ${element.average_price}
-         appearances: ${element.appearances}
+      productData.forEach((product: IDbProduct) => {
+         response += `\
+**title**: ${product.title}
+**average price**: ${product.average_price}
+**average discount**: ${product.average_discount}
+**appearances**: ${product.appearances}
 
-         `;
-         response = response.concat(" ", currentResponse);
+`;
       });
    }
    return response;
