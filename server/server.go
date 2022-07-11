@@ -105,7 +105,7 @@ func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) htt
 func loggerHandler(w http.ResponseWriter, r *http.Request) {
 
 	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
+		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/", "https://www.penguinmagic.com/p/12449"),
 	)
 	product := LoggerProduct{}
 
@@ -114,6 +114,8 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	utils.GetDiscountedPrice(c, &product.Discount_price)
 	utils.GetDiscountPercentage(c, &product.Discount_percentage)
 
+	// c.Visit("https://www.penguinmagic.com/p/17318")
+	// c.Visit("https://www.penguinmagic.com/p/12449")
 	c.Visit("https://www.penguinmagic.com/openbox/")
 
 	if storage != nil {
