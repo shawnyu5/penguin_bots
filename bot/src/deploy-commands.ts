@@ -46,7 +46,9 @@ class OnStart {
     * @param commands - array of commands
     */
    registerCommands(clientID: string, guild: Guild, commands: any): void {
-      const rest = new REST({ version: "9" }).setToken(environment.TOKEN);
+      const rest = new REST({ version: "9" }).setToken(
+         environment.TOKEN as string
+      );
       (async () => {
          try {
             logger.info(

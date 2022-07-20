@@ -20,5 +20,6 @@ COPY ./package*.json ./
 RUN npm install --omit=dev --verbose
 
 COPY --from=build /app/build ./build
+COPY ./src/enviroments/ ./src/enviroments
 
-CMD npm run run
+CMD ["npm", "run", "run"]

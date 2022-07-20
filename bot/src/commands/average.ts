@@ -29,7 +29,7 @@ module.exports = {
       await interaction.deferReply();
       let userMessage = interaction.options.getString("keyword");
 
-      let db = new DataBase(environment.MONGOOSE_KEY);
+      let db = new DataBase(environment.MONGOOSE_KEY as string);
 
       let response = "";
 

@@ -34,11 +34,15 @@ for (const file of commandFiles) {
 
 client.on("ready", () => {
    logger.info(`${client.user?.tag} logged in`);
-   let db = new DataBase(environment.MONGOOSE_KEY);
+   let db = new DataBase(environment.MONGOOSE_KEY as string);
 
    let allCommands = onStart.readAllCommands();
    client.guilds.cache.forEach((guild) => {
-      onStart.registerCommands(environment.CLIENTID, guild, allCommands);
+      onStart.registerCommands(
+         environment.CLIENTID as string,
+         guild,
+         allCommands
+      );
    });
 
    let interval = 0;
@@ -99,7 +103,7 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("guildCreate", function (guild) {
    let allCommands = onStart.readAllCommands();
-   onStart.registerCommands(environment.CLIENTID, guild, allCommands);
+   onStart.registerCommands(environment.CLIENTID as string, guild, allCommands);
 });
 
 client.login(environment.TOKEN);
