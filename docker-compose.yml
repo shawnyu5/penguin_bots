@@ -2,25 +2,30 @@ version: "3"
 services:
    server:
       build: ./server
-      ports:
-         - "8080:8080"
+      # ports:
+      # - "8080:8080"
       env_file:
          - ./server/.env
-      network_mode: "host"
+      environment:
+         - PORT=8080
       restart: always
 
    bot:
       build: ./bot
       depends_on:
          - server
-      network_mode: "host"
+      env_file:
+         - ./bot/.env
+      environment:
+         - API_ADDRESS=http://server:8080
       restart: always
 
-   logger:
+   product-logger:
       build: ./product_logger
       env_file:
          - ./product_logger/.env
       depends_on:
          - server
-      network_mode: "host"
+      environment:
+         - API_ADDRESS=http://server:8080
       restart: always
