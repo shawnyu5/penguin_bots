@@ -1,13 +1,13 @@
 import pino from "pino";
-import config from "./enviroments/config.json";
+import { environment } from "./enviroments/enviroment";
 
 const logger = pino({
    transport: { target: "pino-pretty" },
    options: { colorize: true },
-   level: config.LOG_LEVEL || "info",
+   level: environment.LOG_LEVEL || "info",
 });
 
-if (config.DEVELOPMENT == "true") {
+if (environment.DEVELOPMENT) {
    logger.level = "debug";
 }
 

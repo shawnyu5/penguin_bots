@@ -2,7 +2,7 @@ import { Client, Collection, Intents, TextChannel } from "discord.js";
 import fs from "fs";
 import { OnStart } from "./deploy-commands";
 import { getChannelByName, buildMessage } from "./utils";
-import config from "./enviroments/config.json";
+import { environment } from "./enviroments/enviroment";
 import axios, { AxiosResponse } from "axios";
 import logger from "./logger";
 import { ICoinProduct } from "./types/coinProduct";
@@ -34,11 +34,11 @@ for (const file of commandFiles) {
 
 client.on("ready", () => {
    logger.info(`${client.user?.tag} logged in`);
-   let db = new DataBase(config.MONGOOSE_KEY);
+   let db = new DataBase(environment.MONGOOSE_KEY);
 
    let allCommands = onStart.readAllCommands();
    client.guilds.cache.forEach((guild) => {
-      onStart.registerCommands(config.CLIENTID, guild, allCommands);
+      onStart.registerCommands(environment.CLIENTID, guild, allCommands);
    });
 
    let interval = 0;
@@ -48,7 +48,7 @@ client.on("ready", () => {
       interval++;
       let response: AxiosResponse<any>;
       try {
-         response = await axios.get(`${config.API_ADDRESS}/coinProduct`, {
+         response = await axios.get(`${environment.API_ADDRESS}/coinProduct`, {
             timeout: 5000,
          });
       } catch (e) {
@@ -66,7 +66,7 @@ client.on("ready", () => {
 
       let message: string = buildMessage(coinProduct);
       let channel: TextChannel | undefined;
-      if (config.DEVELOPMENT == "true") {
+      if (environment.DEVELOPMENT) {
          channel = getChannelByName(client, "development");
       } else {
          channel = getChannelByName(client, "notifications");
@@ -99,7 +99,7 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("guildCreate", function (guild) {
    let allCommands = onStart.readAllCommands();
-   onStart.registerCommands(config.CLIENTID, guild, allCommands);
+   onStart.registerCommands(environment.CLIENTID, guild, allCommands);
 });
 
-client.login(config.TOKEN);
+client.login(environment.TOKEN);

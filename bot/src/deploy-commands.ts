@@ -4,8 +4,7 @@ import fs from "fs";
 import { IHelpDocs } from "./types/helpDocs";
 import { Guild } from "discord.js";
 import logger from "./logger";
-import config from "./enviroments/config.json";
-
+import { environment } from "./enviroments/enviroment";
 class OnStart {
    /**
     * @returns all commands contained in `/commands`
@@ -47,7 +46,7 @@ class OnStart {
     * @param commands - array of commands
     */
    registerCommands(clientID: string, guild: Guild, commands: any): void {
-      const rest = new REST({ version: "9" }).setToken(config.TOKEN);
+      const rest = new REST({ version: "9" }).setToken(environment.TOKEN);
       (async () => {
          try {
             logger.info(

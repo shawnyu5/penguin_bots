@@ -1,8 +1,8 @@
-import { AnyChannel, Client, TextChannel } from "discord.js";
+import { Client, TextChannel } from "discord.js";
 // const exec = require("child_process").execSync;
 import { execSync } from "child_process";
 import { ICoinProduct } from "./types/coinProduct";
-import config from "./enviroments/config.json";
+import { environment } from "./enviroments/enviroment";
 
 /**
  * return a channel information by name
@@ -49,9 +49,7 @@ function checkCoinProduct(): ICoinProduct | null {
  */
 function buildMessage(coinProduct: ICoinProduct): string {
    let message: string = "COIN PRODUCT ALERT! ";
-   config.COIN_PRODUCT_ALERT_USERS.forEach((user) => {
-      message += `<@${user}> `;
-   });
+   message += `<@${environment.COIN_PRODUCT_ALERT_USERS}> `;
    message += `
 
 title: ${coinProduct.Title}
