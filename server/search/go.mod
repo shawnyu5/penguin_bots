@@ -1,4 +1,4 @@
-module search
+module github.com/shawnyu5/penguin-search
 
 go 1.18
 

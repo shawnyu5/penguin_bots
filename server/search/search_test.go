@@ -1,4 +1,4 @@
-package search
+package penguin_search
 
 import (
 	"context"

@@ -1,4 +1,4 @@
-package search
+package penguin_search
 
 import (
 	"context"
@@ -16,7 +16,7 @@ import (
 type Product struct {
 	Title               string  `json:"title"`
 	Original_price      float64 `json:"original_price"`
-	Discount_price      float64 `json:"discount_price"`
+	Average_discount    float64 `json:"average_discount"`
 	Discount_percentage float64 `json:"discount_percentage"`
 	Appearances         int32   `json:"appearances"`
 }
@@ -26,18 +26,18 @@ type Product struct {
 // product.Appearances = 0
 // }
 
-func main() {
-	client := connectDB()
-	defer func() {
-		if err := client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-		log.Println("Database successfully disconnected.")
-	}()
+// func main() {
+// client := connectDB()
+// defer func() {
+// if err := client.Disconnect(context.TODO()); err != nil {
+// panic(err)
+// }
+// log.Println("Database successfully disconnected.")
+// }()
 
-	// coll := client.Database("penguin_magic").Collection("open_box")
-	SearchByRegex(&Product{Title: "card"})
-}
+// // coll := client.Database("penguin_magic").Collection("open_box")
+// SearchByRegex(&Product{Title: "card"})
+// }
 
 // connectDB will connect to the mongodb
 func connectDB() *mongo.Client {
@@ -47,6 +47,10 @@ func connectDB() *mongo.Client {
 	}
 
 	uri := os.Getenv("MONGODB_URI")
+	fmt.Println(fmt.Sprintf("connectDB uri: %v", uri)) // __AUTO_GENERATED_PRINT_VAR__
+	if uri == "" {
+		panic("MONGODB_URI is not set")
+	}
 	// Create a new client and connect to the server
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 
@@ -63,8 +67,8 @@ func connectDB() *mongo.Client {
 }
 
 // SearchByRegex will search for a product title by a regex
-// Returns an bson array of products
-func SearchByRegex(product *Product) []bson.D {
+// Returns an array of products
+func SearchByRegex(product *Product) []Product {
 	client := connectDB()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
@@ -78,17 +82,25 @@ func SearchByRegex(product *Product) []bson.D {
 
 	filter["title"] = bson.M{"$regex": fmt.Sprintf(".*%s.*", product.Title)}
 	cursor, err := coll.Find(context.TODO(), filter)
-
 	if err != nil {
 		panic(err)
 	}
 
-	var results []bson.D
-	if err = cursor.All(context.TODO(), &results); err != nil {
-		panic(err)
+	var products []Product
+	// go through all products and add to array of products
+	for cursor.Next(context.TODO()) {
+		var singleProduct Product
+		err := cursor.Decode(&singleProduct)
+		if err != nil {
+			panic(err)
+		}
+		products = append(products, singleProduct)
 	}
+
 	// for _, result := range results {
 	// fmt.Println(result)
+	// current := result[0]
+	// products = append(products, Product{Title: string(current)})
 	// }
-	return results
+	return products
 }
