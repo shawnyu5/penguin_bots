@@ -12,6 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/patrickmn/go-cache"
 	"github.com/shawnyu5/check_coin_product"
+	penguin_search "github.com/shawnyu5/penguin-search"
 	utils "github.com/shawnyu5/penguin-utils"
 )
 
@@ -31,6 +32,7 @@ func main() {
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
 	routes["/logger"] = loggerHandler
+	routes["/search"] = searchHandler
 	routes["/favicon.ico"] = doNothing
 	for k, v := range routes {
 		http.HandleFunc(k, v)
@@ -127,4 +129,17 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println(string(j))
 	fmt.Fprintln(w, string(j))
+}
+
+// searchHandler is the handler for the /search endpoint
+// Returns a list of products that match the search query in json
+func searchHandler(w http.ResponseWriter, r *http.Request) {
+	product := penguin_search.Product{Title: "card"}
+	result := penguin_search.SearchByRegex(&product)
+	j, err := json.MarshalIndent(result, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Fprintln(w, string(j))
+	// fmt.Fprintln(w, fmt.Sprintf("%+v", result))
 }

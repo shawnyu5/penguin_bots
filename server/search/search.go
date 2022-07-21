@@ -15,8 +15,8 @@ import (
 
 type Product struct {
 	Title               string  `json:"title"`
-	Original_price      float64 `json:"original_price"`
 	Average_discount    float64 `json:"average_discount"`
+	Average_price       float64 `json:"average_price"`
 	Discount_percentage float64 `json:"discount_percentage"`
 	Appearances         int32   `json:"appearances"`
 }

@@ -97,5 +97,24 @@
             }
          }
       }
+   },
+   "/search": {
+      "POST": {
+         "description": "Search for a product by title. Will fuzzy match by regex",
+         "content": {
+            "application/json": {
+               "schema": {
+                  "type": "array",
+                  "items": {
+                     "title": "string",
+                     "average_discount": "number",
+                     "average_price": "number",
+                     "discount_percentage": "number",
+                     "appearances": "number"
+                  }
+               }
+            }
+         }
+      }
    }
 }
