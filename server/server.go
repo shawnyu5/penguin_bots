@@ -28,6 +28,9 @@ type LoggerProduct struct {
 	Discount_percentage float64 `json:"discount_percentage"`
 }
 
+type CoinProductService interface {
+}
+
 func main() {
 	// initialize the cache
 	storage = cache.New(cache.NoExpiration, 10*time.Minute)
