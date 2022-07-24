@@ -6,9 +6,7 @@ require (
 	github.com/gocolly/colly v1.2.0
 	github.com/joho/godotenv v1.4.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/shawnyu5/check_coin_product v1.0.0
 	github.com/shawnyu5/penguin-search v1.0.0
-	github.com/shawnyu5/penguin-utils v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -38,9 +36,5 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 )
-
-replace github.com/shawnyu5/penguin-utils v0.0.0-00010101000000-000000000000 => ./utils/
-
-replace github.com/shawnyu5/check_coin_product v1.0.0 => ./coin_products
 
 replace github.com/shawnyu5/penguin-search => ./search

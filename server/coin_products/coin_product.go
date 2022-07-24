@@ -7,9 +7,10 @@ import (
 	"strings"
 	"time"
 
+	"server/utils"
+
 	"github.com/gocolly/colly"
 	"github.com/patrickmn/go-cache"
-	utils "github.com/shawnyu5/penguin-utils"
 )
 
 type CoinProduct struct {

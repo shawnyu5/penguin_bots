@@ -8,8 +8,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"server/utils"
+
 	"github.com/gocolly/colly"
-	utils "github.com/shawnyu5/penguin-utils"
 )
 
 func TestLoggerHandler(t *testing.T) {

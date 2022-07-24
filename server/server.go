@@ -8,12 +8,15 @@ import (
 	"os"
 	"time"
 
+	check_coin_product "server/coin_products"
+
+	"server/utils"
+
+	"server/search"
+
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
 	"github.com/patrickmn/go-cache"
-	"github.com/shawnyu5/check_coin_product"
-	penguin_search "github.com/shawnyu5/penguin-search"
-	utils "github.com/shawnyu5/penguin-utils"
 )
 
 var storage *cache.Cache
@@ -134,8 +137,8 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 // searchHandler is the handler for the /search endpoint
 // Returns a list of products that match the search query in json
 func searchHandler(w http.ResponseWriter, r *http.Request) {
-	product := penguin_search.Product{Title: "card"}
-	result := penguin_search.SearchByRegex(&product)
+	product := search.Product{Title: "card"}
+	result := search.SearchByRegex(&product)
 	j, err := json.MarshalIndent(result, "", "  ")
 	if err != nil {
 		panic(err)

@@ -5,8 +5,9 @@ import (
 	"os/exec"
 	"testing"
 
+	"server/utils"
+
 	"github.com/gocolly/colly"
-	utils "github.com/shawnyu5/penguin-utils"
 )
 
 var c *colly.Collector
