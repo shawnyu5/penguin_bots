@@ -8,6 +8,7 @@ services:
          - ./server/.env
       environment:
          - PORT=8080
+      hostname: server
       restart: always
 
    bot:
@@ -20,12 +21,12 @@ services:
          - API_ADDRESS=http://server:8080
       restart: always
 
-   product-logger:
+   logger:
       build: ./product_logger
       env_file:
          - ./product_logger/.env
       depends_on:
          - server
       environment:
-         - API_ADDRESS=http://server:8080
+         - API_URL=http://server:8080
       restart: always
