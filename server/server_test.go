@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"server/utils"
@@ -13,6 +14,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
+// TestLoggerHandler tests the logger handler, and checks if the product obj we get back is correct
 func TestLoggerHandler(t *testing.T) {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
@@ -50,19 +52,36 @@ func TestLoggerHandler(t *testing.T) {
 	}
 }
 
-// func TestCoinProductHandler(t *testing.T) {
-// req := httptest.NewRequest(http.MethodGet, "/coinProduct", nil)
-// w := httptest.NewRecorder()
-// coinProductHandler(w, req)
-// res := w.Result()
-// defer res.Body.Close()
+// TestSearchHandlerSuccess tests the search handler with a valid query
+func TestSearchHandlerSuccess(t *testing.T) {
+	// a successful search should return a list of products
+	req := httptest.NewRequest(http.MethodPost, "/search", strings.NewReader("hello"))
+	w := httptest.NewRecorder()
+	searchHandler(w, req)
+	res := w.Result()
+	defer res.Body.Close()
 
-// data, err := ioutil.ReadAll(res.Body)
-// if err != nil {
-// t.Errorf("Error reading body: %v", err)
-// }
+	data, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		panic(err)
+	}
 
-// if data == nil {
-// t.Errorf("Expected data, got nil")
-// }
-// }
+	// if we didnt get anything back, something has gone wrong
+	if len(data) == 0 {
+		t.Errorf("Expected data, got %v", data)
+	}
+
+}
+
+// TestSearchHandlerFail tests the search handler with a invalid request method
+func TestSearchHandlerFail(t *testing.T) {
+	// a successful search should return a list of products
+	req := httptest.NewRequest(http.MethodGet, "/search", nil)
+	w := httptest.NewRecorder()
+	searchHandler(w, req)
+	res := w.Result()
+	defer res.Body.Close()
+	if res.StatusCode != 404 {
+		t.Errorf("Expected status code 404, got %v", res.StatusCode)
+	}
+}

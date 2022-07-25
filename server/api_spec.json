@@ -101,8 +101,14 @@
    "/search": {
       "POST": {
          "description": "Search for a product by title. Will fuzzy match by regex",
-         "content": {
+         "consumes": "plain/text",
+         "parameters": {
+            "in": "body",
+            "description": "Search query"
+         },
+         "responses": {
             "application/json": {
+               "description": "List of products from database",
                "schema": {
                   "type": "array",
                   "items": {

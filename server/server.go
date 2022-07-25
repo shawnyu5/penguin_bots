@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -137,12 +138,16 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 // searchHandler is the handler for the /search endpoint
 // Returns a list of products that match the search query in json
 func searchHandler(w http.ResponseWriter, r *http.Request) {
-	product := search.Product{Title: "card"}
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", 404)
+		return
+	}
+	body, err := ioutil.ReadAll(r.Body)
+	product := search.Product{Title: string(body)}
 	result := search.SearchByRegex(&product)
 	j, err := json.MarshalIndent(result, "", "  ")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Fprintln(w, string(j))
-	// fmt.Fprintln(w, fmt.Sprintf("%+v", result))
 }
