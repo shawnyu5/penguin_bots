@@ -12,6 +12,6 @@ FROM golang:1.18.3-alpine3.16 AS production
 
 WORKDIR /logger
 COPY --from=build /logger/logger ./
-COPY ./.env ./
+# COPY ./.env ./
 
 CMD ["./logger"]
