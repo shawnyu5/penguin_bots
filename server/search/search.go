@@ -47,7 +47,6 @@ func connectDB() *mongo.Client {
 	}
 
 	uri := os.Getenv("MONGODB_URI")
-	fmt.Println(fmt.Sprintf("connectDB uri: %v", uri)) // __AUTO_GENERATED_PRINT_VAR__
 	if uri == "" {
 		panic("MONGODB_URI is not set")
 	}
