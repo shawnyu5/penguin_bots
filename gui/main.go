@@ -32,14 +32,13 @@ func main() {
 		},
 		OnSubmit: func() {
 			log.Println("Submitted:", titleEntry.Text)
+			products.SetText("Loading...")
 			go func() {
 				getProducts(titleEntry.Text, products)
-				fmt.Println(fmt.Sprintf("main products: %v", products)) // __AUTO_GENERATED_PRINT_VAR__
 			}()
 		},
 	}
 
-	// vBox := layout.NewVBoxLayout()
 	content := container.NewVScroll(
 		fyne.NewContainerWithLayout(
 			layout.NewVBoxLayout(),
@@ -66,21 +65,27 @@ func getProducts(searchQuery string, w *widget.Label) {
 
 	var products []product
 
-	res, err := http.Post(os.Getenv("API_URL")+"/search", "plain/text", strings.NewReader(searchQuery))
+	res, err := http.Post(os.Getenv("API_URL")+"search", "plain/text", strings.NewReader(searchQuery))
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
+	fmt.Println(fmt.Sprintf("getProducts body: %v", string(body))) // __AUTO_GENERATED_PRINT_VAR__
 	if err != nil {
 		log.Fatal(err)
 	}
 	json.Unmarshal(body, &products)
+	// fmt.Println(fmt.Sprintf("getProducts products: %v", products)) // __AUTO_GENERATED_PRINT_VAR__
 
 	productWidget := widget.NewLabel("")
-	for i := 0; i < 20; i++ {
-		curr := products[i]
-		productWidget.Text += fmt.Sprintf("%+v\n\n", curr)
+
+	counter := 0
+	for _, p := range products {
+		if counter < 20 {
+			productWidget.SetText(productWidget.Text + fmt.Sprintf("%v. %+v\n", counter+1, p))
+			counter++
+		}
 	}
 	w.SetText(productWidget.Text)
 	// return productWidget
