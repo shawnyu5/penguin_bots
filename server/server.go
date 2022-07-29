@@ -139,7 +139,7 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 // Returns a list of products that match the search query in json
 func searchHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		http.Error(w, "Method not allowed", 404)
+		http.Error(w, "Method "+r.Method+" not allowed", 404)
 		return
 	}
 	body, err := ioutil.ReadAll(r.Body)
