@@ -71,7 +71,6 @@ func getProducts(searchQuery string, w *widget.Label) {
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-	fmt.Println(fmt.Sprintf("getProducts body: %v", string(body))) // __AUTO_GENERATED_PRINT_VAR__
 	if err != nil {
 		log.Fatal(err)
 	}
