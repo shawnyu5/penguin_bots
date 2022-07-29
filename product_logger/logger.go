@@ -59,7 +59,7 @@ func Log(client *mongo.Client) {
 	penguinProduct, err := getProductInfo()
 	// if failed to get product info, skip this iteration
 	if err != nil {
-		log.Println("Failed to get product info")
+		log.Println("Failed to get product info: " + err.Error())
 		return
 	}
 
@@ -129,10 +129,11 @@ func cacheProduct(product PenguinProduct) {
 // Returns a penguin product object.
 func getProductInfo() (PenguinProduct, error) {
 	// make http request to get product
-	res, err := http.Get(os.Getenv("API_URL") + "/logger")
+	api_url := os.Getenv("API_URL")
+	res, err := http.Get(api_url + "/logger")
 	if err != nil {
-		log.Println("API request failed")
-		return PenguinProduct{}, errors.New("API request failed")
+		log.Println(err.Error())
+		return PenguinProduct{}, errors.New("API request failed: " + err.Error())
 	}
 	body, err := ioutil.ReadAll(res.Body)
 
@@ -168,7 +169,7 @@ func constructProductObj(b bson.M) DbProduct {
 func connectDB() *mongo.Client {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 
 	uri = os.Getenv("MONGODB_URI")

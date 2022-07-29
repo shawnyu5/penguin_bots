@@ -57,10 +57,6 @@ export class DataBase {
          .lean() // convert mongoose object to plain javascript object
          .exec();
 
-      // logger.debug(JSON.stringify(response.slice(0, 10), null, 2));
-      // logger.debug(`Response 0: ${response[0]}`);
-      // logger.debug(response[0].average_price);
-
       return Promise.resolve(response.slice(0, 10));
    }
 }

@@ -3,16 +3,21 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
+	check_coin_product "server/coin_products"
+
+	"server/utils"
+
+	"server/search"
+
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
 	"github.com/patrickmn/go-cache"
-	"github.com/shawnyu5/check_coin_product"
-	utils "github.com/shawnyu5/penguin-utils"
 )
 
 var storage *cache.Cache
@@ -31,6 +36,7 @@ func main() {
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
 	routes["/logger"] = loggerHandler
+	routes["/search"] = searchHandler
 	routes["/favicon.ico"] = doNothing
 	for k, v := range routes {
 		http.HandleFunc(k, v)
@@ -126,5 +132,22 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	log.Println(string(j))
+	fmt.Fprintln(w, string(j))
+}
+
+// searchHandler is the handler for the /search endpoint
+// Returns a list of products that match the search query in json
+func searchHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method "+r.Method+" not allowed", 404)
+		return
+	}
+	body, err := ioutil.ReadAll(r.Body)
+	product := search.Product{Title: string(body)}
+	result := search.SearchByRegex(&product)
+	j, err := json.MarshalIndent(result, "", "  ")
+	if err != nil {
+		panic(err)
+	}
 	fmt.Fprintln(w, string(j))
 }
