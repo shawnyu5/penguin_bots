@@ -47,7 +47,6 @@ func connectDB() *mongo.Client {
 	}
 
 	uri := os.Getenv("MONGODB_URI")
-	fmt.Println(fmt.Sprintf("connectDB uri: %v", uri)) // __AUTO_GENERATED_PRINT_VAR__
 	if uri == "" {
 		panic("MONGODB_URI is not set")
 	}
@@ -97,10 +96,6 @@ func SearchByRegex(product *Product) []Product {
 		products = append(products, singleProduct)
 	}
 
-	// for _, result := range results {
-	// fmt.Println(result)
-	// current := result[0]
-	// products = append(products, Product{Title: string(current)})
-	// }
+	fmt.Println(fmt.Sprintf("SearchByRegex products: %v", products)) // __AUTO_GENERATED_PRINT_VAR__
 	return products
 }
