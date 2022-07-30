@@ -53,19 +53,19 @@ func (SearchServiceImpl) connectDB() *mongo.Client {
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
 		panic(err)
 	}
-	log.Println("Database successfully connected and pinged.")
+	// log.Println("Database successfully connected and pinged.")
 	return client
 }
 
 // SearchByRegex will search for a product title by a regex
 // Returns an array of products
-func (SearchServiceImpl) SearchByRegex(product *Product) ([]Product, error) {
-	client := connectDB()
+func (si SearchServiceImpl) SearchByRegex(product *Product) ([]Product, error) {
+	client := si.connectDB()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
 			panic(err)
 		}
-		log.Println("Database successfully disconnected.")
+		// log.Println("Database successfully disconnected.")
 	}()
 
 	coll := client.Database("penguin_magic").Collection("open_box")
@@ -88,6 +88,6 @@ func (SearchServiceImpl) SearchByRegex(product *Product) ([]Product, error) {
 		products = append(products, singleProduct)
 	}
 
-	fmt.Println(fmt.Sprintf("SearchByRegex products: %v", products)) // __AUTO_GENERATED_PRINT_VAR__
+	// fmt.Println(fmt.Sprintf("SearchByRegex products: %v", products)) // __AUTO_GENERATED_PRINT_VAR__
 	return products, nil
 }
