@@ -2,13 +2,23 @@ package search
 
 import (
 	"context"
+	"log"
+	"os"
 	"testing"
 )
 
-var ss = SearchServiceImpl{}
+func beforeEach() SearchService {
+	logger := log.New(os.Stdout, "", log.LUTC)
+
+	var ss SearchService
+	ss = SearchServiceImpl{}
+	ss = LoggingMiddleware{Logger: logger, Next: ss}
+	return ss
+}
 
 // TestAbleToConnectToDb tests if we can connect to the database
 func TestAbleToConnectToDb(t *testing.T) {
+	ss := beforeEach()
 	client := ss.connectDB()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
@@ -22,6 +32,7 @@ func TestAbleToConnectToDb(t *testing.T) {
 }
 
 func TestSearchByRegex(t *testing.T) {
+	ss := beforeEach()
 	product := &Product{Title: "card"}
 	found, err := ss.SearchByRegex(product)
 	if err != nil {

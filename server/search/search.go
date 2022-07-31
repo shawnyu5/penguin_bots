@@ -59,8 +59,8 @@ func (SearchServiceImpl) connectDB() *mongo.Client {
 
 // SearchByRegex will search for a product title by a regex
 // Returns an array of products
-func (si SearchServiceImpl) SearchByRegex(product *Product) ([]Product, error) {
-	client := si.connectDB()
+func (ss SearchServiceImpl) SearchByRegex(product *Product) ([]Product, error) {
+	client := ss.connectDB()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
 			panic(err)
