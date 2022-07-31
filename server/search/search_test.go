@@ -5,9 +5,11 @@ import (
 	"testing"
 )
 
+var ss = SearchServiceImpl{}
+
 // TestAbleToConnectToDb tests if we can connect to the database
 func TestAbleToConnectToDb(t *testing.T) {
-	client := connectDB()
+	client := ss.connectDB()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
 			panic(err)
@@ -21,7 +23,11 @@ func TestAbleToConnectToDb(t *testing.T) {
 
 func TestSearchByRegex(t *testing.T) {
 	product := &Product{Title: "card"}
-	found := SearchByRegex(product)
+	found, err := ss.SearchByRegex(product)
+	if err != nil {
+		t.Error("Error searching for product")
+	}
+
 	if len(found) == 0 {
 		t.Error("Failed to find product")
 	}
