@@ -2,16 +2,27 @@ package check_coin_product
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"strings"
-	"time"
 
 	"server/utils"
 
+	"git.mills.io/prologic/bitcask"
 	"github.com/gocolly/colly"
-	"github.com/patrickmn/go-cache"
 )
+
+type CoinProductService interface {
+	// create and return database connection
+	makeDB() *bitcask.Bitcask
+	// Check gets the product from the url passed in, and checks if it's a coin product, and if it is an interesting product.
+	// sets the product.IsValid field to true if it is a coin product. False otherwise. And the product.Reason field
+	Check(product *CoinProduct)
+	// gets the getProduct information from the URL passed in
+	getProductInfo(c *colly.Collector, product *CoinProduct, url string)
+	// checks if a product is different from the one stored in database
+	hasProductChanged(product *CoinProduct, db bitcask.Bitcask) bool
+}
+
+type CoinProductServiceImpl struct{}
 
 type CoinProduct struct {
 	Title              string
