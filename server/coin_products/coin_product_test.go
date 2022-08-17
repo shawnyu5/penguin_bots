@@ -18,8 +18,7 @@ func setup() CoinProductService {
 
 // TestMakeDB tests the makeDB function is able to create a local database
 func TestMakeDB(t *testing.T) {
-	p := setup()
-	db := p.makeDB()
+	db := makeDB()
 	defer db.Close()
 	if db == nil {
 		t.Error("makeDB returned nil")
@@ -62,7 +61,7 @@ func TestCheckInvalidProduct(t *testing.T) {
 	)
 
 	product := CoinProduct{}
-	p.getProductInfo(c, &product, "https://www.penguinmagic.com/p/8474")
+	getProductInfo(c, &product, "https://www.penguinmagic.com/p/8474")
 	p.Check(&product)
 	if product.IsValid {
 		fmt.Println(fmt.Sprintf("TestCheckInvalidProduct product.IsValid: %v", product.IsValid)) // __AUTO_GENERATED_PRINT_VAR__
@@ -78,7 +77,7 @@ func TestCheckValidProduct(t *testing.T) {
 	)
 
 	product := CoinProduct{}
-	p.getProductInfo(c, &product, "https://www.penguinmagic.com/p/1797")
+	getProductInfo(c, &product, "https://www.penguinmagic.com/p/1797")
 	p.Check(&product)
 	if !product.IsValid {
 		t.Errorf("Product should be valid, instead got %s", product.Reason)

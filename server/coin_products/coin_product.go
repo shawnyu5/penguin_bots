@@ -11,15 +11,7 @@ import (
 )
 
 type CoinProductService interface {
-	// create and return database connection
-	makeDB() *bitcask.Bitcask
-	// Check gets the product from the url passed in, and checks if it's a coin product, and if it is an interesting product.
-	// sets the product.IsValid field to true if it is a coin product. False otherwise. And the product.Reason field
 	Check(product *CoinProduct)
-	// gets the getProduct information from the URL passed in
-	getProductInfo(c *colly.Collector, product *CoinProduct, url string)
-	// checks if a product is different from the one stored in database
-	hasProductChanged(product *CoinProduct, db bitcask.Bitcask) bool
 }
 
 type CoinProductServiceImpl struct{}
@@ -38,7 +30,7 @@ type CoinProduct struct {
 // var PRODUCT_INFO_FILE string
 // var storage *cache.Cache
 
-func (CoinProductServiceImpl) makeDB() *bitcask.Bitcask {
+func makeDB() *bitcask.Bitcask {
 	b, err := bitcask.Open("./db")
 	if err != nil {
 		panic(err)
@@ -49,23 +41,6 @@ func (CoinProductServiceImpl) makeDB() *bitcask.Bitcask {
 // Check gets the product from the url passed in, and checks if it's a coin product, and if it is an interesting product.
 // sets the product.IsValid field to true if it is a coin product. False otherwise. And the product.Reason field
 func (CoinProductServiceImpl) Check(product *CoinProduct) {
-	// homeDir, _ := os.UserHomeDir()
-	// storage = cache.New(cache.NoExpiration, 30*time.Minute)
-	// utils.SetFilePath(homeDir + "/python/penguin_bots/not_interested_products.csv")
-
-	// c := colly.NewCollector(
-	// colly.AllowedDomains("www.penguinmagic.com",
-	// "www.penguinmagic.com/p/17235", "www.penguinmagic.com/openbox",
-	// "www.penguinmagic.com/p/3901", url),
-	// )
-
-	// var p CoinProductService
-	// p = CoinProductServiceImpl{}
-
-	// product := CoinProduct{}
-
-	// p.getProductInfo(c, &product, url)
-
 	// if product is empty, then openbox is down right now
 	if product.Title == "" {
 		product.IsValid = false
@@ -84,7 +59,7 @@ func (CoinProductServiceImpl) Check(product *CoinProduct) {
 }
 
 // getProductInfo get the product currently on penguin open box. Stores the product info in product struct passed in
-func (CoinProductServiceImpl) getProductInfo(c *colly.Collector, product *CoinProduct, url string) {
+func getProductInfo(c *colly.Collector, product *CoinProduct, url string) {
 	utils.GetTitle(c, &product.Title)
 	utils.GetDescription(c, &product.Description)
 	utils.GetPrice(c, &product.OriginalPrice)
@@ -96,7 +71,7 @@ func (CoinProductServiceImpl) getProductInfo(c *colly.Collector, product *CoinPr
 
 // hasProductChanged checks if the product has changed compared to product in database.
 // Return true if it has changed. False otherwise
-func (CoinProductServiceImpl) hasProductChanged(product *CoinProduct, db bitcask.Bitcask) bool {
+func hasProductChanged(product *CoinProduct, db bitcask.Bitcask) bool {
 	// read from file
 	// fileProduct, found := storage.Get("product_title")
 	// if no product in cache, product has changed
