@@ -11,20 +11,18 @@ import (
 )
 
 type CoinProductService interface {
+	// Check gets the product from the url passed in, and checks if it's a coin product, and if it is an interesting product.
+	// sets the product.IsValid field to true if it is a coin product. False otherwise. And sets the product.Reason field
 	Check(product *CoinProduct)
 }
 
 type CoinProductServiceImpl struct{}
 
 type CoinProduct struct {
-	Title              string
-	Description        string
-	OriginalPrice      float64
-	DiscountPrice      float64
-	DiscountPercentage float64
-	Rating             int64
-	IsValid            bool
-	Reason             string
+	Title       string
+	Description string
+	IsValid     bool
+	Reason      string
 }
 
 // var PRODUCT_INFO_FILE string
@@ -61,10 +59,6 @@ func (CoinProductServiceImpl) Check(product *CoinProduct) {
 func getProductInfo(c *colly.Collector, product *CoinProduct, url string) {
 	utils.GetTitle(c, &product.Title)
 	utils.GetDescription(c, &product.Description)
-	utils.GetPrice(c, &product.OriginalPrice)
-	utils.GetDiscountedPrice(c, &product.DiscountPrice)
-	utils.GetDiscountPercentage(c, &product.DiscountPercentage)
-	utils.GetStarRating(c, &product.Rating)
 	c.Visit(url)
 }
 
