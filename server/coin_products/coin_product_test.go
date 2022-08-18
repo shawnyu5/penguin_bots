@@ -25,18 +25,7 @@ func TestMakeDB(t *testing.T) {
 	}
 }
 
-// // create a non coin product
-// notCoinProduct := CoinProductResponse{Title: "jfsdjfsljf",
-// Description:   "jfldsfjf jjfdsl",
-// OriginalPrice: 0.00}
-
-// invalidCoinProduct := isCoinProduct(&notCoinProduct)
-
-// if invalidCoinProduct == true {
-// t.Errorf("false Coin product detected")
-// }
-// }
-
+// TestIsCoinProduct tests isCoinProduct() is able to detect a coin product
 func TestIsCoinProduct(t *testing.T) {
 	// valid product
 	product := CoinProduct{Title: "Coin fjdsljf"}
@@ -53,7 +42,7 @@ func TestIsCoinProduct(t *testing.T) {
 	}
 }
 
-// TestCheckInvalidProduct tests if it is able to detect an invalid product
+// TestCheckInvalidProduct tests if Check() is able to detect an invalid product
 func TestCheckInvalidProduct(t *testing.T) {
 	p := setup()
 	c := colly.NewCollector(

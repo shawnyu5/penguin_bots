@@ -55,7 +55,6 @@ func (CoinProductServiceImpl) Check(product *CoinProduct) {
 		product.IsValid = true
 		product.Reason = "Product is a coin product"
 	}
-
 }
 
 // getProductInfo get the product currently on penguin open box. Stores the product info in product struct passed in
@@ -69,23 +68,23 @@ func getProductInfo(c *colly.Collector, product *CoinProduct, url string) {
 	c.Visit(url)
 }
 
-// hasProductChanged checks if the product has changed compared to product in database.
-// Return true if it has changed. False otherwise
-func hasProductChanged(product *CoinProduct, db bitcask.Bitcask) bool {
-	// read from file
-	// fileProduct, found := storage.Get("product_title")
-	// if no product in cache, product has changed
-	// if !found {
-	// return true
-	// }
+// // hasProductChanged checks if the product has changed compared to product in database.
+// // Return true if it has changed. False otherwise
+// func hasProductChanged(product *CoinProduct, db bitcask.Bitcask) bool {
+// // read from file
+// // fileProduct, found := storage.Get("product_title")
+// // if no product in cache, product has changed
+// // if !found {
+// // return true
+// // }
 
-	// // if current product is the same as product in file, then exit
-	// if product.Title == fileProduct {
-	// // log.Println(fmt.Sprintf("Product %s has not changed", product.Title))
-	// return false
-	// }
-	return true
-}
+// // // if current product is the same as product in file, then exit
+// // if product.Title == fileProduct {
+// // // log.Println(fmt.Sprintf("Product %s has not changed", product.Title))
+// // return false
+// // }
+// return true
+// }
 
 // isCoinProduct check if the product is a coin product.
 // Return true if it is a coin product. False otherwise
