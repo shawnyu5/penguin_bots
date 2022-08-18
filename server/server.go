@@ -7,20 +7,16 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	check_coin_product "server/coin_products"
-
+	"server/search"
 	"server/utils"
 
-	"server/search"
-
+	"git.mills.io/prologic/bitcask"
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
 	"github.com/patrickmn/go-cache"
 )
-
-var storage *cache.Cache
 
 type LoggerProduct struct {
 	Title               string  `json:"title"`
@@ -32,9 +28,14 @@ type LoggerProduct struct {
 type CoinProductService interface {
 }
 
+var storage *bitcask.Bitcask
+
 func main() {
 	// initialize the cache
-	storage = cache.New(cache.NoExpiration, 10*time.Minute)
+	storage, err := bitcask.Open("./db")
+	if err != nil {
+		log.Fatal(err)
+	}
 	routes := make(map[string]func(http.ResponseWriter, *http.Request))
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
@@ -46,7 +47,7 @@ func main() {
 	}
 
 	// load .env
-	err := godotenv.Load()
+	err = godotenv.Load()
 	if err != nil {
 		log.Println("(server) Error loading .env file")
 	}
@@ -68,23 +69,41 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", 404)
 		return
 	}
-	productInfo := check_coin_product.Check("https://www.penguinmagic.com/openbox/")
+
+	var check check_coin_product.CoinProductService
+	check = check_coin_product.CoinProductServiceImpl{}
+
+	c := colly.NewCollector(
+		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
+	)
+
+	product := check_coin_product.CoinProduct{}
+	utils.GetTitle(c, &product.Title)
+	utils.GetDescription(c, &product.Description)
+	c.Visit("https://www.penguinmagic.com/openbox")
+	check.Check(&product)
+
 	// check if product has changed
-	var title interface{}
-	found := false
+
+	var title []byte
+	if storage != nil {
+		var err error
+		title, err = storage.Get([]byte("coin_product_title"))
+		if err != nil {
+			log.Println("Error getting product title from cache")
+			return
+		}
+	}
+	if string(title) == product.Title {
+		product.IsValid = false
+		product.Reason = "Product has not changed"
+	}
 
 	if storage != nil {
-		title, found = storage.Get("coin_product_title")
+		storage.Put([]byte("coin_product_title"), []byte(product.Title))
 	}
-	if found && title.(string) == productInfo.Title {
-		productInfo.IsValid = false
-		productInfo.Reason = "Product has not changed"
-	}
-	if storage != nil {
-		storage.Set("coin_product_title", productInfo.Title, cache.DefaultExpiration)
-	}
-	log.Println("/coinProduct:", productInfo.Title)
-	j, err := json.MarshalIndent(productInfo, "", "  ")
+	// log.Println("/coinProduct:", productInfo.Title)
+	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
 		panic(err)
 	}

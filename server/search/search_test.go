@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+// beforeEach called before each unit test, sets up the service with nessary middleware
+// returns an instance of the service
 func beforeEach() SearchService {
 	logger := log.New(os.Stdout, "", log.LUTC)
 
