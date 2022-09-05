@@ -25,6 +25,8 @@ jobs:
 
          - name: server test
            run: cd server && go test -v
+           env: 
+            MONGODB_URI: ${{ env.MONGODB_URI }}
 
          - name: coin product test
            run: cd server/coin_products && go test -v
