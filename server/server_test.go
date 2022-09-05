@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -20,6 +19,7 @@ func TestLoggerHandler(t *testing.T) {
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
 	)
 
+	// the product we are expecting to get back
 	penguinProduct := LoggerProduct{} // product on penguinmagic
 
 	utils.GetTitle(c, &penguinProduct.Title)
@@ -39,7 +39,6 @@ func TestLoggerHandler(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error reading body: %v", err)
 	}
-	fmt.Println(fmt.Sprintf("TestLoggerHandler data: %v", string(data))) // __AUTO_GENERATED_PRINT_VAR__
 
 	var loggerProduct LoggerProduct
 	err = json.Unmarshal(data, &loggerProduct) // parse json data into struct
@@ -47,6 +46,7 @@ func TestLoggerHandler(t *testing.T) {
 		t.Errorf("Error unmarshalling json: %v", err)
 	}
 
+	// the product our logger handler returns should be the same as the product we got from penguinmagic
 	if loggerProduct != penguinProduct {
 		t.Errorf("Expected %v, got %v", loggerProduct, data)
 	}

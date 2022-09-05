@@ -7,20 +7,15 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	check_coin_product "server/coin_products"
-
+	"server/search"
 	"server/utils"
 
-	"server/search"
-
+	"git.mills.io/prologic/bitcask"
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
-	"github.com/patrickmn/go-cache"
 )
-
-var storage *cache.Cache
 
 type LoggerProduct struct {
 	Title               string  `json:"title"`
@@ -29,9 +24,28 @@ type LoggerProduct struct {
 	Discount_percentage float64 `json:"discount_percentage"`
 }
 
+type CoinProductService interface {
+}
+
+type dbTypes struct{}
+
+func (db dbTypes) coin_product_title() string {
+	return "coin_product_title"
+}
+
+func (db dbTypes) product_title() string {
+	return "product_title"
+}
+
+var storage *bitcask.Bitcask
+
 func main() {
 	// initialize the cache
-	storage = cache.New(cache.NoExpiration, 10*time.Minute)
+	b, err := bitcask.Open("./db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	storage = b
 	routes := make(map[string]func(http.ResponseWriter, *http.Request))
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
@@ -43,11 +57,11 @@ func main() {
 	}
 
 	// load .env
-	err := godotenv.Load()
+	err = godotenv.Load()
 	if err != nil {
 		log.Println("(server) Error loading .env file")
 	}
-	// get from env
+	// get port from env
 	port := ":" + os.Getenv("PORT")
 	// set default port to 8080
 	if port == ":" {
@@ -65,23 +79,42 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", 404)
 		return
 	}
-	productInfo := check_coin_product.Check("https://www.penguinmagic.com/openbox/")
+
+	var check check_coin_product.CoinProductService
+	check = check_coin_product.CoinProductServiceImpl{}
+
+	c := colly.NewCollector(
+		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
+	)
+
+	product := check_coin_product.CoinProduct{}
+	utils.GetTitle(c, &product.Title)
+	utils.GetDescription(c, &product.Description)
+	c.Visit("https://www.penguinmagic.com/openbox")
+	check.Check(&product)
+
 	// check if product has changed
-	var title interface{}
-	found := false
+
+	types := dbTypes{}
+	var title []byte
+	if storage != nil {
+		var err error
+		title, err = storage.Get([]byte(types.coin_product_title()))
+		if err != nil {
+			log.Println("Error getting product title from cache")
+			return
+		}
+	}
+	if string(title) == product.Title {
+		product.IsValid = false
+		product.Reason = "Product has not changed"
+	}
 
 	if storage != nil {
-		title, found = storage.Get("coin_product_title")
+		storage.Put([]byte(types.coin_product_title()), []byte(product.Title))
 	}
-	if found && title.(string) == productInfo.Title {
-		productInfo.IsValid = false
-		productInfo.Reason = "Product has not changed"
-	}
-	if storage != nil {
-		storage.Set("coin_product_title", productInfo.Title, cache.DefaultExpiration)
-	}
-	log.Println("/coinProduct:", productInfo.Title)
-	j, err := json.MarshalIndent(productInfo, "", "  ")
+	// log.Println("/coinProduct:", productInfo.Title)
+	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
 		panic(err)
 	}
@@ -124,8 +157,10 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	// c.Visit("https://www.penguinmagic.com/p/12449")
 	c.Visit("https://www.penguinmagic.com/openbox/")
 
+	types := dbTypes{}
 	if storage != nil {
-		storage.Set("product_title", product.Title, cache.DefaultExpiration)
+		storage.Put([]byte(types.product_title()), []byte(product.Title))
+		// storage.Set("product_title", product.Title, cache.DefaultExpiration)
 	}
 	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
@@ -142,9 +177,18 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method "+r.Method+" not allowed", 404)
 		return
 	}
+
+	logger := log.New(os.Stdout, "", log.LUTC)
+
+	var s search.SearchService
+	s = search.SearchServiceImpl{}
+	s = search.LoggingMiddleware{Logger: logger, Next: s}
+
 	body, err := ioutil.ReadAll(r.Body)
 	product := search.Product{Title: string(body)}
-	result := search.SearchByRegex(&product)
+	result, err := s.SearchByRegex(&product)
+	// result := search.SearchByRegex(&product)
+
 	j, err := json.MarshalIndent(result, "", "  ")
 	if err != nil {
 		panic(err)
