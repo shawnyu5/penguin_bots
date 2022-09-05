@@ -19,6 +19,7 @@ func TestLoggerHandler(t *testing.T) {
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
 	)
 
+	// the product we are expecting to get back
 	penguinProduct := LoggerProduct{} // product on penguinmagic
 
 	utils.GetTitle(c, &penguinProduct.Title)
@@ -45,6 +46,7 @@ func TestLoggerHandler(t *testing.T) {
 		t.Errorf("Error unmarshalling json: %v", err)
 	}
 
+	// the product our logger handler returns should be the same as the product we got from penguinmagic
 	if loggerProduct != penguinProduct {
 		t.Errorf("Expected %v, got %v", loggerProduct, data)
 	}

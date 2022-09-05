@@ -15,7 +15,6 @@ import (
 	"git.mills.io/prologic/bitcask"
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
-	"github.com/patrickmn/go-cache"
 )
 
 type LoggerProduct struct {
@@ -32,10 +31,11 @@ var storage *bitcask.Bitcask
 
 func main() {
 	// initialize the cache
-	storage, err := bitcask.Open("./db")
+	b, err := bitcask.Open("./db")
 	if err != nil {
 		log.Fatal(err)
 	}
+	storage = b
 	routes := make(map[string]func(http.ResponseWriter, *http.Request))
 	routes["/"] = homeHandler(routes)
 	routes["/coinProduct"] = coinProductHandler
@@ -147,7 +147,8 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	c.Visit("https://www.penguinmagic.com/openbox/")
 
 	if storage != nil {
-		storage.Set("product_title", product.Title, cache.DefaultExpiration)
+		storage.Put([]byte("product_title"), []byte(product.Title))
+		// storage.Set("product_title", product.Title, cache.DefaultExpiration)
 	}
 	j, err := json.MarshalIndent(product, "", "  ")
 	if err != nil {
