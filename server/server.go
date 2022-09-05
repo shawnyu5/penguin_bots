@@ -27,6 +27,16 @@ type LoggerProduct struct {
 type CoinProductService interface {
 }
 
+type dbTypes struct{}
+
+func (db dbTypes) coin_product_title() string {
+	return "coin_product_title"
+}
+
+func (db dbTypes) product_title() string {
+	return "product_title"
+}
+
 var storage *bitcask.Bitcask
 
 func main() {
@@ -51,7 +61,7 @@ func main() {
 	if err != nil {
 		log.Println("(server) Error loading .env file")
 	}
-	// get from env
+	// get port from env
 	port := ":" + os.Getenv("PORT")
 	// set default port to 8080
 	if port == ":" {
@@ -85,10 +95,11 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 
 	// check if product has changed
 
+	types := dbTypes{}
 	var title []byte
 	if storage != nil {
 		var err error
-		title, err = storage.Get([]byte("coin_product_title"))
+		title, err = storage.Get([]byte(types.coin_product_title()))
 		if err != nil {
 			log.Println("Error getting product title from cache")
 			return
@@ -100,7 +111,7 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if storage != nil {
-		storage.Put([]byte("coin_product_title"), []byte(product.Title))
+		storage.Put([]byte(types.coin_product_title()), []byte(product.Title))
 	}
 	// log.Println("/coinProduct:", productInfo.Title)
 	j, err := json.MarshalIndent(product, "", "  ")
@@ -146,8 +157,9 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	// c.Visit("https://www.penguinmagic.com/p/12449")
 	c.Visit("https://www.penguinmagic.com/openbox/")
 
+	types := dbTypes{}
 	if storage != nil {
-		storage.Put([]byte("product_title"), []byte(product.Title))
+		storage.Put([]byte(types.product_title()), []byte(product.Title))
 		// storage.Set("product_title", product.Title, cache.DefaultExpiration)
 	}
 	j, err := json.MarshalIndent(product, "", "  ")
