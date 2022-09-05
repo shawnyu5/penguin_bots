@@ -7,7 +7,7 @@ require (
 	github.com/gocolly/colly v1.2.0
 	github.com/joho/godotenv v1.4.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	go.mongodb.org/mongo-driver v1.10.0
+	go.mongodb.org/mongo-driver v1.10.1
 )
 
 require (
