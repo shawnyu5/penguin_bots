@@ -16,7 +16,7 @@ const client = new Client({
 
 const onStart = new OnStart();
 
-//@ts-ignore
+// @ts-ignore
 client.commands = new Collection();
 
 const commandFiles = fs
