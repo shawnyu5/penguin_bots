@@ -87,10 +87,6 @@
                      "discount_percentage": {
                         "description": "Discount percentage of the product",
                         "type": "number"
-                     },
-                     "has_changed": {
-                        "description": "True if the product has changed since last call",
-                        "type": "boolean"
                      }
                   }
                }
