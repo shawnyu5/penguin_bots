@@ -22,35 +22,35 @@
                "schema": {
                   "type": "object",
                   "properties": {
-                     "Title": {
+                     "title": {
                         "description": "Title of the product",
                         "type": "string"
                      },
-                     "Description": {
+                     "description": {
                         "description": "Description of the product",
                         "type": "string"
                      },
-                     "OriginalPrice": {
+                     "originalPrice": {
                         "description": "Original price of the product",
                         "type": "number"
                      },
-                     "DiscountPrice": {
+                     "discountPrice": {
                         "description": "Discount price of the product",
                         "type": "number"
                      },
-                     "DiscountPercentage": {
+                     "discountPercentage": {
                         "description": "Discount percentage of the product",
                         "type": "number"
                      },
-                     "Rating": {
+                     "rating": {
                         "description": "Rating of the product",
                         "type": "number"
                      },
-                     "IsValid": {
+                     "isValid": {
                         "description": "True if the product is valid - is a coin product and is interesting to the user. Also checks if the product has changed from the last time this api is called",
                         "type": "boolean"
                      },
-                     "Reason": {
+                     "reason": {
                         "description": "Reason why the product is not valid",
                         "type": "string"
                      }

@@ -19,10 +19,10 @@ type CoinProductService interface {
 type CoinProductServiceImpl struct{}
 
 type CoinProduct struct {
-	Title       string
-	Description string
-	IsValid     bool
-	Reason      string
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	IsValid     bool   `json:"is_valid"`
+	Reason      string `json:"reason"`
 }
 
 // var PRODUCT_INFO_FILE string

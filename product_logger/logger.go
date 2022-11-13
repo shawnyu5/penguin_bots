@@ -85,8 +85,8 @@ func Log(client *mongo.Client) {
 		const appearances int32 = 0
 		const average_discount float64 = 0
 		const average_price float64 = 0
-		var created_at string = time.Now().Format("2006-01-02 15:04:05")
-		var updated_at string = time.Now().Format("2006-01-02 15:04:05")
+		var created_at = time.Now().Format("2006-01-02 15:04:05")
+		var updated_at = time.Now().Format("2006-01-02 15:04:05")
 
 		dbResult = bson.M{"title": penguinProduct.Title, "appearances": appearances, "average_discount": average_discount, "average_price": average_price, "created_at": created_at, "updated_at": updated_at}
 

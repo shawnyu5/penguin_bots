@@ -9,6 +9,7 @@ import (
 	"os"
 
 	check_coin_product "server/coin_products"
+	"server/middleware"
 	"server/search"
 	"server/utils"
 
@@ -46,14 +47,14 @@ func main() {
 		log.Fatal(err)
 	}
 	storage = b
-	routes := make(map[string]func(http.ResponseWriter, *http.Request))
-	routes["/"] = homeHandler(routes)
-	routes["/coinProduct"] = coinProductHandler
-	routes["/logger"] = loggerHandler
-	routes["/search"] = searchHandler
-	routes["/favicon.ico"] = doNothing
-	for k, v := range routes {
-		http.HandleFunc(k, v)
+	routes := make(map[string]middleware.LoggerInter)
+	routes["/"] = middleware.NewLogger(homeHandler(routes))
+	routes["/coinProduct"] = middleware.NewLogger(coinProductHandler)
+	routes["/logger"] = middleware.NewLogger(loggerHandler)
+	routes["/search"] = middleware.NewLogger(searchHandler)
+	routes["/favicon.ico"] = middleware.NewLogger(doNothing)
+	for route, handler := range routes {
+		http.HandleFunc(route, handler.ServeHTTP)
 	}
 
 	// load .env
@@ -80,8 +81,7 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var check check_coin_product.CoinProductService
-	check = check_coin_product.CoinProductServiceImpl{}
+	var check check_coin_product.CoinProductService = check_coin_product.CoinProductServiceImpl{}
 
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
@@ -94,7 +94,6 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 	check.Check(&product)
 
 	// check if product has changed
-
 	types := dbTypes{}
 	var title []byte
 	if storage != nil {
@@ -118,13 +117,14 @@ func coinProductHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Fprintf(w, string(j))
+	fmt.Fprint(w, string(j))
 }
 
 // doNothing is a do nothing function
 func doNothing(w http.ResponseWriter, r *http.Request) {}
 
-func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
+// homeHandler handles the home route
+func homeHandler(routes map[string]middleware.LoggerInter) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
 			http.NotFound(w, r)
@@ -135,14 +135,12 @@ func homeHandler(routes map[string]func(http.ResponseWriter, *http.Request)) htt
 		for k := range routes {
 			list += k + "\n"
 		}
-		log.Println("/:", list)
 		fmt.Fprintln(w, list)
 	}
-
 }
 
+// loggerHandler handles the /logger route
 func loggerHandler(w http.ResponseWriter, r *http.Request) {
-
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/", "https://www.penguinmagic.com/p/12449"),
 	)
@@ -166,7 +164,6 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	log.Println(string(j))
 	fmt.Fprintln(w, string(j))
 }
 
@@ -185,8 +182,14 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 	s = search.LoggingMiddleware{Logger: logger, Next: s}
 
 	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err)
+	}
 	product := search.Product{Title: string(body)}
 	result, err := s.SearchByRegex(&product)
+	if err != nil {
+		panic(err)
+	}
 	// result := search.SearchByRegex(&product)
 
 	j, err := json.MarshalIndent(result, "", "  ")
