@@ -10,15 +10,15 @@ services:
       hostname: server
       restart: always
 
-   bot:
-      build: ./bot
-      depends_on:
-         - server
-      env_file:
-         - ./bot/.env
-      environment:
-         - API_ADDRESS=http://server:8080
-      restart: always
+   # bot:
+   # build: ./bot
+   # depends_on:
+   # - server
+   # env_file:
+   # - ./bot/.env
+   # environment:
+   # - API_ADDRESS=http://server:8080
+   # restart: always
 
    logger:
       build: ./product_logger
