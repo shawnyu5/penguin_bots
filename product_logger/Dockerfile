@@ -11,6 +11,7 @@ RUN go build -o logger
 FROM golang:1.18.3-alpine3.16 AS production
 
 WORKDIR /logger
+RUN apk --no-cache add gcc g++
 COPY --from=build /logger/logger ./
 # COPY ./.env ./
 

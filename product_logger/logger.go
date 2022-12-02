@@ -107,7 +107,7 @@ func hasProductChanged(product PenguinProduct) bool {
 	cacheProduct, found := c.Get("product_title")
 	if !found {
 		// if not found, assume product has not changed to avoid counting too many times
-		log.Println("Product not found in cache")
+		// log.Println("Product not found in cache")
 		return false
 	}
 
@@ -136,6 +136,9 @@ func getProductInfo() (PenguinProduct, error) {
 		return PenguinProduct{}, errors.New("API request failed: " + err.Error())
 	}
 	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	penguinProduct := PenguinProduct{}
 	if err := json.Unmarshal(body, &penguinProduct); err != nil {
@@ -215,8 +218,7 @@ func saveProduct(product *DbProduct, coll *mongo.Collection, update bool) {
 // updateProduct update the dbproduct with the new product passed in
 func updateProduct(product *DbProduct, penguinProduct PenguinProduct) error {
 	if product.Title != penguinProduct.Title {
-		// return an error
-		return fmt.Errorf("Product titles do not match")
+		return fmt.Errorf("product titles do not match")
 	}
 
 	// update the dbproduct with the new product
