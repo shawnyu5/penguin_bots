@@ -14,52 +14,6 @@
          }
       }
    },
-   "/coinProduct": {
-      "GET": {
-         "description": "Return information about current open box product, as well as if it's a coin product",
-         "content": {
-            "application/json": {
-               "schema": {
-                  "type": "object",
-                  "properties": {
-                     "title": {
-                        "description": "Title of the product",
-                        "type": "string"
-                     },
-                     "description": {
-                        "description": "Description of the product",
-                        "type": "string"
-                     },
-                     "originalPrice": {
-                        "description": "Original price of the product",
-                        "type": "number"
-                     },
-                     "discountPrice": {
-                        "description": "Discount price of the product",
-                        "type": "number"
-                     },
-                     "discountPercentage": {
-                        "description": "Discount percentage of the product",
-                        "type": "number"
-                     },
-                     "rating": {
-                        "description": "Rating of the product",
-                        "type": "number"
-                     },
-                     "isValid": {
-                        "description": "True if the product is valid - is a coin product and is interesting to the user. Also checks if the product has changed from the last time this api is called",
-                        "type": "boolean"
-                     },
-                     "reason": {
-                        "description": "Reason why the product is not valid",
-                        "type": "string"
-                     }
-                  }
-               }
-            }
-         }
-      }
-   },
    "/logger": {
       "GET": {
          "description": "Get the current product on penguin open box",

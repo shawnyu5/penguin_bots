@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 
-	check_coin_product "server/coin_products"
 	"server/middleware"
 	"server/search"
 	"server/utils"
@@ -49,7 +48,6 @@ func main() {
 	storage = b
 	routes := make(map[string]middleware.LoggerInter)
 	routes["/"] = middleware.NewLogger(homeHandler(routes))
-	routes["/coinProduct"] = middleware.NewLogger(coinProductHandler)
 	routes["/logger"] = middleware.NewLogger(loggerHandler)
 	routes["/search"] = middleware.NewLogger(searchHandler)
 	routes["/favicon.ico"] = middleware.NewLogger(doNothing)
@@ -72,52 +70,6 @@ func main() {
 	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatal(err)
 	}
-}
-
-// coinProductHandler is the handler for the /coinProduct endpoint
-func coinProductHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", 404)
-		return
-	}
-
-	var check check_coin_product.CoinProductService = check_coin_product.CoinProductServiceImpl{}
-
-	c := colly.NewCollector(
-		colly.AllowedDomains("www.penguinmagic.com", "www.penguinmagic.com/openbox/"),
-	)
-
-	product := check_coin_product.CoinProduct{}
-	utils.GetTitle(c, &product.Title)
-	utils.GetDescription(c, &product.Description)
-	c.Visit("https://www.penguinmagic.com/openbox")
-	check.Check(&product)
-
-	// check if product has changed
-	types := dbTypes{}
-	var title []byte
-	if storage != nil {
-		var err error
-		title, err = storage.Get([]byte(types.coin_product_title()))
-		if err != nil {
-			log.Println("Error getting product title from cache")
-			return
-		}
-	}
-	if string(title) == product.Title {
-		product.IsValid = false
-		product.Reason = "Product has not changed"
-	}
-
-	if storage != nil {
-		storage.Put([]byte(types.coin_product_title()), []byte(product.Title))
-	}
-	// log.Println("/coinProduct:", productInfo.Title)
-	j, err := json.MarshalIndent(product, "", "  ")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Fprint(w, string(j))
 }
 
 // doNothing is a do nothing function
@@ -190,7 +142,6 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	// result := search.SearchByRegex(&product)
 
 	j, err := json.MarshalIndent(result, "", "  ")
 	if err != nil {

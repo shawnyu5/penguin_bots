@@ -13,6 +13,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/patrickmn/go-cache"
+	"github.com/spf13/afero"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -38,6 +39,7 @@ type PenguinProduct struct {
 // Connection URI
 var uri string
 var c *cache.Cache
+var AppFs = afero.NewOsFs()
 
 func main() {
 	c = cache.New(cache.NoExpiration, 10*time.Minute)
@@ -64,7 +66,7 @@ func Log(client *mongo.Client) {
 	}
 
 	hasChanged := hasProductChanged(penguinProduct)
-	cacheProduct(penguinProduct)
+	CacheProduct(penguinProduct)
 
 	// if product has not changed, do nothing
 	// We want to log when the product has changed. the last time it was seen
@@ -79,7 +81,7 @@ func Log(client *mongo.Client) {
 	update := true // whether to update or insert the product in the db
 
 	// find the product with current product title in db
-	err = coll.FindOne(context.TODO(), bson.D{{"title", penguinProduct.Title}}).Decode(&dbResult)
+	err = coll.FindOne(context.TODO(), bson.D{{Key: "title", Value: penguinProduct.Title}}).Decode(&dbResult)
 	// create default product if product is not found
 	if err == mongo.ErrNoDocuments {
 		const appearances int32 = 0
@@ -101,28 +103,27 @@ func Log(client *mongo.Client) {
 	saveProduct(&dbProduct, coll, update)
 }
 
-// hasProductChanged will check if the current product title is different from the cached product title.
-// Returns true if the product has changed.
+// hasProductChanged will check if the current product title is different from stored product in `product.txt`.
+// product: the product to check against.
+// return: true if the product has changed.
 func hasProductChanged(product PenguinProduct) bool {
-	cacheProduct, found := c.Get("product_title")
-	if !found {
-		// if not found, assume product has not changed to avoid counting too many times
-		// log.Println("Product not found in cache")
-		return false
+	f, err := ioutil.ReadFile("product.txt")
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	// if product is same, product has not changed
-	if cacheProduct.(string) == product.Title {
-		log.Println("Product in cache has not changed")
-		return false
+	if string(f) == product.Title {
+		return true
 	}
-	return true
+	return false
 }
 
-// cacheProduct cache product title under "product_title" key
-func cacheProduct(product PenguinProduct) {
-	c.Set("product_title", product.Title, cache.NoExpiration)
-	log.Println("Product " + product.Title + " cached")
+// CacheProduct saves a product title in `product.txt`.
+// product: the product to save.
+func CacheProduct(product PenguinProduct) {
+	err := afero.WriteFile(AppFs, "product.txt", []byte(product.Title), 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 // getProductInfo will get the current product from penguin magic.
@@ -199,7 +200,7 @@ func saveProduct(product *DbProduct, coll *mongo.Collection, update bool) {
 	}
 
 	if update {
-		filter := bson.D{{"title", product.Title}}
+		filter := bson.D{{Key: "title", Value: product.Title}}
 		result, err := coll.ReplaceOne(context.TODO(), filter, bProduct)
 		if err != nil {
 			panic(err)
